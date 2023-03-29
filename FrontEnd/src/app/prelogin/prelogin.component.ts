@@ -8,18 +8,19 @@ import { Auth0Client } from '@auth0/auth0-spa-js';
   styleUrls: ['./prelogin.component.css']
 })
 export class PreloginComponent {
+  redirect_uri: string = 'http://localhost:4200/'
   personalAuth0: Auth0Client = new Auth0Client({
     domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
     clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
     authorizationParams: {
-      redirect_uri: 'http://localhost:4200/UserHome'
+      redirect_uri: this.redirect_uri + 'UserHome'
     }
   })
   businessAuth0: Auth0Client = new Auth0Client({
     domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
     clientId: '3723m9sPuC9l6thbtyOLBQpfdzjQuxrS',
     authorizationParams: {
-      redirect_uri: 'http://localhost:4200/BusinessHome'
+      redirect_uri: this.redirect_uri + 'BusinessHome'
     }
   })
   constructor() { }
