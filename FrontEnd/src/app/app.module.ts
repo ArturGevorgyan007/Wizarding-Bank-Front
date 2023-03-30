@@ -4,16 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserHomeComponent } from './user-home/user-home.component';
-import { PreloginComponent } from './prelogin/prelogin.component';
+import { LandingComponent } from './Landing/Landing.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { BusinessHomeComponent } from './business-home/business-home.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserHomeComponent,
-    PreloginComponent,
-    BusinessHomeComponent
+    LandingComponent,
+    BusinessHomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
