@@ -30,4 +30,9 @@ export class PreloginComponent {
   businessLogin() {
     this.businessAuth0.loginWithRedirect();
   }
+  async handleRedirectCallback(): Promise<void> {
+    const result = await this.personalAuth0.handleRedirectCallback();
+    const token = await this.personalAuth0.getTokenSilently()
+    localStorage.setItem('access_token', token);
+  }
 }
