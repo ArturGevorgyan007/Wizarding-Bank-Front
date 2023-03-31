@@ -8,14 +8,12 @@ import { UserDataService } from '../user-data.service';
   selector: 'app-user-home',
   templateUrl: './user-home.component.html',
   styleUrls: ['./user-home.component.css'],
-  providers: [UserDataService]
 })
 export class UserHomeComponent implements OnInit {
 
   token: string | undefined | null = localStorage.getItem('access_token');
   constructor(private myAuthService: AuthService, private jwtDecoder: JwtDecoderService, private userData: UserDataService) { }
   ngOnInit(): void {
-
     console.log(this.userData.getUser())
   }
   printJWT(): void {

@@ -8,6 +8,7 @@ import { LandingComponent } from './Landing/Landing.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { UserDataService } from './user-data.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { NavbarComponent } from './navbar/navbar.component';
       }
     })
   ],
-  providers: [],
+  providers: [UserDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
