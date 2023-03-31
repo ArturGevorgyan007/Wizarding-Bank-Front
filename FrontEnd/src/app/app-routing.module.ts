@@ -4,6 +4,7 @@ import { LandingComponent } from './Landing/Landing.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { HttpClient } from '@angular/common/http'
 import { BusinessHomeComponent } from './business-home/business-home.component';
+import { UserGuard } from './user.guard';
 
 const routes: Routes = [
   { path: 'UserHome', component: UserHomeComponent },
