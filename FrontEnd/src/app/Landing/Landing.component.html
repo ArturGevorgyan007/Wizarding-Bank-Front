@@ -63,6 +63,11 @@
     <section style="background-color: rgba(250,246,240,255);">
         <h2>Sample Article</h2>
         <p>Lorem Ipsum</p>
+        <button (click)="LogOut()">Logout</button>
+        <div *ngIf="authService.user$ | async as user">
+            <p>user exists</p>
+            <p>{{user.email}}</p>
+        </div>
 
     </section>
 </article>

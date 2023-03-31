@@ -13,15 +13,7 @@ export class UserHomeComponent implements OnInit {
   token: string | undefined | null = localStorage.getItem('access_token');
   constructor(private myAuthService: AuthService, private jwtDecoder: JwtDecoderService) { }
   ngOnInit(): void {
-    // this.authService.isAuthenticated$.subscribe(isAuthenticated => {
-    //   if (isAuthenticated) {
-    //     this.authService.getAccessTokenSilently().subscribe(token => {
-    //       this.myAuthService.token = token;
-    //     });
-    //   } else {
-    //     console.log('not Authenticated')
-    //   }
-    // });
+
   }
   printJWT(): void {
     if (this.myAuthService.token) {
