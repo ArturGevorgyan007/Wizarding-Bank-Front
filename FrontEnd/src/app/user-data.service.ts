@@ -4,21 +4,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserDataService {
-  public static email: any;
+  public email: any;
   constructor() { }
   public getUser(): string {
-    console.log("This function has been called")
-    return UserDataService.email;
+    if (this.email) {
+
+      console.log("This function has been called")
+    }
+
+    return this.email;
   }
   public addUser(user: string) {
-    UserDataService.email = user;
+    this.email = user;
     console.log("Added user!! " + user);
   }
-}
-
-
-export interface User {
-  email: string,
-  name: string,
-  picture: string
 }

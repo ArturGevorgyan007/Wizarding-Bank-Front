@@ -10,7 +10,7 @@ import { UserDataService } from '../user-data.service';
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css']
+  styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent implements OnInit {
   personalAuth0: Auth0Client = new Auth0Client({
@@ -32,26 +32,29 @@ export class LandingComponent implements OnInit {
   })
   constructor(private router: Router, public authService: AuthService, public userData: UserDataService) { }
   async ngOnInit(): Promise<void> {
-    this.authService.user$.subscribe(c => {
-      if (c) {
-        if (c["email"]) {
-          this.userData.addUser(c["email"]);
-          console.log(this.userData.getUser());
-
+    if (this.authService.isAuthenticated$) {
+      await this.authService.user$.subscribe(c => {
+        if (c) {
+          console.log(c)
+          if (c["email"]) {
+            this.userData.addUser(c["email"]);
+            this.router.navigate(['/UserHome'])
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   async login() {
-    this.personalAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200' } });
+    this.personalAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } });
   }
   businessLogin() {
-    this.businessAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/UserHome' } });
+    this.businessAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/BusinessHome' } });
   }
   LogOut() {
     this.personalAuth0.logout();
 
   }
+
 
 }
