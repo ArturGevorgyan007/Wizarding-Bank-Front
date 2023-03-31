@@ -30,9 +30,17 @@ export class LandingComponent implements OnInit {
       redirect_uri: 'http://localhost:4200/BusinessHome'
     }
   })
-  constructor(private router: Router, public authService: AuthService) { }
+  constructor(private router: Router, public authService: AuthService, public userData: UserDataService) { }
   async ngOnInit(): Promise<void> {
-    this.authService.user$.forEach(c => console.log(c))
+    this.authService.user$.subscribe(c => {
+      if (c) {
+        if (c["email"]) {
+          this.userData.addUser(c["email"]);
+          console.log(this.userData.getUser());
+
+        }
+      }
+    })
   }
 
   async login() {
