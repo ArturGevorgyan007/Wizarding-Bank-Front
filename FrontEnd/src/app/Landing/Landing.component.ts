@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Auth0Client } from '@auth0/auth0-spa-js';
+import { JwtModule } from "@auth0/angular-jwt";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -8,31 +10,28 @@ import { Auth0Client } from '@auth0/auth0-spa-js';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent {
-  redirect_uri: string = 'http://localhost:4200/'
   personalAuth0: Auth0Client = new Auth0Client({
     domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
     clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
     authorizationParams: {
-      redirect_uri: this.redirect_uri + 'UserHome'
+      redirect_uri: 'http://localhost:4200/UserHome/'
     }
   })
   businessAuth0: Auth0Client = new Auth0Client({
     domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
     clientId: '3723m9sPuC9l6thbtyOLBQpfdzjQuxrS',
     authorizationParams: {
-      redirect_uri: this.redirect_uri + 'BusinessHome'
+      redirect_uri: 'http://localhost:4200/BusinessHome'
     }
   })
-  constructor() { }
-  login() {
-    this.personalAuth0.loginWithRedirect();
+  constructor(private router: Router, private authService: AuthService) { }
+  async login() {
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_url: 'http://localhost:4200/UserHome/' } });
+    console.log(this.personalAuth0.getUser())
+
   }
   businessLogin() {
-    this.businessAuth0.loginWithRedirect();
+    this.businessAuth0.loginWithRedirect({ authorizationParams: { redirect_url: 'http://localhost:4200/UserHome' } });
   }
-  async handleRedirectCallback(): Promise<void> {
-    const result = await this.personalAuth0.handleRedirectCallback();
-    const token = await this.personalAuth0.getTokenSilently()
-    localStorage.setItem('access_token', token);
-  }
+
 }
