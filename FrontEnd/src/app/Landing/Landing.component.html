@@ -29,12 +29,11 @@
                     </h1>
                     <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%);margin-left: 10%;">
                         <br />
+                        Implemented by Gringotts (seen in picture)
                         <br />
+                        Transfer money so quick, it seems like magic! With support for business operations and for
+                        personal transfers, Knuts and Bolts is the go-to application for all financial needs
 
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                        Temporibus, expedita iusto veniam atque, magni tempora mollitia
-                        dolorum consequatur nulla, neque debitis eos reprehenderit quasi
-                        ab ipsum nisi dolorem modi. Quos?
                     </p>
                 </div>
 
@@ -45,12 +44,12 @@
                     <button type="submit" class="btn btn-primary btn-block mb-4"
                         style="font-size: larger; font-weight:bolder; padding: 5%; margin-right: 15%; padding: 3%; float: right; width: 40%; border: 0px ; background-color: #bfc1c2; color:black"
                         (click)=" login()">
-                        Login
+                        Personal Account
                     </button>
                     <br />
                     <button type="submit" class="btn btn-primary btn-block mb-4" (click)="businessLogin()"
                         style="font-size: larger; font-weight:bolder; margin-bottom: 5%; padding:3%; margin-right: 15%; float: right; width: 40%; border: 0px ; background-color: #bfc1c2; color:black">
-                        Register
+                        Business Account
                     </button>
 
 
@@ -63,14 +62,6 @@
     <section style="background-color: rgba(250,246,240,255);">
         <h2>Sample Article</h2>
         <p>Lorem Ipsum</p>
-        <button (click)="LogOut()">Logout</button>
-        <div *ngIf="authService.user$ | async as user">
-            <p>user exists</p>
-            <p>{{user.email}}</p>
-        </div>
-        <div>
-            <button routerLink="/UserHome">Home</button>
-        </div>
     </section>
 </article>
 <!-- Section: Design Block -->
