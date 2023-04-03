@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode'
   providedIn: 'root'
 })
 export class JwtDecoderService {
-  token = sessionStorage.getItem('a0.spajs.txs.Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ')
+  token = localStorage.getItem('access_token')
   constructor() { }
   printTokenInfo(): void {
     if (this.token) {
