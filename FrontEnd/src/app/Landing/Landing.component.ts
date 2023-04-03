@@ -27,7 +27,7 @@ export class LandingComponent implements OnInit {
     domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
     clientId: '3723m9sPuC9l6thbtyOLBQpfdzjQuxrS',
     authorizationParams: {
-      redirect_uri: 'http://localhost:4200/BusinessHome'
+      redirect_uri: 'http://localhost:4200'
     }
   })
   constructor(private router: Router, public authService: AuthService, public userData: UserDataService) { }
@@ -46,10 +46,18 @@ export class LandingComponent implements OnInit {
   }
 
   async login() {
+    try {
+      this.businessAuth0.logout()
+      this.personalAuth0.logout()
+    } catch (Exception) { }
     this.personalAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } });
   }
   businessLogin() {
-    this.businessAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/BusinessHome' } });
+    try {
+      this.personalAuth0.logout()
+      this.businessAuth0.logout()
+    } catch (Exception) { }
+    this.businessAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } });
   }
   LogOut() {
     this.personalAuth0.logout();
