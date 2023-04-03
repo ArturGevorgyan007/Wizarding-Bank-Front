@@ -16,11 +16,6 @@ export class UserHomeComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.userData.getUser())
   }
-  printJWT(): void {
-    if (this.myAuthService.token) {
-      console.log(JSON.parse(this.myAuthService.token))
 
-    }
-  }
 
 }
