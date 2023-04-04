@@ -43,22 +43,4 @@ export class AddPaymentFormComponent {
       
     }
   }
-  confirma(event: Event): void{
-    event.preventDefault();
-    console.log("confirm Function");
-    if (this.mode === 'credit') {
-      //do something if credit card
-      this.CardModel.id = 0;
-      this.CardModel.UserId = 1;
-      console.log(typeof this.CardModel.CardNumber);
-      console.log(typeof this.CardModel.Cvv);
-      
-      console.log(this.CardModel.CardNumber);
-      //this.pfs.addCard(this.CardModel).subscribe(data => console.log(data));
-    }
-    else if (this.mode === 'bank'){
-      //do something if bank account
-    }
-    this.router.navigate(['/UserHome']);
-  }
 }
