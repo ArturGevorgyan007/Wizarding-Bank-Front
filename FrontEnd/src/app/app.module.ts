@@ -12,6 +12,7 @@ import { UserDataService } from './user-data.service';
 import { AddPaymentFormComponent } from './add-payment-form/add-payment-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     AuthModule.forRoot({
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
