@@ -12,17 +12,14 @@
 
         <tbody>
             <ng-container *ngIf="Transactions.length > 0">
-                <!-- <div > -->
-                <tr *ngFor="let transac of Transactions" [ngClass]="{'minus' : transac.senderId == user,
-                'plus' : transac.senderId != user}">
-                    <td>{{transac.recipientId}}</td>
-                    <td>{{transac.senderId}}</td>
+                <tr *ngFor="let transac of Transactions" [ngClass]="{'minus' : transac.senderEmail == user,
+                'plus' : transac.senderEmail != user}">
+                    <td>{{transac.recipientEmail}}</td>
+                    <td>{{transac.senderEmail}}</td>
                     <td>{{transac.amount}}</td>
-                    <td>{{transac.createdAt}}</td>
+                    <td>{{transac.createdAt | date: 'shortDate'}}</td>
                     <td>{{transac.description}}</td>
                 </tr>
-                <!-- </div> -->
-
             </ng-container>
         </tbody>
     </table>

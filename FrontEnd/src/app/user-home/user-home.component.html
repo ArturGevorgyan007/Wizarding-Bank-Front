@@ -49,8 +49,8 @@
 <section class="right split2">
     <details *ngFor="let Transaction of Transactions">
         <summary>Date: {{Transaction.createdAt | date: 'shortDate'}} Amount: {{Transaction.amount}}</summary>
-        <p>Recipient: {{Transaction.recipientId}}</p>
-        <p>Sender: {{Transaction.senderId}}</p>
+        <p>Recipient: {{Transaction.recipientEmail}}</p>
+        <p>Sender: {{Transaction.senderEmail}}</p>
         <p>Sender: {{Transaction.description}}</p>
     </details>
 </section>
