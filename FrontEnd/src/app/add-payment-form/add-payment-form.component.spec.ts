@@ -13,7 +13,8 @@ describe('AddPaymentFormComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ AddPaymentFormComponent ],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule
       ]
     })
     .compileComponents();
@@ -29,6 +30,6 @@ describe('AddPaymentFormComponent', () => {
   });
 
   it('should be credit from valid', () => {
-
+    
   });
 });
