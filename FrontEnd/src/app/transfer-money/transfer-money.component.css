@@ -1,0 +1,69 @@
+.subtitle-money{
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 29px;
+    text-align: left;
+    margin-top: 15px;
+    color: #25282C;
+}
+
+row d-flex justify-content-center{
+    margin-left: 150px;
+}
+
+input{
+
+    width: 300px;
+    border-bottom-style: hidden;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;  
+    font-size: 40px;
+    color: black;
+    text-align: center; 
+    margin-top: 55px;
+}
+
+
+.no-outline:focus{
+    outline: none;
+}
+
+button{
+    width: 157px;
+    height: 83px;
+    left: 292px;
+    top: 408px;
+
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 14px;
+
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 31px;
+    text-align: center;
+    letter-spacing: 0.02em;
+
+    color: #25282C;
+}
+
+.yellow-button{
+    width: 239px;
+    height: 56px;
+    left: 337px;
+    top: 595px;
+
+    background: #FECE22;
+    border-radius: 12px;
+    border: #FECE22;
+    text-align: center;
+    color: #262626;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 21px;
+}

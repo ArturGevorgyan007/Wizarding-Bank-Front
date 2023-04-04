@@ -10,7 +10,7 @@ import { BusinessHomeComponent } from './business-home/business-home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
-import { TransferMoneyComponentComponent } from './transfer-money-component/transfer-money-component.component';
+import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { TransferMoneyComponentComponent } from './transfer-money-component/tran
     BusinessHomeComponent,
     NavbarComponent,
     WalletPageComponent,
-    TransferMoneyComponentComponent
+    TransferMoneyComponent
   ],
   imports: [
     BrowserModule,
