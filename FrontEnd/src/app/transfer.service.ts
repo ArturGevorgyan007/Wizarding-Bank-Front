@@ -14,23 +14,43 @@ export class TransferService {
   //When sending money to self, recipient = id, sender = null
   //TODO: wrap functions to accept name email etc
   //Card-to-wallet
-  cardToWallet(cardID : number, userID : number, amount : number){
-    
+  cardToWallet(cardId : number, userId : number, amount : number) : Observable<any>{
+    var body : Transaction = {
+      "cardId": cardId,
+      "recipientId": userId,
+      "amount": amount
+    };
+    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
   }
-
+  
   //wallet-to-card
-
-  walletToCard(userID : number, cardID : number, amount : number) {
-    
+  walletToCard(userId : number, cardId : number, amount : number) {
+    var body : Transaction = {
+      "senderId": userId,
+      "cardId": cardId,
+      "amount": amount
+    };
+    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
   }
 
   //bankAccount-to-wallet
-  accountToWallet(accountID : number, userID : number, amount : number) {
-    
+  accountToWallet(accountId : number, userId : number, amount : number) {
+    var body : Transaction = {
+      "accountId": accountId,
+      "recipientId": userId,
+      "amount": amount
+    };
+    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
   }
+
   //wallet-to-bankAccount
-  walletToAccount(userID : number, accountID : number, amount : number) {
-    
+  walletToAccount(userId : number, accountId : number, amount : number) {
+    var body : Transaction = {
+      "accountId": accountId,
+      "senderId": userId,
+      "amount": amount
+    };
+    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
   }
   
 }
