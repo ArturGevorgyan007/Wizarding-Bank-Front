@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserDataService {
   public email: any;
-  constructor() { }
+  constructor(private http: HttpClient) { }
   public getUser(): string {
     if (this.email) {
 
@@ -17,5 +18,10 @@ export class UserDataService {
   public addUser(user: string) {
     this.email = user;
     console.log("Added user!! " + user);
+  }
+  public getUserId(email: string) {
+    this.http.get("http://localhost:5092/User/user/byEmail/" + this.email).subscribe(x => {
+      return x;
+    })
   }
 }
