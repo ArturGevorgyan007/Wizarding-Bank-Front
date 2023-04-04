@@ -56,7 +56,7 @@
         </div>
          
         <div class="row d-flex justify-content-center" style="text-align: center; margin-top: 55px;"> 
-          <input type="text" class = "no-outline" placeholder="$0">
+            <input #amountin type="text" class = "no-outline" placeholder="$0">
           <p style="font-size: 12px;"> Balance: $0.00</p>
         </div>
 
@@ -76,7 +76,7 @@
         </div>
 
         <div class="row d-flex justify-content-center" style="margin-left: 250px; margin-right: 250px; margin-top: 105px; padding-bottom: 70px;">
-          <button class="yellow-button" (click)="continue(10)"> Continue </button>
+          <button class="yellow-button" (click)="continue(amountin.value)"> Continue </button>
         </div>
 
       </div>
@@ -96,14 +96,14 @@
 
         <div class="row d-flex justify-content-center" style="margin-left: 185px; padding-top: 65px;"> 
           <div class="col-md-8 col-lg-6 col-xl-4">
-            <button>Add with card</button>
+            <button class="withBut" #withCard autofocus="autofocus" value="c" (click)="setType(withCard.value)">Add with card</button>
           </div>
           <div class="col-md-8 col-lg-6 col-xl-4" style="margin-left: -155px;">
-            <button> Add with bank </button>
+            <button class="withBut" #withBank value="b" (click)="setType(withBank.value)"> Add with bank </button>
           </div>
         </div>
 
-          <div class="row d-flex justify-content-center" style="padding-top: 115px;">
+          <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="cardDsiplay">
             <div class="d-flex flex-row pb-3" style="padding-left: 220px; padding-right: 220px;">
               <div class="rounded border d-flex w-100 px-3 py-2 align-items-center" style="margin-right: 100px;">
                 <div class="d-flex flex-column">
@@ -113,7 +113,8 @@
                 
               </div>
               <div class="d-flex flex-column">
-                  <h6 class="mb-0" style="text-align: center; padding-top: 15px; color: #FECE22; font-weight: bold;"> Change</h6>
+                  <h6 class="mb-0" style="text-align: center; padding-top: 15px; color: #FECE22; font-weight: bold;" (click)="change()"> 
+                    Change</h6>
                 </div>
             </div>
           </div>
@@ -129,7 +130,7 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center" style="margin-left: 250px; margin-right: 250px; margin-top: 105px; padding-bottom: 70px;">
-          <button class="yellow-button"> Add string Now </button>
+          <button class="yellow-button" (click)="addMoney()"> Add string Now </button>
         </div>
 
       </div>
