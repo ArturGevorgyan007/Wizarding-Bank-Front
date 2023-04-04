@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponentComponent } from './transfer-money-component/transfer-money-component.component';
+import { TransferPageComponent } from './transfer-page/transfer-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TransferMoneyComponentComponent } from './transfer-money-component/tran
     BusinessHomeComponent,
     NavbarComponent,
     WalletPageComponent,
-    TransferMoneyComponentComponent
+    TransferMoneyComponentComponent,
+    TransferPageComponent
   ],
   imports: [
     BrowserModule,
