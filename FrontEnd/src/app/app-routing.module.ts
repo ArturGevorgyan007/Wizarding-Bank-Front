@@ -5,11 +5,13 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { HttpClient } from '@angular/common/http'
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { UserGuard } from './user.guard';
+import {TransferPageComponent} from './transfer-page/transfer-page.component'
 
 const routes: Routes = [
   { path: 'UserHome', component: UserHomeComponent },
   { path: '', component: LandingComponent },
-  { path: 'BusinessHome', component: BusinessHomeComponent }
+  { path: 'BusinessHome', component: BusinessHomeComponent },
+  { path: 'Transfer', component : TransferPageComponent}
 ];
 
 @NgModule({

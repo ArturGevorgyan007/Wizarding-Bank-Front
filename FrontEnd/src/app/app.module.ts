@@ -12,6 +12,7 @@ import { UserDataService } from './user-data.service';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponentComponent } from './transfer-money-component/transfer-money-component.component';
 import { TransferPageComponent } from './transfer-page/transfer-page.component';
+import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { TransferPageComponent } from './transfer-page/transfer-page.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AuthModule.forRoot({
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
