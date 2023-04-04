@@ -32,4 +32,11 @@
         <th>Amount</th>
         <th>Recipient</th>
     </tr>
+    <div *ngForEach="let Transaction in Transactions">
+        <tr>
+            <td>{{Transaction.Sender}}</td>
+            <td>{{Transaction.Amount}}</td>
+            <td>{{Transaction.Recipient}}</td>
+        </tr>
+    </div>
 </table>
