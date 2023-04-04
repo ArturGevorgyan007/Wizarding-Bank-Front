@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserDataService {
   public email: any;
+  public Id: any;
   constructor(private http: HttpClient) { }
   public getUser(): string {
     if (this.email) {
@@ -21,7 +22,7 @@ export class UserDataService {
   }
   public getUserId(email: string) {
     this.http.get("http://localhost:5092/User/user/byEmail/" + this.email).subscribe(x => {
-      return x;
+      this.Id = x;
     })
   }
 }
