@@ -24,7 +24,7 @@ export class TransferService {
   }
   
   //wallet-to-card
-  walletToCard(userId : number, cardId : number, amount : number) {
+  walletToCard(userId : number, cardId : number, amount : number) : Observable<any> {
     var body : Transaction = {
       "senderId": userId,
       "cardId": cardId,
@@ -34,7 +34,7 @@ export class TransferService {
   }
 
   //bankAccount-to-wallet
-  accountToWallet(accountId : number, userId : number, amount : number) {
+  accountToWallet(accountId : number, userId : number, amount : number) : Observable<any> {
     var body : Transaction = {
       "accountId": accountId,
       "recipientId": userId,
@@ -44,7 +44,7 @@ export class TransferService {
   }
 
   //wallet-to-bankAccount
-  walletToAccount(userId : number, accountId : number, amount : number) {
+  walletToAccount(userId : number, accountId : number, amount : number) : Observable<any> {
     var body : Transaction = {
       "accountId": accountId,
       "senderId": userId,
