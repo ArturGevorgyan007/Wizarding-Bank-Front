@@ -1,1 +1,29 @@
-<p>view-all-transactions works!</p>
+<div class="transac-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Recipient</th>
+                <th scope="col">Sender</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <ng-container *ngIf="Transactions.length > 0">
+                <!-- <div > -->
+                <tr *ngFor="let transac of Transactions" [ngClass]="{'minus' : transac.senderId == user,
+                'plus' : transac.senderId != user}">
+                    <td>{{transac.recipientId}}</td>
+                    <td>{{transac.senderId}}</td>
+                    <td>{{transac.amount}}</td>
+                    <td>{{transac.createdAt}}</td>
+                    <td>{{transac.description}}</td>
+                </tr>
+                <!-- </div> -->
+
+            </ng-container>
+        </tbody>
+    </table>
+</div>

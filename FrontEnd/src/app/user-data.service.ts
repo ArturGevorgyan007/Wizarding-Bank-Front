@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,13 @@ export class UserDataService {
   public getUser(): string {
     return this.email;
   }
-  public addUser(user: string) {
+  public getUserEmailFromAuth0(user: string) {
     this.email = user;
   }
-  public getUserId(email: string) {
-    this.http.get("http://localhost:5092/User/user/byEmail/" + this.email).subscribe(x => {
-      this.Id = x;
-    })
+  public retrieveUserIdFromDB(email: string): Observable<number> {
+    return this.http.get("http://localhost:5092/user/byEmail/" + this.email) as Observable<number>;
+  }
+  public getUserId(): number {
+    return this.Id
   }
 }

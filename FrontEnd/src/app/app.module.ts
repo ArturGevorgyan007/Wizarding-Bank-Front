@@ -10,6 +10,7 @@ import { BusinessHomeComponent } from './business-home/business-home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
 import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-t
       authorizationParams: {
         redirect_uri: 'http://localhost:4200/UserHome/'
       }
-    })
+    }),
+    HttpClientModule
   ],
   providers: [UserDataService],
   bootstrap: [AppComponent]

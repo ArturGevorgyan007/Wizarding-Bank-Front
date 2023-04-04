@@ -13,17 +13,22 @@ import { TransactionHistoryService } from '../transaction-history.service';
 })
 export class UserHomeComponent implements OnInit {
   Transactions: Array<Transaction> = []
+  user: string | undefined;
 
   token: string | undefined | null = localStorage.getItem('access_token');
   constructor(private transactions: TransactionHistoryService, private myAuthService: AuthService, private jwtDecoder: JwtDecoderService, private userData: UserDataService) { }
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.userData.getUser()
-    await this.userData.getUserId(this.userData.email)
-    await this.transactions.getMostRecentTransactions(this.userData.Id).subscribe(x => {
-      this.Transactions = x;
+    this.userData.retrieveUserIdFromDB(this.userData.getUser()).subscribe(x => {
+      this.userData.Id = x;
+      this.user = this.userData.Id;
+      this.transactions.getMostRecentTransactions(x).subscribe(w => {
+        this.Transactions = w;
+      })
     })
 
   }
+
 
 
 }

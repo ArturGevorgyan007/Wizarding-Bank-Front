@@ -58,23 +58,23 @@ body {
 }
 
 .split1 {
-    height: 91.1%;
+    height: 85%;
     width: 20%;
     position: fixed;
     z-index: 1;
     top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
+    overflow-x: visible;
+    padding-top: 60px;
 }
 
 .split2 {
-    height: 91.1%;
+    height: 85%;
     width: 70%;
     position: fixed;
     z-index: 1;
     top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
+    overflow-x: visible;
+    padding-top: 60px;
 }
 
 /* Control the left side */
@@ -87,4 +87,18 @@ body {
 .right {
     right: 0;
     background-color: transparent;
+}
+
+.minus {
+    color: red;
+}
+
+.plus {
+    color: green;
+}
+
+@media screen and (max-width: 700px) {
+    .disappear {
+        display: none;
+    }
 }
