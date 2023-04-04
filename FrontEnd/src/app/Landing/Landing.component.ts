@@ -37,7 +37,7 @@ export class LandingComponent implements OnInit {
         if (c) {
           console.log(c)
           if (c["email"]) {
-            this.userData.addUser(c["email"]);
+            this.userData.getUserEmailFromAuth0(c["email"]);
             this.router.navigate(['/UserHome'])
           }
         }
@@ -59,10 +59,7 @@ export class LandingComponent implements OnInit {
     } catch (Exception) { }
     this.businessAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } });
   }
-  LogOut() {
-    this.personalAuth0.logout();
 
-  }
 
 
 }
