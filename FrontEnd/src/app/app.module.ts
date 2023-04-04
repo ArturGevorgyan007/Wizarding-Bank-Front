@@ -9,6 +9,8 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
+import { WalletPageComponent } from './wallet-page/wallet-page.component';
+import { TransferMoneyComponentComponent } from './transfer-money-component/transfer-money-component.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { UserDataService } from './user-data.service';
     UserHomeComponent,
     LandingComponent,
     BusinessHomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    WalletPageComponent,
+    TransferMoneyComponentComponent
   ],
   imports: [
     BrowserModule,
