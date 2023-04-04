@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserHomeComponent } from './user-home/user-home.component';
@@ -21,6 +21,7 @@ import { UserDataService } from './user-data.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     AuthModule.forRoot({
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
