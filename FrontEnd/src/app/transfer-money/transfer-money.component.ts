@@ -46,8 +46,18 @@ export class TransferMoneyComponent{
   
   addMoney(){
     console.log(this._amount, this.type, "user id: 1");
-    // this.service.cardToWallet(1,1,1).subscribe(data => {
-    //   console.log(data);
-    // })
+    if(this.type == "b"){
+      console.log("Add money from bank");
+      // this.service.bankToWallet(1,1,1).subscribe(data => {
+      //   console.log(data);
+      // })
+    } 
+    else {
+      console.log("Add money from card");
+      // this.service.cardToWallet(1,1,1).subscribe(data => {
+      //   console.log(data);
+      // })
+    }
+    
   }
 }

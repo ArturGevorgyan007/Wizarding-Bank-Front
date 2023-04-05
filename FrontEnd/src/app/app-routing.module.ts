@@ -10,7 +10,7 @@ import { TransferMoneyComponent } from './transfer-money/transfer-money.componen
 
 const routes: Routes = [
   { path: 'UserHome', component: UserHomeComponent },
-  { path: '', component: TransferMoneyComponent },
+  { path: '', component: UserHomeComponent },
   { path: 'BusinessHome', component: BusinessHomeComponent },
   { path: 'Wallet', component: WalletPageComponent},
   { path: 'TransferMoney', component: TransferMoneyComponent}
