@@ -14,7 +14,7 @@ import { TransferMoneyComponentComponent } from './transfer-money-component/tran
 import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
-
+import { LoanApplyComponent } from './loan-apply/loan-apply.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-t
     TransferPageComponent,
     TransferMoneyComponentComponent,
     WalletPageComponent,
-    ViewAllTransactionsComponent
+    ViewAllTransactionsComponent,
+    LoanApplyComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +39,7 @@ import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-t
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
       authorizationParams: {
-        redirect_uri: 'http://localhost:4200/UserHome/'
+        redirect_uri: 'http://localhost:4200'
       }
     }),
     HttpClientModule
