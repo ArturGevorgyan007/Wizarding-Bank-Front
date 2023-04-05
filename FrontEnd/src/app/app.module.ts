@@ -11,6 +11,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
 import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoanApplyComponent } from './loan-apply/loan-apply.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,11 +21,14 @@ import { HttpClientModule } from '@angular/common/http';
     LandingComponent,
     BusinessHomeComponent,
     NavbarComponent,
-    ViewAllTransactionsComponent
+    ViewAllTransactionsComponent,
+    LoanApplyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     AuthModule.forRoot({
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
