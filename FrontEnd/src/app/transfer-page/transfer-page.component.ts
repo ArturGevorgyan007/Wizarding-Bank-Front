@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TransferService } from '../transfer.service';
+import { UserDataService } from '../user-data.service';
 
 @Component({
   selector: 'app-transfer-page',
@@ -9,8 +10,9 @@ import { TransferService } from '../transfer.service';
   styleUrls: ['./transfer-page.component.css']
 })
 export class TransferPageComponent{
-  constructor(private router: Router, private fb: FormBuilder, private api:TransferService){}
+  constructor(private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
   mode : string = "credit";
+  UID = this.userData.Id
 
 
   cardForm : FormGroup = this.fb.group({
@@ -43,7 +45,8 @@ export class TransferPageComponent{
     if(this.cardForm.valid) {
       let A = this.cardForm.value['cardAmount'];
       let C = this.cardForm.value['card'];
-      let U = this.cardForm.value['cardUserId'];
+      let U = this.UID;
+      console.log(this.UID)
       
 
       //walletToCard(userId : number, cardId : number, amount : number)
