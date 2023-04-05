@@ -16,9 +16,12 @@ export class UserDataService {
     this.email = user;
   }
   public retrieveUserIdFromDB(email: string): Observable<number> {
-    return this.http.get("http://localhost:5092/user/byEmail/" + this.email) as Observable<number>;
+    return this.http.get("http://localhost:5092/user/byEmail/" + email) as Observable<number>;
   }
   public getUserId(): number {
     return this.Id
+  }
+  public retrieveBusinessIdFromDB(email: string): Observable<number> {
+    return this.http.get("http://localhost:5092/Business/busId/" + email) as Observable<number>;
   }
 }
