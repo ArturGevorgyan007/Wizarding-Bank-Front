@@ -1,7 +1,7 @@
 export interface Transaction {
     amount: number;
-    senderId: string;
-    recipientId: string;
+    senderEmail: string;
+    recipientEmail: string;
     createdAt: Date;
     description: string;
 }

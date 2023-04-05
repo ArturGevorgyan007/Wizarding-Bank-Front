@@ -46,11 +46,20 @@
         </tr>
     </ng-container>
 </table> -->
-<section class="right split2">
-    <details *ngFor="let Transaction of Transactions">
-        <summary>Date: {{Transaction.createdAt | date: 'shortDate'}} Amount: {{Transaction.amount}}</summary>
-        <p>Recipient: {{Transaction.recipientId}}</p>
-        <p>Sender: {{Transaction.senderId}}</p>
-        <p>Sender: {{Transaction.description}}</p>
-    </details>
-</section>
+<div class="container d-flex justify-content-right split2 p-3" style="margin-bottom: 2%; top:5%; ">
+    <div class="card">
+        <a routerLink="Transactions" class="text-dark">Transaction History</a>
+        <div class="d-flex flex-row justify-content-between text-align-center">
+            <section class="card">
+                <details *ngFor="let Transaction of Transactions">
+                    <summary>Date: {{Transaction.createdAt | date: 'shortDate'}} Amount: {{Transaction.amount}}
+                    </summary>
+                    <p>Recipient: {{Transaction.recipientEmail}}</p>
+                    <p>Sender: {{Transaction.senderEmail}}</p>
+                    <p>Sender: {{Transaction.description}}</p>
+                </details>
+            </section>
+
+        </div>
+    </div>
+</div>

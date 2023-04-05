@@ -75,6 +75,7 @@ body {
     top: 0;
     overflow-x: visible;
     padding-top: 60px;
+    margin-left: 45%;
 }
 
 /* Control the left side */
@@ -100,5 +101,14 @@ body {
 @media screen and (max-width: 700px) {
     .disappear {
         display: none;
+    }
+
+    .split1 {
+        position: relative;
+    }
+
+    .split2 {
+        position: relative;
+        margin-left: auto;
     }
 }
