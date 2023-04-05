@@ -13,6 +13,8 @@ import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponentComponent } from './transfer-money-component/transfer-money-component.component';
 import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,10 +22,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
     UserHomeComponent,
     LandingComponent,
     BusinessHomeComponent,
-    NavbarComponent,
-    WalletPageComponent,
-    TransferMoneyComponentComponent,
-    TransferPageComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +35,8 @@ import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
       authorizationParams: {
         redirect_uri: 'http://localhost:4200/UserHome/'
       }
-    })
+    }),
+    HttpClientModule
   ],
   providers: [UserDataService],
   bootstrap: [AppComponent]
