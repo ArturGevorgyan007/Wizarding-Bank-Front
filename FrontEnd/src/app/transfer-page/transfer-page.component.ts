@@ -3,18 +3,25 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TransferService } from '../transfer.service';
 import { UserDataService } from '../user-data.service';
+import {of} from 'rxjs'
 
 @Component({
   selector: 'app-transfer-page',
   templateUrl: './transfer-page.component.html',
   styleUrls: ['./transfer-page.component.css']
 })
-export class TransferPageComponent{
+export class TransferPageComponent implements OnInit{
+  mode : string = "card";
   constructor(private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
-  mode : string = "credit";
-  UID = this.userData.Id
 
-
+  UID = this.userData.getUser()
+  cards : any[]
+  ngOnInit(): void {
+      this.userData.getUserCards(1).subscribe((data:any) => {
+        this.cards = data
+        console.log(data)
+      })
+    }
   cardForm : FormGroup = this.fb.group({
     card : new FormControl(),
     cardUserId : new FormControl(),
@@ -50,7 +57,7 @@ export class TransferPageComponent{
       
 
       //walletToCard(userId : number, cardId : number, amount : number)
-      this.api.walletToCard(U, C, A).subscribe(data => console.log(data));
+      this.api.walletToCard(5, C, A).subscribe(data => console.log(data));
     }
   }
   processBankForm(e: Event) : void {
@@ -59,7 +66,8 @@ export class TransferPageComponent{
     if(this.bankForm.valid) {
       let A = this.bankForm.value['bankAmount'];
       let B = this.bankForm.value['bank'];
-      let U = this.bankForm.value['bankUserId'];
+      let U = 5;
+      console.log(this.cards)
       
 
       //walletToCard(userId : number, cardId : number, amount : number)

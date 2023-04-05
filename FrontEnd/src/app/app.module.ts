@@ -14,7 +14,7 @@ import { TransferMoneyComponentComponent } from './transfer-money-component/tran
 import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
-import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -22,13 +22,18 @@ import { HttpClientModule } from '@angular/common/http';
     UserHomeComponent,
     LandingComponent,
     BusinessHomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    TransferPageComponent,
+    TransferMoneyComponentComponent,
+    WalletPageComponent,
+    ViewAllTransactionsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     AuthModule.forRoot({
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
