@@ -14,13 +14,25 @@ export class TransferPageComponent implements OnInit{
   mode : string = "card";
   constructor(private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
 
-  UID = this.userData.getUser()
+  UID = this.userData.getUserId()
+  bankAccounts = this.userData.getUser()
+  
   cards : any[]
   ngOnInit(): void {
+
+    //get all cards
       this.userData.getUserCards(1).subscribe((data:any) => {
         this.cards = data
         console.log(data)
       })
+
+      //get all bank accounts
+      this.userData.getUserAccounts(1).subscribe((data:any) => {
+        this.bankAccounts = data
+        console.log(data)
+      })
+
+
     }
   cardForm : FormGroup = this.fb.group({
     card : new FormControl(),
@@ -60,6 +72,11 @@ export class TransferPageComponent implements OnInit{
       this.api.walletToCard(5, C, A).subscribe(data => console.log(data));
     }
   }
+  process(e: Event,  num : number){
+    console.log(num)
+     this.api.walletToCard(1, num, 2).subscribe(data => console.log(data))
+  }
+
   processBankForm(e: Event) : void {
     e.preventDefault();
     this.bankForm.markAllAsTouched();
@@ -74,5 +91,7 @@ export class TransferPageComponent implements OnInit{
       this.api.walletToAccount(U, B, A).subscribe(data => console.log(data));
     }
   }
+ 
+
 
 }
