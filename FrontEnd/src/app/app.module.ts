@@ -9,6 +9,8 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
+import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { UserDataService } from './user-data.service';
     UserHomeComponent,
     LandingComponent,
     BusinessHomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    ViewAllTransactionsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { UserDataService } from './user-data.service';
       authorizationParams: {
         redirect_uri: 'http://localhost:4200/UserHome/'
       }
-    })
+    }),
+    HttpClientModule
   ],
   providers: [UserDataService],
   bootstrap: [AppComponent]
