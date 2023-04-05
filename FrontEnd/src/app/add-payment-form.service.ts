@@ -8,7 +8,7 @@ import { Account } from './Interfaces/Account';
     providedIn: 'root'
 })
 export class PaymentFormService{
-    constructor(private http: HttpClient){}
+  constructor(private http: HttpClient){}
     
   addCard(newCard : Card) : Observable<Card> {
     return this.http.post('http://localhost:5092/Card/Add', newCard) as Observable<Card>;
