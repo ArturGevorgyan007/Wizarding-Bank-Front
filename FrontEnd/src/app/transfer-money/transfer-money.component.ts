@@ -1,6 +1,7 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { Card, bankAccount } from '../wallet-page/wallet-page.component';
 import {  TransferService } from '../transfer.service';
 import { UserDataService } from '../user-data.service';
 
@@ -9,7 +10,7 @@ import { UserDataService } from '../user-data.service';
   templateUrl: './transfer-money.component.html',
   styleUrls: ['./transfer-money.component.css']
 })
-export class TransferMoneyComponent{
+export class TransferMoneyComponent implements OnInit{
 
   constructor(private service : TransferService, private user_service : UserDataService){}
 
@@ -19,7 +20,13 @@ export class TransferMoneyComponent{
   _amount : any = 0;
   cardDsiplay = true;
   bankDisplay = false;
-  type : any = "c";
+  type : any = "";
+  cardList : Card[] = [];
+  bankList : bankAccount[] = [];
+
+  ngOnInit(): void {
+    this.setType("c");
+  }
 
   addToWallet() {
     this.display = false;
@@ -39,9 +46,17 @@ export class TransferMoneyComponent{
   setType(type : any){
     if(type == "b"){
       this.type = "b";
+      this.cardDsiplay = false;
+      this.bankDisplay = true;
       console.log("with bank", this.type);
+      //populate with bank accounts
     } else {
       this.type = "c";
+      this.bankDisplay = false;
+      this.cardDsiplay = true;
+      console.log("with card", this.type);
+      //populate with cards 
+      this.displayCards();
     }
   }
   
@@ -60,5 +75,31 @@ export class TransferMoneyComponent{
       })
     }
     
+  }
+
+  displayCards(){
+    this.user_service.getUserCards(1).subscribe(data => {
+      console.log(data);
+      for(let i = 0; i < data.length; i++){
+        let card = {} as Card; 
+        card.cardId = data[i]['id'];
+        card.balance = data[i]['balance'];
+        card.cardNumber = data[i]['cardNumber'];
+        card.cvv = data[i]['cvv'];
+        card.expDate = data[i]['expiryDate'];
+        this.cardList.push(card);
+      }
+      console.log(this.cardList);
+    });
+  }
+
+  displayAccounts(){
+    this.user_service.getUserAccounts(1).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  setCard(id : any){
+    console.log(id);
   }
 }

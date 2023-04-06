@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { UserDataService } from '../user-data.service';
 
+
 @Component({
   selector: 'app-wallet-page',
   templateUrl: './wallet-page.component.html',
@@ -26,6 +27,7 @@ export class WalletPageComponent implements OnInit{
   linkCardorAcct(){}
 
   transferMoney(){
+    //this needs to send first card and first account to transfer money page
     this.route.navigateByUrl('TransferMoney');
   }
 
