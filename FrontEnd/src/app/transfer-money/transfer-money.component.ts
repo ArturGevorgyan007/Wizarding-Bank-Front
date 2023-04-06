@@ -65,9 +65,10 @@ export class TransferMoneyComponent implements OnInit{
   addMoney(){
     console.log(this._amount, this.type, "user id: 1");
     if(this.type == "b"){
-      console.log("Add money from bank");
+      console.log("Add money from bank", this.typeId, this._amount);
        this.service.accountToWallet(this.typeId,1,this._amount).subscribe(data => {
          console.log(data);
+         //need to update wallet balance
        })
     } 
     else {
