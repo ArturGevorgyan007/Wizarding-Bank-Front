@@ -1,0 +1,26 @@
+<div>
+    <div id="loan_apply_form">
+        <form (submit)="onLoanFormSubmit($event)" [formGroup]="loanForm">
+            <label for="amount">Amount $</label>
+            <input #amount name="amount" formControlName="amount" value="" type="text" data-type="currency" class="number-separator"/>
+            <br/>
+            <label for="period">Number of years</label>
+            <input type="numbee" formControlName="period"/>
+            <input type="submit"/>
+        </form>
+    </div>
+
+    <div>
+        <table class="table">
+            <tr>
+                <th>Amount</th>
+                <th>Interest Rate</th>
+            </tr>
+            <tr>
+                <td>$10,000</td>
+                <td>{{interest}}</td>
+            </tr>
+        </table>
+    </div>
+    
+</div>
