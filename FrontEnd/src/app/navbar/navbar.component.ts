@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private cookieService: CookieService, private authService: AuthService, private userData: UserDataService, private router : Router) { }
+  constructor(private cookieService: CookieService, private authService: AuthService, private userData: UserDataService, private router: Router) { }
   Logout(): void {
     this.cookieService.set('userType', '')
     this.cookieService.set('email', '')
     this.authService.logout()
   }
-  goToWallet(){
+  goToWallet() {
     this.router.navigateByUrl('Wallet');
+  }
 }
