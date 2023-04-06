@@ -6,6 +6,7 @@ export interface Loan {
     dateLoaned: Date;
     loanPaid: Date;
     monthlyPay: number;
+    amountPaid: number;
 }
 
 export interface LoanSchedule {

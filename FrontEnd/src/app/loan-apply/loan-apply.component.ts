@@ -22,6 +22,7 @@ export class LoanApplyComponent {
     monthlyPay: 0,
     dateLoaned: new Date(),
     loanPaid: new Date(),
+    amountPaid: 0
   }
   loanForm: FormGroup = this.formBuilder.group({
     amount: new FormControl('', [Validators.required, Validators.maxLength(256)]),
@@ -133,13 +134,6 @@ export class LoanApplyComponent {
           if (isNaN(this.payment)) this.payment = 0;
         }
       })
-
-
-      // interest rate: check if this business type is student or not or by amount loaned
-
-      // get datetime of when this loan was requested
-
-      // get user's bin
 
     }
   }
