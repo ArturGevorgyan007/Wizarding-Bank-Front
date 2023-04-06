@@ -1,0 +1,160 @@
+<section style="background-color: #eee;" id="TransferMoney" *ngIf="display">  
+  <div class="container py-5">
+    <div class ="card rounded-3">
+        <div class="row d-flex justify-content-center">
+            <h6 style="text-align: center; margin-top: 10px;"> Transfer Money </h6> <img>
+        </div>
+         
+        <div class="row d-flex justify-content-center" style="margin-left: 20px; margin-right: 20px;"> 
+            <p class="subtitle-money">Money out</p>
+          
+            <div class="d-flex flex-row pb-3">
+              <div class="rounded border d-flex w-100 px-3 py-2 align-items-center">
+                <div class="d-flex flex-column">
+                  <h6 class="mb-0"> Transfer to your bank </h6>
+                  <p class="mb-1 small">blah blah blah</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-row pb-3">
+              <div class="rounded border d-flex w-100 px-3 py-2 align-items-center">
+                <div class="d-flex flex-column">
+                  <h6 class="mb-0"> Transfer to your card</h6>
+                  <p class="mb-1 small"> blah blah blah </p>
+                </div>
+                  
+              </div>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center" style="margin-left: 20px; margin-right: 20px;"> 
+          <p class="subtitle-money">Money in</p>
+          <div class="d-flex flex-row pb-3">
+            <div class="rounded border d-flex w-100 px-3 py-2 align-items-center" (click)="addToWallet()">
+              <div class="d-flex flex-column">
+                <img>
+                <h6 class="mb-0"> Transfer money to wallet from your bank or debit card </h6>
+                <p class="mb-1 small"> Use card to add money fast </p>
+                
+              </div>
+            </div>
+          </div>
+
+      </div>
+
+      </div>
+    </div>
+
+</section>
+
+<section style="background-color: #eee;" id="AddMoney" *ngIf="displayAdd">  
+  <div class="container py-5">
+    <div class ="card rounded-3">
+        <div class="row d-flex justify-content-center">
+            <h6 style="text-align: center; margin-top: 10px;"> Add money to your wallet </h6> <img>
+        </div>
+         
+        <div class="row d-flex justify-content-center" style="text-align: center; margin-top: 55px;"> 
+            <input #amountin type="text" class = "no-outline" placeholder="$0">
+          <p style="font-size: 12px;"> Balance: $0.00</p>
+        </div>
+
+        <div class="row d-flex justify-content-center" style="margin-left: 160px; padding-top: 65px;"> 
+          <div class="col-md-8 col-lg-6 col-xl-4">
+            <button (click)="continue(10)">$ 10.00 </button>
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4" style="margin-left: -155px;">
+            <button (click)="continue(25)"> $ 25.00</button>
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4" style="margin-left: -155px;">
+            <button (click)="continue(50)"> $ 50.00</button>
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4" style="margin-left: -155px;">
+            <button (click)="continue(100)"> $ 100.00</button>
+          </div>
+        </div>
+
+        <div class="row d-flex justify-content-center" style="margin-left: 250px; margin-right: 250px; margin-top: 105px; padding-bottom: 70px;">
+          <button class="yellow-button" (click)="continue(amountin.value)"> Continue </button>
+        </div>
+
+      </div>
+    </div>
+</section>
+
+<section style="background-color: #eee;" id="AddMoneyBorC" *ngIf="displayFinal">  
+  <div class="container py-5">
+    <div class ="card rounded-3">
+        <div class="row d-flex justify-content-center">
+            <h6 style="text-align: center; margin-top: 10px;"> Add money to your wallet </h6> <img>
+        </div>
+         
+        <div class="row d-flex justify-content-center" style="text-align: center; margin-top: 55px;"> 
+          <p style="font-size: 40px;"> $ {{_amount}}</p>
+        </div>
+
+        <div class="row d-flex justify-content-center" style="margin-left: 185px; padding-top: 65px;"> 
+          <div class="col-md-8 col-lg-6 col-xl-4">
+            <button class="withBut" #withCard autofocus="autofocus" value="c" (click)="setType(withCard.value)">Add with card</button>
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4" style="margin-left: -155px;">
+            <button class="withBut" #withBank value="b" (click)="setType(withBank.value)"> Add with bank </button>
+          </div>
+        </div>
+
+          <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="cardDsiplay" #cards>
+            <div class="d-flex flex-row pb-3" style="padding-left: 220px; padding-right: 220px;" *ngFor="let card of cardList">
+              <div class = "bcard" tabindex="1">
+              <div class="rounded border d-flex w-100 px-3 py-2 align-items-center" style="margin-right: 100px;" (click)="setCard(card.cardId)" >
+                  <div class="d-flex flex-column">
+                  <h6 class="mb-0"> Bank Debit MasterCard </h6>
+                  <p class="mb-1 small"> {{card.cardNumber}}</p>
+                </div>
+              </div>
+                  
+            </div>
+              <!-- <div class="d-flex flex-column">
+                  <h6 class="mb-0" style="text-align: center; padding-top: 15px; color: #FECE22; font-weight: bold;" (click)="change()"> 
+                    Change</h6>
+                </div> -->
+            </div>
+          </div>
+        
+          <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="bankDisplay">
+            <div class="d-flex flex-row pb-3" style="padding-left: 220px; padding-right: 220px;" *ngFor="let bank of bankList">
+              <div class = "bacct" tabindex="2">
+                <div class="rounded border d-flex w-100 px-3 py-2 align-items-center" style="margin-right: 100px;" (click)="setBAcct(bank.bankAcctId)">
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-0"> Bank Credit Union </h6>
+                    <p class="mb-1 small"> {{bank.acctNum}}</p>
+                  </div>
+              </div>
+             
+                
+              </div>
+              <!-- <div class="d-flex flex-column">
+                  <h6 class="mb-0" style="text-align: center; padding-top: 15px; color: #FECE22; font-weight: bold;" (click)="change()"> 
+                    Change</h6>
+                </div> -->
+            </div>
+          </div>
+        
+
+
+        <div class="row d-flex justify-content-center" style="padding-top: 65px;">
+          <div class="col-md-8 col-lg-6 col-xl-4">
+            <p style="text-align: left; font-weight: bold;"> Fee:</p>
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4">
+            <p style="text-align: right;"> Free</p>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center" style="margin-left: 250px; margin-right: 250px; margin-top: 105px; padding-bottom: 70px;">
+          <button class="yellow-button" (click)="addMoney()"> Add {{_amount}} Now </button>
+        </div>
+
+      </div>
+    </div>
+</section>
+

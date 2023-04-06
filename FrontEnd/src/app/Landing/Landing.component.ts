@@ -5,6 +5,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { UserDataService } from '../user-data.service';
+import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
 
 @Component({
@@ -13,51 +14,48 @@ import { UserDataService } from '../user-data.service';
   styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent implements OnInit {
-  personalAuth0: Auth0Client = new Auth0Client({
-    domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
-    clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
-    authorizationParams: {
-      redirect_uri: 'http://localhost:4200/',
-      audience: "https://dev-z8ypmdswd2nbh4n2.us.auth0.com/api/v2/",
-      scope: "openid profile email"
-    },
-
-  })
-  businessAuth0: Auth0Client = new Auth0Client({
-    domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
-    clientId: '3723m9sPuC9l6thbtyOLBQpfdzjQuxrS',
-    authorizationParams: {
-      redirect_uri: 'http://localhost:4200'
-    }
-  })
-  constructor(private router: Router, public authService: AuthService, public userData: UserDataService) { }
+  constructor(private cookieService: CookieService, private router: Router, public authService: AuthService, public userData: UserDataService) { }
   async ngOnInit(): Promise<void> {
     if (this.authService.isAuthenticated$) {
       await this.authService.user$.subscribe(c => {
         if (c) {
           console.log(c)
           if (c["email"]) {
-            this.userData.getUserEmailFromAuth0(c["email"]);
-            this.router.navigate(['/UserHome'])
+            console.log(c['email'])
+            this.cookieService.set('email', c['email'])
+            if (this.cookieService.get('userType') == 'Business') {
+              this.userData.retrieveBusinessIdFromDB(this.cookieService.get('email')).subscribe(data => {
+                if (data) {
+                  this.cookieService.set("userId", data + "")
+                  this.router.navigate(['/BusinessHome']);
+                }
+              })
+            }
+            else if (this.cookieService.get('userType') == 'Personal') {
+              this.userData.retrieveUserIdFromDB(this.cookieService.get('email')).subscribe(data => {
+                if (data) {
+                  this.cookieService.set("userId", data + "")
+                  this.router.navigate(['/UserHome']);
+                }
+              })
+            }
           }
         }
       })
     }
   }
 
+
   async login() {
-    try {
-      this.businessAuth0.logout()
-      this.personalAuth0.logout()
-    } catch (Exception) { }
-    this.personalAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } });
+    await this.authService.logout()
+    this.cookieService.set('userType', 'Personal');
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } })
+
   }
-  businessLogin() {
-    try {
-      this.personalAuth0.logout()
-      this.businessAuth0.logout()
-    } catch (Exception) { }
-    this.businessAuth0.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } });
+  async businessLogin() {
+    await this.authService.logout();
+    this.cookieService.set('userType', 'Business')
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } })
   }
 
 

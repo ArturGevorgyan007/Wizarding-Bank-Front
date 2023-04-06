@@ -1,0 +1,38 @@
+.column {
+    float: left;
+    width: 50%;
+  }
+
+.d-flex{
+    width: 350px;
+    margin-left: 50px;
+}
+
+#linkButton{
+    margin-left: 100px;
+    width: 350px;
+}
+
+.yellow-button{
+    width: 280px;
+    height: 56px;
+    left: 337px;
+    top: 595px;
+
+    background: #FECE22;
+    border-radius: 12px;
+    border: #FECE22;
+    text-align: center;
+    color: #262626;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 21px;
+}
+
+#transferButton{
+    margin-right: 380px;
+}
+.link-p{
+    font-weight: bold; 
+    color: #FECE22;
+}
