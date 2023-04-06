@@ -39,4 +39,8 @@ export class UserDataService {
     .set('id', userId/*this.Id*/)
     return this.http.get("http://localhost:5092/" + 'Account/UserAccounts', {params:qparams}) as Observable<Array<any>>;
   }
+
+  public getWalletBalance(userId : number): Observable<any>{
+    return this.http.get("http://localhost:5092/user/" + userId) as Observable<any>;
+  }
 }

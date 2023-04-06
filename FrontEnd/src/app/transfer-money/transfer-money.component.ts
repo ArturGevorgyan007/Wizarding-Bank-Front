@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Card, bankAccount } from '../wallet-page/wallet-page.component';
 import {  TransferService } from '../transfer.service';
 import { UserDataService } from '../user-data.service';
+import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
 @Component({
   selector: 'app-transfer-money-component',
@@ -12,23 +13,26 @@ import { UserDataService } from '../user-data.service';
 })
 export class TransferMoneyComponent implements OnInit{
 
-  constructor(private service : TransferService, private user_service : UserDataService, private router : Router){}
+  constructor(private service : TransferService, private user_service : UserDataService, private router : Router, private cookieService: CookieService){}
 
   display = true;
   displayAdd = false;
   displayFinal = false;
-  _amount : any = 0;
+  UID : any; 
+  _amount : any = "$";
   cardDsiplay = true;
   bankDisplay = false;
   typeId : any = 0;
   type : any = "";
   cardList : Card[] = [];
   bankList : bankAccount[] = [];
+  
 
   ngOnInit(): void {
     this.setType("c");
-    this.displayAccounts();
-    this.displayCards();
+    this.UID = parseInt(this.cookieService.get('userId')) ;
+    this.displayAccounts(this.UID);
+    this.displayCards(this.UID);
   }
 
   addToWallet() {
@@ -36,10 +40,14 @@ export class TransferMoneyComponent implements OnInit{
     this.displayAdd = true;
   }
 
+  goToTp(){
+    this.router.navigateByUrl('Transfer');
+  }
+
   continue( amount : any){
     this.displayAdd = false;
     this.displayFinal = true;
-    this._amount = amount;
+    this._amount += amount;
   }
 
   change(){
@@ -68,7 +76,7 @@ export class TransferMoneyComponent implements OnInit{
     console.log(this._amount, this.type, "user id: 1");
     if(this.type == "b"){
       console.log("Add money from bank", this.typeId, this._amount);
-       this.service.accountToWallet(this.typeId,1,this._amount).subscribe(data => {
+       this.service.accountToWallet(this.typeId,this.UID,this._amount).subscribe(data => {
          if(data != null){
           console.log(data);
           console.log("successful transaction from bank to wallet");
@@ -78,7 +86,7 @@ export class TransferMoneyComponent implements OnInit{
     } 
     else {
       console.log("Add money from card");
-      this.service.cardToWallet(this.typeId,1,this._amount).subscribe(data => {
+      this.service.cardToWallet(this.typeId,this.UID,this._amount).subscribe(data => {
         console.log(data);
         console.log("successful transaction from card to wallet");
         this.router.navigateByUrl('Wallet');
@@ -87,8 +95,8 @@ export class TransferMoneyComponent implements OnInit{
     
   }
 
-  displayCards(){
-    this.user_service.getUserCards(1).subscribe(data => {
+  displayCards(id : any){
+    this.user_service.getUserCards(this.UID).subscribe(data => {
       console.log(data);
       for(let i = 0; i < data.length; i++){
         let card = {} as Card; 
@@ -103,8 +111,8 @@ export class TransferMoneyComponent implements OnInit{
     });
   }
 
-  displayAccounts(){
-    this.user_service.getUserAccounts(1).subscribe(data => {
+  displayAccounts(id : any){
+    this.user_service.getUserAccounts(this.UID).subscribe(data => {
       console.log(data);
       for(let i = 0; i < data.length; i++){
         let bacct = {} as bankAccount;
