@@ -5,6 +5,7 @@ import { Card } from '../Interfaces/Card';
 import { Account } from '../Interfaces/Account';
 import { PaymentFormService } from '../add-payment-form.service';
 import { UserDataService } from '../user-data.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-payment-form',
@@ -15,15 +16,25 @@ import { UserDataService } from '../user-data.service';
 export class AddPaymentFormComponent implements OnInit{
   mode : string = "credit";
 
-  constructor(private router: Router, private fb: FormBuilder, private pfs: PaymentFormService, private uds: UserDataService){}
+  constructor(private router: Router, private fb: FormBuilder, private pfs: PaymentFormService, private uds: UserDataService, private cookie: CookieService){}
 
   ngOnInit(): void {
-    this.uds.getUser();
-    this.uds.retrieveUserIdFromDB(this.uds.getUser()).subscribe(data => {
-      this.uds.Id = data;
-      this.CardModel.UserId = this.uds.Id;
-      this.AccModel.UserId = this.uds.Id;
-    });
+    if (this.cookie.get('userType') == 'Personal') {
+      this.uds.getUser();
+      this.uds.retrieveUserIdFromDB(this.uds.getUser()).subscribe(data => {
+        this.uds.Id = data;
+        this.CardModel.UserId = this.uds.Id;
+        this.AccModel.UserId = this.uds.Id;
+      });
+    }
+    else if (this.cookie.get('userType') == 'Business') {
+      this.uds.getUser();
+      this.uds.retrieveBusinessIdFromDB(this.uds.getUser()).subscribe(data => {
+        this.uds.Id = data;
+        this.CardModel.BusinessId = this.uds.Id;
+        this.AccModel.BusinessId = this.uds.Id;
+      });
+    }
   }
 
   toggleMode(mode : string) : void {
