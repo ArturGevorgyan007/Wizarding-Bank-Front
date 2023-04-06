@@ -75,7 +75,7 @@ export class LoanApplyComponent {
   }
 
   createSchedule() {
-    let dateincriment = 0
+    let dateincrement = 0
     let balance = this.amount
     let totInterest = 0
     while (balance > 0) {
