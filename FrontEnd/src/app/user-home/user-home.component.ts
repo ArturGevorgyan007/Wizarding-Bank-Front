@@ -5,7 +5,7 @@ import { AuthService as Auth0Service } from '@auth0/auth0-angular';
 import { UserDataService } from '../user-data.service';
 import { Transaction } from '../Interfaces/transaction';
 import { TransactionHistoryService } from '../transaction-history.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from '../../../node_modules/ngx-cookie-service';
 @Component({
   selector: 'app-user-home',
   templateUrl: './user-home.component.html',

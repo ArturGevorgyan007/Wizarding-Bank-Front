@@ -4,7 +4,7 @@ import { FormGroup, FormControl, FormBuilder, FormsModule, ReactiveFormsModule} 
 import { TransferService } from '../transfer.service';
 import { UserDataService } from '../user-data.service';
 import {of} from 'rxjs'
-
+import { CookieService } from '../../../node_modules/ngx-cookie-service';
 @Component({
   selector: 'app-transfer-page',
   templateUrl: './transfer-page.component.html',
@@ -12,8 +12,9 @@ import {of} from 'rxjs'
 })
 export class TransferPageComponent implements OnInit{
   mode : string = "card";
-  constructor(private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
-
+  constructor(private cookieSerive : CookieService, private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
+  //we can user this to get the userID:
+  otherUserID = this.cookieSerive.get('userId')
   UID = this.userData.getUserId()
   bankAccounts = this.userData.getUser()
   

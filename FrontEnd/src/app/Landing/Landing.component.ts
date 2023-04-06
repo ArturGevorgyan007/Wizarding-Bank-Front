@@ -5,7 +5,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { UserDataService } from '../user-data.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
 
 @Component({
