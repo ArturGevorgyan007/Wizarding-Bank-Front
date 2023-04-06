@@ -20,6 +20,8 @@ import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { CookieService } from 'ngx-cookie-service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BusinessProfileComponent } from './business-profile/business-profile.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { CookieService } from 'ngx-cookie-service';
     LoanApplyComponent,
     TransferPageComponent,
     WalletPageComponent,
-    TransferMoneyComponent
+    TransferMoneyComponent,
+    UserProfileComponent,
+    BusinessProfileComponent
   ],
   imports: [
     BrowserModule,
