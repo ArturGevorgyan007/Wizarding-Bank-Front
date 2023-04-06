@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Card, bankAccount } from '../wallet-page/wallet-page.component';
 import {  TransferService } from '../transfer.service';
 import { UserDataService } from '../user-data.service';
@@ -12,7 +12,7 @@ import { UserDataService } from '../user-data.service';
 })
 export class TransferMoneyComponent implements OnInit{
 
-  constructor(private service : TransferService, private user_service : UserDataService){}
+  constructor(private service : TransferService, private user_service : UserDataService, private router : Router){}
 
   display = true;
   displayAdd = false;
@@ -27,6 +27,8 @@ export class TransferMoneyComponent implements OnInit{
 
   ngOnInit(): void {
     this.setType("c");
+    this.displayAccounts();
+    this.displayCards();
   }
 
   addToWallet() {
@@ -50,7 +52,7 @@ export class TransferMoneyComponent implements OnInit{
       this.cardDsiplay = false;
       this.bankDisplay = true;
       console.log("with bank", this.type);
-      this.displayAccounts();
+      
       //populate with bank accounts
     } else {
       this.type = "c";
@@ -58,7 +60,7 @@ export class TransferMoneyComponent implements OnInit{
       this.cardDsiplay = true;
       console.log("with card", this.type);
       //populate with cards 
-      this.displayCards();
+      
     }
   }
   
@@ -67,14 +69,19 @@ export class TransferMoneyComponent implements OnInit{
     if(this.type == "b"){
       console.log("Add money from bank", this.typeId, this._amount);
        this.service.accountToWallet(this.typeId,1,this._amount).subscribe(data => {
-         console.log(data);
-         //need to update wallet balance
+         if(data != null){
+          console.log(data);
+          console.log("successful transaction from bank to wallet");
+          this.router.navigateByUrl('Wallet');
+         }
        })
     } 
     else {
       console.log("Add money from card");
       this.service.cardToWallet(this.typeId,1,this._amount).subscribe(data => {
         console.log(data);
+        console.log("successful transaction from card to wallet");
+        this.router.navigateByUrl('Wallet');
       })
     }
     

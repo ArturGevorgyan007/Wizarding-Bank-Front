@@ -1,8 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
 import { UserDataService } from '../user-data.service';
+import {of} from 'rxjs'
+import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
 
 @Component({
@@ -12,11 +13,13 @@ import { UserDataService } from '../user-data.service';
 })
 export class WalletPageComponent implements OnInit{
   
+  constructor(private route : Router, private service : UserDataService, private cookieService : CookieService){}
+
   _amount : any = ""; 
   cardList : Card[] = [];
   bankList : bankAccount[] = [];
+  userId = this.cookieService.get('userId');
 
-  constructor(private route : Router, private service : UserDataService){}
 
   ngOnInit(): void {
     this.getCurrentAmount();

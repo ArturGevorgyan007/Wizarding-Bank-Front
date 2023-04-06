@@ -12,6 +12,7 @@ import { UserDataService } from './user-data.service';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [

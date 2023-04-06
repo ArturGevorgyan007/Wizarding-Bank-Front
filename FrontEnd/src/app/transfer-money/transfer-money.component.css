@@ -72,3 +72,28 @@ button{
     border-color: #FECE22;
 }
 
+div .bcard:focus {
+    border-color: #FECE22;
+    background-color: #FECE22;
+    border-radius: 5px;
+}
+
+
+.bcard:hover{
+    background-color: #FECE22;
+    border-radius: 5px;
+}
+
+div .bacct:focus {
+    border-color: #FECE22;
+    background-color: #FECE22;
+    border-radius: 5px;
+}
+
+
+.bacct:hover{
+    background-color: #FECE22;
+    border-radius: 5px;
+}
+
+
