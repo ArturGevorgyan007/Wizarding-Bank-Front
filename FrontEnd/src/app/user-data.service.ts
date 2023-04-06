@@ -24,4 +24,8 @@ export class UserDataService {
   public retrieveBusinessIdFromDB(email: string): Observable<number> {
     return this.http.get("http://localhost:5092/Business/busId/" + email) as Observable<number>;
   }
+
+  public retrieveBusinessTypeFromDB(email: string): Observable<string> {
+    return this.http.get("http://localhost:5092/Business/busType/" + email) as Observable<string>;
+  }
 }
