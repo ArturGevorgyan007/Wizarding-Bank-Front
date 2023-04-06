@@ -1,0 +1,4 @@
+.selected-input:focus {
+    background: rgb(23, 140, 203);
+    color: rgb(38, 44, 44);
+  }

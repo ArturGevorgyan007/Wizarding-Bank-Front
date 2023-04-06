@@ -1,5 +1,4 @@
 <div class="container py-5">
-  <p>{{otherUserID}}</p>
     <div class="list">
       <div class="col-lg-7 mx-auto">
         <div class="bg-white rounded-lg shadow-sm p-5">
@@ -25,7 +24,7 @@
           <div class="tab-content">
   
             <!--  card info-->
-            <div id="nav-tab-card" class="tab-pane fade" [ngClass]="mode === 'card' ? 'show active' : ''">
+            <div id="nav-tab-card" class="tab-pane fade" [ngClass]="mode === 'card' ? 'show active' : ''" (click)="unselect()">
                 <table>
                     <thead>
                         <th>Card ID</th>
@@ -33,53 +32,48 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of cards">
-                            <button (click)="process($event, i.id)"><td>{{i.cardNumber}} </td></button>
+                            <button (click)="select($event, i.id, 'card')" class="selected-input"><td>{{i.cardNumber}}</td></button>
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
                 <form [formGroup]="cardForm" (ngSubmit)="processCardForm($event)">
                 <div class="form-group" style="padding-bottom: 3ex;">
-                    <label >Card ID</label>
-                    <input type="number" formControlName="card" placeholder="12345..." required class="form-control">
-                    
                   
                     <label >Amount</label>
                     <input type="number" formControlName="cardAmount" placeholder="$0" required class="form-control">
 
                 </div>
 
-                <button type="submit"> Submit  </button>
+                <button type="submit" *ngIf="selected"> Submit  </button>
               </form>
             </div>
             <!-- End -->
   
             <!-- Bank Account Infromation-->
-            <div id="nav-tab-bank" class="tab-pane fade" [ngClass]="mode === 'bank' ? 'show active' : ''">
+            <div id="nav-tab-bank" class="tab-pane fade" [ngClass]="mode === 'bank' ? 'show active' : ''" (click)="unselect()">
                 <table>
                     <thead>
-                        <th>Card ID</th>
+                        <th>Bank ID</th>
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let i of bankAccounts">
-                            <td>{{i}}</td>
+                        <tr *ngFor="let i of banks">
+                            <button (click)="select($event, i.id, 'bank')" class="selected-input"><td>{{i.accountNumber}}</td></button> 
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
+
                 <form [formGroup]="bankForm" (ngSubmit)="processBankForm($event)">
                 
                     <div class="form-group" style="padding-bottom: 3ex;">
-                        <label >Bank ID</label>
-                        <input type="number" formControlName="bank" placeholder="12345..." required class="form-control">
-
                         <label >Amount</label>
                         <input type="number" formControlName="bankAmount" placeholder="$0" required class="form-control">
     
                     </div>
     
-                    <button type="submit"> Submit  </button>
+                    <button type="submit" *ngIf="selected"> Submit  </button>
                   </form>
             <!-- End -->
           </div>

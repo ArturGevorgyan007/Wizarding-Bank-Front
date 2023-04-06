@@ -13,44 +13,44 @@ import { CookieService } from '../../../node_modules/ngx-cookie-service';
 export class TransferPageComponent implements OnInit{
   mode : string = "card";
   constructor(private cookieSerive : CookieService, private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
-  //we can user this to get the userID:
-  otherUserID = this.cookieSerive.get('userId')
-  UID = this.userData.getUserId()
-  bankAccounts = this.userData.getUser()
+  UID = parseInt(this.cookieSerive.get('userId')) 
   
-  cards : any[]
+  cards : any[];
+  banks : any[];
+  showselected : boolean = false;
+  selected : string;
+
+
   ngOnInit(): void {
 
     //get all cards
-      this.userData.getUserCards(1).subscribe((data:any) => {
+      this.userData.getUserCards(this.UID).subscribe((data:any) => {
         this.cards = data
-        console.log(data)
       })
 
       //get all bank accounts
-      this.userData.getUserAccounts(1).subscribe((data:any) => {
-        this.bankAccounts = data
-        console.log(data)
+      this.userData.getUserAccounts(this.UID).subscribe((data:any) => {
+        this.banks = data
       })
 
-
     }
+
+
+
   cardForm : FormGroup = this.fb.group({
-    card : new FormControl(),
-    cardUserId : new FormControl(),
     cardAmount : new FormControl()
   })
 
   bankForm : FormGroup = this.fb.group({
-    bank : new FormControl(),
-    bankUserId : new FormControl(),
     bankAmount : new FormControl()
   })
-
 
   toggleMode(mode : string) : void {
     this.mode = mode;
   }
+
+
+
 
   confirm(event: Event): void{
     event.preventDefault();
@@ -64,35 +64,33 @@ export class TransferPageComponent implements OnInit{
     this.cardForm.markAllAsTouched();
     if(this.cardForm.valid) {
       let A = this.cardForm.value['cardAmount'];
-      let C = this.cardForm.value['card'];
-      let U = this.UID;
-      console.log(this.UID)
+      let C = parseInt(this.selected)
       
-
-      //walletToCard(userId : number, cardId : number, amount : number)
-      this.api.walletToCard(5, C, A).subscribe(data => console.log(data));
+      this.api.walletToCard(this.UID, C, A).subscribe(data => console.log(data));
     }
   }
-  process(e: Event,  num : number){
-    console.log(num)
-     this.api.walletToCard(1, num, 2).subscribe(data => console.log(data))
-  }
+
 
   processBankForm(e: Event) : void {
     e.preventDefault();
     this.bankForm.markAllAsTouched();
     if(this.bankForm.valid) {
-      let A = this.bankForm.value['bankAmount'];
-      let B = this.bankForm.value['bank'];
-      let U = 5;
-      console.log(this.cards)
-      
+      let A = this.bankForm.value['bankAmount']; 
+      let B = parseInt(this.selected)     
 
       //walletToCard(userId : number, cardId : number, amount : number)
-      this.api.walletToAccount(U, B, A).subscribe(data => console.log(data));
+      this.api.walletToAccount(this.UID, B, A).subscribe(data => console.log(data));
     }
-  }
- 
 
+  }
+
+  select(e : Event, selec : string, type : string){
+    this.showselected = true;
+    this.selected = selec;
+  }
+  unselect()
+  {
+    this.showselected = false;
+  }
 
 }
