@@ -1,20 +1,31 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserDataService } from '../user-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Loan, LoanSchedule } from '../Interfaces/loan';
 import { LoanServicesService } from '../loan-services.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loan-apply',
   templateUrl: './loan-apply.component.html',
   styleUrls: ['./loan-apply.component.css']
 })
-export class LoanApplyComponent {
+export class LoanApplyComponent implements OnInit {
 
   constructor(private router: Router, private loanService: LoanServicesService, private formBuilder: FormBuilder, private userData: UserDataService, private cookieService: CookieService) { }
   loan: Loan = {
+    id: 0,
+    interestRate: 0,
+    amount: 0,
+    businessId: "0",
+    monthlyPay: 0,
+    dateLoaned: new Date(),
+    loanPaid: new Date(),
+    amountPaid: 0
+  }
+  existingLoan: Loan = {
     id: 0,
     interestRate: 0,
     amount: 0,
@@ -29,6 +40,14 @@ export class LoanApplyComponent {
     period: new FormControl(new Date(), [Validators.required]),
   })
 
+  payLoanForm: FormGroup = this.formBuilder.group({
+    payAmount: new FormControl('')
+  })
+
+  monthlyAmountButton: boolean = false;
+  customAmountButton: boolean = false;
+  fullAmountButton: boolean = false;
+
   interest: number = 0;
   amount: number = 0;
   business_type: string = "";
@@ -37,6 +56,15 @@ export class LoanApplyComponent {
   showCalculation: boolean = false;
   schedule: Array<LoanSchedule> = []
 
+  ngOnInit() {
+    this.getCurrentLoan().subscribe(data => {
+      this.existingLoan = data as Loan;
+    });
+  }
+
+  getCurrentLoan(): Observable<any> {
+    return this.loanService.getLoan(this.cookieService.get("userId") as unknown as number);
+  }
 
   PMT(ir: any, np: any, pv: any, fv: any, type: any) {
     /*
@@ -75,23 +103,34 @@ export class LoanApplyComponent {
     this.showCalculation = true;
   }
 
+
   createSchedule() {
-    let dateincrement = 0
+    let dateincriment = 0
     let balance = this.amount
     let totInterest = 0
-    while (balance > 0) {
+    let inter = parseFloat((balance * this.interest / 100 / 12).toFixed(2))
+
+    while (true) {
+      if (balance < this.payment) {
+        balance = parseFloat((balance - this.payment + inter).toFixed(0))
+      }
+      else {
+        balance = parseFloat((balance - this.payment + inter).toFixed(2))
+        inter = parseFloat((balance * this.interest / 100 / 12).toFixed(2))
+      }
+
       let data: LoanSchedule = {
         date: new Date(),
         payment: this.payment,
-        interest: balance * this.interest / 100,
-        principal: this.payment - this.interest,
-        balance: balance - this.payment,
-        totalInterest: totInterest + this.interest,
+        interest: inter,
+        principal: parseFloat((this.payment - inter).toFixed(2)),
+        balance: balance,
+        totalInterest: parseFloat((totInterest + inter).toFixed(2)),
       }
-      balance = balance - this.payment
-      if (balance < 0) {
+
+      if (balance < 0)
         break;
-      }
+
       totInterest = data.totalInterest
       this.schedule.push(data)
       console.log(data)
@@ -149,5 +188,47 @@ export class LoanApplyComponent {
         this.router.navigate(['/BusinessHome'])
       })
   }
+
+  toggleMonthlyBill() {
+    this.monthlyAmountButton = true;
+    this.customAmountButton = false;
+    this.fullAmountButton = false;
+    // this.payLoanForm.controls['amount'].value = this.loan.monthlyPay
+  }
+
+  toggleCustomBill() {
+    this.monthlyAmountButton = false;
+    this.customAmountButton = true;
+    this.fullAmountButton = false;
+  }
+
+  toggleFullBill() {
+    this.monthlyAmountButton = false;
+    this.customAmountButton = false;
+    this.fullAmountButton = true;
+    // this.payLoanForm.controls['amount'].value = this.loan.amount
+  }
+
+  toggleAllBillButtons() {
+    this.monthlyAmountButton = false;
+    this.customAmountButton = false;
+    this.fullAmountButton = false;
+  }
+
+  payLoan(amount: number): any {
+    //this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number);
+    this.loanService.makePayment(amount, this.cookieService.get("userId") as unknown as number).subscribe(data => {
+      console.log(data);
+      location.reload();
+    });
+  }
+  payCustomLoan(): any {
+    //this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number);
+    this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number).subscribe(data => {
+      console.log(data);
+      location.reload();
+    });
+  }
+
 
 }
