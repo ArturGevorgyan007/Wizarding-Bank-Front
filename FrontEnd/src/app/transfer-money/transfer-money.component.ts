@@ -20,6 +20,7 @@ export class TransferMoneyComponent implements OnInit{
   _amount : any = 0;
   cardDsiplay = true;
   bankDisplay = false;
+  typeId : any = 0;
   type : any = "";
   cardList : Card[] = [];
   bankList : bankAccount[] = [];
@@ -49,6 +50,7 @@ export class TransferMoneyComponent implements OnInit{
       this.cardDsiplay = false;
       this.bankDisplay = true;
       console.log("with bank", this.type);
+      this.displayAccounts();
       //populate with bank accounts
     } else {
       this.type = "c";
@@ -64,13 +66,13 @@ export class TransferMoneyComponent implements OnInit{
     console.log(this._amount, this.type, "user id: 1");
     if(this.type == "b"){
       console.log("Add money from bank");
-       this.service.accountToWallet(1,1,1).subscribe(data => {
+       this.service.accountToWallet(this.typeId,1,this._amount).subscribe(data => {
          console.log(data);
        })
     } 
     else {
       console.log("Add money from card");
-      this.service.cardToWallet(1,1,1).subscribe(data => {
+      this.service.cardToWallet(this.typeId,1,this._amount).subscribe(data => {
         console.log(data);
       })
     }
@@ -96,10 +98,24 @@ export class TransferMoneyComponent implements OnInit{
   displayAccounts(){
     this.user_service.getUserAccounts(1).subscribe(data => {
       console.log(data);
+      for(let i = 0; i < data.length; i++){
+        let bacct = {} as bankAccount;
+        bacct.acctNum = data[i]['accountNumber'];
+        bacct.balance = data[i]['balance'];
+        bacct.bankAcctId = data[i]['id'];
+        this.bankList.push(bacct);
+      }
+      console.log(this.bankList);
     });
   }
 
   setCard(id : any){
-    console.log(id);
+    this.typeId = id;
+    console.log(this.typeId);
+  }
+
+  setBAcct(id : any){
+    this.typeId = id;
+    console.log(this.typeId);
   }
 }

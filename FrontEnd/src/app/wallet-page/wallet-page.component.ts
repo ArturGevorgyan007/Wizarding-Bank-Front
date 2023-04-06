@@ -39,6 +39,14 @@ export class WalletPageComponent implements OnInit{
   displayAccounts(){
     this.service.getUserAccounts(1).subscribe(data => {
       console.log(data);
+      for(let i = 0; i < data.length; i++){
+        let bacct = {} as bankAccount;
+        bacct.acctNum = data[i]['accountNumber'];
+        bacct.balance = data[i]['balance'];
+        bacct.bankAcctId = data[i]['id'];
+        this.bankList.push(bacct);
+      }
+      console.log(this.bankList);
     });
   }
 
