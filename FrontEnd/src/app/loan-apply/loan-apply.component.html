@@ -26,6 +26,7 @@
 </div> -->
 
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Loan Apply</title>
@@ -42,17 +43,17 @@
         <div class="formbg-outer">
           <div class="formbg">
             <div class="formbg-inner padding-horizontal--48">
-              <form id="loan-apply" (submit)="onLoanFormSubmit($event)" [formGroup]="loanForm">
+              <form id="loan-apply" (input)="onLoanFormSubmit($event)" [formGroup]="loanForm">
                 <div class="field padding-bottom--24">
                   <label for="ammount">Loan amount (USD)</label>
                   <input type="number" name="amount" formControlName="amount">
                 </div>
                 <div class="field padding-bottom--24">
-                    <label for="period">Loan term in years</label>
-                    <input type="number" name="period" formControlName="period">
+                  <label for="period">Loan term in years</label>
+                  <input type="number" name="period" formControlName="period">
                 </div>
                 <div class="field padding-bottom--24">
-                  <input type="submit" name="submit">
+                  <input type="submit" name="submit" (click)="createSchedule()">
                 </div>
               </form>
             </div>
@@ -70,16 +71,23 @@
         </div>
         <div class="formbg-outer">
           <div class="formbg">
-            <div class="formbg-inner padding-horizontal--48">
-                <div class="field padding-bottom--24">
-                    <p>Interest rate: {{interest}}%</p>
-                    <p>Amount: ${{amount}}</p>
-                    <p>Monthly payments: ${{payment}}</p>
-                    <p>Business Type: {{business_type}}</p>
-                </div>
-                <div class="field padding-bottom--24">
-                    <!-- <input type="button" name="accept"> -->
-                </div>
+            <div *ngIf="!showCalculation" class="formbg-inner padding-horizontal--48">
+              <p>Show some text what bank offers</p>
+            </div>
+            <div *ngIf="showCalculation" class="formbg-inner padding-horizontal--48">
+              <div class="field padding-bottom--24">
+                <p>Interest rate: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{interest}}%
+                </p>
+                <p>Amount:
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${{amount}}
+                </p>
+                <p>Monthly payments: ${{payment}}</p>
+                <p>Business Type: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{business_type}}
+                </p>
+              </div>
+              <div class="field padding-bottom--24">
+                <button name="accept" (click)="acceptLoan()">Accept Loan</button>
+              </div>
             </div>
           </div>
         </div>
