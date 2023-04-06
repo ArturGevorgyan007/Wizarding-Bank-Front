@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserDataService {
+  addUser(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   public email: any;
   public Id: any;
   constructor(private http: HttpClient) { }
@@ -31,10 +34,9 @@ export class UserDataService {
     return this.http.get("http://localhost:5092/Business/busId/" + email) as Observable<number>;
   }
   
-  public getUserAccounts(Id : number): Observable<Array<any>>{
+  public getUserAccounts(userId : number): Observable<Array<any>>{
     let qparams = new HttpParams()
-    .set('Id', Id/*this.Id*/)
+    .set('id', userId/*this.Id*/)
     return this.http.get("http://localhost:5092/" + 'Account/UserAccounts', {params:qparams}) as Observable<Array<any>>;
   }
 }
-

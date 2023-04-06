@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoanApplyComponent } from './loan-apply/loan-apply.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransferPageComponent } from './transfer-page/transfer-page.component';
+import { WalletPageComponent } from './wallet-page/wallet-page.component';
+import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +25,16 @@ import { TransferPageComponent } from './transfer-page/transfer-page.component';
     NavbarComponent,
     ViewAllTransactionsComponent,
     LoanApplyComponent,
-    TransferPageComponent
+    TransferPageComponent,
+    WalletPageComponent,
+    TransferMoneyComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AuthModule.forRoot({
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
