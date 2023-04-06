@@ -36,7 +36,7 @@ export class UserDataService {
   
   public getUserAccounts(userId : number): Observable<Array<any>>{
     let qparams = new HttpParams()
-    .set('userId', userId/*this.Id*/)
+    .set('id', userId/*this.Id*/)
     return this.http.get("http://localhost:5092/" + 'Account/UserAccounts', {params:qparams}) as Observable<Array<any>>;
   }
 }
