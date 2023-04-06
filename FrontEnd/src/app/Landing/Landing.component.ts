@@ -7,6 +7,7 @@ import jwtDecode from 'jwt-decode';
 import { UserDataService } from '../user-data.service';
 import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
+
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',

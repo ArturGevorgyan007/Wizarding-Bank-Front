@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { UserDataService } from '../user-data.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,10 +10,12 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private cookieService: CookieService, private authService: AuthService, private userData: UserDataService) { }
+  constructor(private cookieService: CookieService, private authService: AuthService, private userData: UserDataService, private router : Router) { }
   Logout(): void {
     this.cookieService.set('userType', '')
     this.cookieService.set('email', '')
     this.authService.logout()
   }
+  goToWallet(){
+    this.router.navigateByUrl('Wallet');
 }

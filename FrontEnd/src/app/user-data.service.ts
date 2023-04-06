@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -6,9 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserDataService {
+  addUser(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   public email: any;
   public Id: any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient){}
   public getUser(): string {
     return this.email;
   }
@@ -21,11 +24,29 @@ export class UserDataService {
   public getUserId(): number {
     return this.Id
   }
+  public getUserCards(userId : number): Observable<Array<any>>{
+    let qparams = new HttpParams()
+    .set('userId', userId/*this.Id*/)
+    return this.http.get("http://localhost:5092/" + 'Card/User', {params:qparams}) as Observable<Array<any>>;
+  }
+
   public retrieveBusinessIdFromDB(email: string): Observable<number> {
     return this.http.get("http://localhost:5092/Business/busId/" + email) as Observable<number>;
   }
 
+
   public retrieveBusinessTypeFromDB(email: string): Observable<string> {
     return this.http.get("http://localhost:5092/Business/busType/" + email) as Observable<string>;
+  
+  public getUserAccounts(userId : number): Observable<Array<any>>{
+    let qparams = new HttpParams()
+    .set('id', userId/*this.Id*/)
+    return this.http.get("http://localhost:5092/" + 'Account/UserAccounts', {params:qparams}) as Observable<Array<any>>;
+  }
+  public retrieveUserIdFromDB(email: string): Observable<number> {
+    return this.http.get("http://localhost:5092/user/byEmail/" + this.email) as Observable<number>;
+  }
+  public getUserId(): number {
+    return this.Id
   }
 }
