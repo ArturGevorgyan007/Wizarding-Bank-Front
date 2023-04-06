@@ -1,7 +1,8 @@
 import { Component} from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { TransferService } from '../transfer.service';
+import {  TransferService } from '../transfer.service';
+import { UserDataService } from '../user-data.service';
 
 @Component({
   selector: 'app-transfer-money-component',
@@ -10,7 +11,7 @@ import { TransferService } from '../transfer.service';
 })
 export class TransferMoneyComponent{
 
-  // constructor(private service : TransferService){}
+  constructor(private service : TransferService, private user_service : UserDataService){}
 
   display = true;
   displayAdd = false;
@@ -48,15 +49,15 @@ export class TransferMoneyComponent{
     console.log(this._amount, this.type, "user id: 1");
     if(this.type == "b"){
       console.log("Add money from bank");
-      // this.service.bankToWallet(1,1,1).subscribe(data => {
-      //   console.log(data);
-      // })
+       this.service.accountToWallet(1,1,1).subscribe(data => {
+         console.log(data);
+       })
     } 
     else {
       console.log("Add money from card");
-      // this.service.cardToWallet(1,1,1).subscribe(data => {
-      //   console.log(data);
-      // })
+      this.service.cardToWallet(1,1,1).subscribe(data => {
+        console.log(data);
+      })
     }
     
   }

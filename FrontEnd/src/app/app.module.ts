@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TransferMoneyComponent } from './transfer-money/transfer-money.componen
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     AuthModule.forRoot({
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
