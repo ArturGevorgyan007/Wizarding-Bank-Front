@@ -55,4 +55,24 @@ export class LoanApplyComponent {
     }
   }
 
+  amountChange(event : Event) {
+    // var tempAmount = this.loanForm.controls['amount'].value
+    // if(tempAmount > Math.floor(tempAmount) && Math.ceil(tempAmount) > tempAmount) { 
+    //   var element = document.getElementById('loan_amount_input');
+    //   if(element?.ariaValueNow) {
+    //     // element.nodeValue = '00'
+    //     console.log("changed")
+    //   }
+    // }
+  }
+
+  // validateNumber(event: any) {
+  //   let input = String.fromCharCode(event.charCode);
+  //   const reg = /^\d*(?:[.,]\d{1,2})?$/;
+
+  //   if (!reg.test(input)) {
+  //     event.preventDefault();
+  //   }
+  // }
+
 }

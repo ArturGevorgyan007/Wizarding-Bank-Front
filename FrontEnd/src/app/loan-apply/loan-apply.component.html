@@ -2,7 +2,7 @@
     <div id="loan_apply_form">
         <form (submit)="onLoanFormSubmit($event)" [formGroup]="loanForm">
             <label for="amount">Amount $</label>
-            <input #amount name="amount" formControlName="amount" value="" type="text" data-type="currency" class="number-separator"/>
+            <input name="amount" id="loan_amount_input" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="myDecimal" formControlName="amount" type="number" step="0.01" (ngModelChange)="amountChange($event)" onkeydown="return event.keyCode !== 69"/>
             <br/>
             <label for="period">Number of years</label>
             <input type="numbee" formControlName="period"/>
