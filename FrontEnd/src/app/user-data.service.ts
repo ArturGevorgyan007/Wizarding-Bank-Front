@@ -11,7 +11,7 @@ export class UserDataService {
   }
   public email: any;
   public Id: any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient){}
   public getUser(): string {
     return this.email;
   }
@@ -38,5 +38,11 @@ export class UserDataService {
     let qparams = new HttpParams()
     .set('id', userId/*this.Id*/)
     return this.http.get("http://localhost:5092/" + 'Account/UserAccounts', {params:qparams}) as Observable<Array<any>>;
+  }
+  public retrieveUserIdFromDB(email: string): Observable<number> {
+    return this.http.get("http://localhost:5092/user/byEmail/" + this.email) as Observable<number>;
+  }
+  public getUserId(): number {
+    return this.Id
   }
 }
