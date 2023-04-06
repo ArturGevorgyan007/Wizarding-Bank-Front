@@ -5,16 +5,22 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { HttpClient } from '@angular/common/http'
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { UserGuard } from './user.guard';
+import {TransferPageComponent} from './transfer-page/transfer-page.component'
+import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
+import { LoanApplyComponent } from './loan-apply/loan-apply.component';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 
 const routes: Routes = [
   { path: 'UserHome', component: UserHomeComponent },
-  { path: '', component: WalletPageComponent },
+  { path: '', component: LandingComponent },
   { path: 'BusinessHome', component: BusinessHomeComponent },
-  { path: 'Wallet', component: WalletPageComponent},
-  { path: 'TransferMoney', component: TransferMoneyComponent}
-];
+  { path: 'UserHome/Transactions', component: ViewAllTransactionsComponent },
+  { path: 'Transfer', component : TransferPageComponent},
+  { path: 'BusinessHome/Loan', component: LoanApplyComponent },
+  { path: 'TransferMoney', component: TransferMoneyComponent},
+  { path: 'Wallet', component: WalletPageComponent}
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
