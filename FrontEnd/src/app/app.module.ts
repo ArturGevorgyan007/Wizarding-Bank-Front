@@ -20,8 +20,11 @@ import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { CookieService } from 'ngx-cookie-service';
+import {cardTransform} from './CardTransformPipe';
+import { SendAndRequestComponent } from './send-and-request/send-and-request.component'
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
+
 
 @NgModule({
   declarations: [
@@ -36,8 +39,11 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
     TransferPageComponent,
     WalletPageComponent,
     TransferMoneyComponent,
+    cardTransform,
+    SendAndRequestComponent,
     UserProfileComponent,
     BusinessProfileComponent
+
   ],
   imports: [
     BrowserModule,

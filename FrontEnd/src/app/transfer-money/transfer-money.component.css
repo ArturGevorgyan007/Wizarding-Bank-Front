@@ -13,6 +13,11 @@ row d-flex justify-content-center{
     margin-left: 150px;
 }
 
+div .cardMT:hover{
+    background-color: #FECE22;
+    border-radius: 5px;
+}
+
 input{
 
     width: 300px;
@@ -71,6 +76,11 @@ button{
 .withBut:focus{
     border-color: #FECE22;
 }
+.withBut:hover{
+    border-color: #FECE22;
+    background-color: #FECE22;
+    border-radius: 15px;
+}
 
 div .bcard:focus {
     border-color: #FECE22;
@@ -94,6 +104,11 @@ div .bacct:focus {
 .bacct:hover{
     background-color: #FECE22;
     border-radius: 5px;
+}
+
+.amtbtn:hover{
+    background-color: #FECE22;
+    border-radius: 15px;
 }
 
 

@@ -16,15 +16,17 @@ export class WalletPageComponent implements OnInit{
   constructor(private route : Router, private service : UserDataService, private cookieService : CookieService){}
 
   _amount : any = ""; 
+  userID : any = "";
   cardList : Card[] = [];
   bankList : bankAccount[] = [];
   userId = this.cookieService.get('userId');
 
 
   ngOnInit(): void {
-    this.getCurrentAmount();
-    this.displayAccounts();
-    this.displayCards();
+    this.userID = parseInt(this.cookieService.get('userId')) ;
+    this.getCurrentAmount(this.userID);
+    this.displayAccounts(this.userID);
+    this.displayCards(this.userID);
   }
 
   linkCardorAcct(){}
@@ -34,13 +36,16 @@ export class WalletPageComponent implements OnInit{
     this.route.navigateByUrl('TransferMoney');
   }
 
-  getCurrentAmount(){
+  getCurrentAmount(id : any){
     //getWalletBalance
-    this._amount = 10;
+    this.service.getWalletBalance(id).subscribe(data => {
+      console.log(data);
+      this._amount = data['wallet'];
+    });
   }
 
-  displayAccounts(){
-    this.service.getUserAccounts(1).subscribe(data => {
+  displayAccounts(id : any){
+    this.service.getUserAccounts(id).subscribe(data => {
       console.log(data);
       for(let i = 0; i < data.length; i++){
         let bacct = {} as bankAccount;
@@ -53,8 +58,8 @@ export class WalletPageComponent implements OnInit{
     });
   }
 
-  displayCards(){
-    this.service.getUserCards(1).subscribe(data => {
+  displayCards(id : any){
+    this.service.getUserCards(id).subscribe(data => {
       console.log(data);
       for(let i = 0; i < data.length; i++){
         let card = {} as Card; 

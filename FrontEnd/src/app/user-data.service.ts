@@ -63,4 +63,8 @@ export class UserDataService {
     
     return this.http.put("http://localhost:5092/Business/Update", businessObj) as Observable<Array<any>>;
   }
+
+  public getWalletBalance(userId : number): Observable<any>{
+    return this.http.get("http://localhost:5092/user/" + userId) as Observable<any>;
+  }
 }

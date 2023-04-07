@@ -21,7 +21,7 @@ export class TransferService {
       "recipientId": userId,
       "amount": amount
     };
-    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transactions/internal?type=3', body) as Observable<any>; 
   }
   
   //wallet-to-card
@@ -29,9 +29,9 @@ export class TransferService {
     var body : Transaction = {
       "senderId": userId,
       "cardId": cardId,
-      "amount": amount
+      "amount": amount,
     };
-    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transactions/internal?type=2', body) as Observable<any>; 
   }
 
   //bankAccount-to-wallet
@@ -41,7 +41,7 @@ export class TransferService {
       "recipientId": userId,
       "amount": amount
     };
-    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transactions/internal?type=4', body) as Observable<any>; 
   }
 
   //wallet-to-bankAccount
@@ -51,7 +51,7 @@ export class TransferService {
       "senderId": userId,
       "amount": amount
     };
-    return this.http.post(this.apiRoot + 'Transaction', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transactions/internal?type=1', body) as Observable<any>; 
   }
   
 }
