@@ -1,10 +1,12 @@
 import { Component,OnInit } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TransferService } from '../transfer.service';
 import { UserDataService } from '../user-data.service';
-import {of} from 'rxjs'
+import {of, firstValueFrom, pipe} from 'rxjs'
 import { CookieService } from '../../../node_modules/ngx-cookie-service';
+
 @Component({
   selector: 'app-transfer-page',
   templateUrl: './transfer-page.component.html',
@@ -15,8 +17,10 @@ export class TransferPageComponent implements OnInit{
   constructor(private cookieSerive : CookieService, private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
   UID = parseInt(this.cookieSerive.get('userId')) 
   
+  transaction : string;
   cards : any[];
   banks : any[];
+  walletamt : number;
   showselected : boolean = false;
   selected : string;
 
@@ -65,21 +69,47 @@ export class TransferPageComponent implements OnInit{
     if(this.cardForm.valid) {
       let A = this.cardForm.value['cardAmount'];
       let C = parseInt(this.selected)
-      
-      this.api.walletToCard(this.UID, C, A).subscribe(data => console.log(data));
+
+
+           //get wallet balance
+           this.userData.getWalletBalance(this.UID).subscribe(data => {
+            if (data == null ){}
+            else{
+              this.walletamt = data['wallet']; 
+              if(this.walletamt >= A){
+                this.api.walletToCard(this.UID, C, A).subscribe(data => {if(data != null) this.transaction = data['amount']});
+
+              }
+              else alert('Not enough money')
+            }     
+          });
+
     }
   }
 
 
-  processBankForm(e: Event) : void {
+  async processBankForm(e: Event) : Promise<void> {
     e.preventDefault();
     this.bankForm.markAllAsTouched();
     if(this.bankForm.valid) {
       let A = this.bankForm.value['bankAmount']; 
-      let B = parseInt(this.selected)     
+      let B = parseInt(this.selected)   
 
-      //walletToCard(userId : number, cardId : number, amount : number)
-      this.api.walletToAccount(this.UID, B, A).subscribe(data => console.log(data));
+      // get wallet balance
+      this.userData.getWalletBalance(this.UID).subscribe(data => {
+        if (data == null ){}
+            else{
+              this.walletamt = data['wallet']; 
+              if(this.walletamt >= A){
+                this.api.walletToAccount(this.UID, B, A).subscribe(data => {if(data != null) this.transaction = data['amount']});
+              }
+              else alert('Not enough money') 
+            }
+      
+      });
+
+      
+
     }
 
   }
@@ -94,3 +124,4 @@ export class TransferPageComponent implements OnInit{
   }
 
 }
+

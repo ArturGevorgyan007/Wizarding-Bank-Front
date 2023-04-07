@@ -25,14 +25,14 @@
   
             <!--  card info-->
             <div id="nav-tab-card" class="tab-pane fade" [ngClass]="mode === 'card' ? 'show active' : ''" (click)="unselect()">
-                <table>
+              <span *ngIf="transaction">${{transaction}} was moved successfully</span>  
+              <table>
                     <thead>
                         <th>Card ID</th>
-                        <th></th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of cards">
-                            <button (click)="select($event, i.id, 'card')" class="selected-input"><td>{{i.cardNumber}}</td></button>
+                            <button (click)="select($event, i.id, 'card')" class="selected-input"><td>{{i.cardNumber | cardTransform}}</td></button>
                             <td></td>
                         </tr>
                     </tbody>
@@ -52,14 +52,15 @@
   
             <!-- Bank Account Infromation-->
             <div id="nav-tab-bank" class="tab-pane fade" [ngClass]="mode === 'bank' ? 'show active' : ''" (click)="unselect()">
-                <table>
+              <span *ngIf="transaction">${{transaction}} was moved successfully</span>   
+              <table>
                     <thead>
                         <th>Bank ID</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of banks">
-                            <button (click)="select($event, i.id, 'bank')" class="selected-input"><td>{{i.accountNumber}}</td></button> 
+                            <button (click)="select($event, i.id, 'bank')" class="selected-input"><td>{{i.accountNumber | cardTransform}}</td></button> 
                             <td></td>
                         </tr>
                     </tbody>
