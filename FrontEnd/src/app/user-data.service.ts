@@ -44,4 +44,23 @@ export class UserDataService {
     return this.http.get("http://localhost:5092/" + 'Account/UserAccounts', { params: qparams }) as Observable<Array<any>>;
   }
 
+  public getFullPersonalUser(userId : number): Observable<Array<any>>{
+  
+    return this.http.get("http://localhost:5092/user/"+ userId) as Observable<Array<any>>;
+  }
+
+  public updateUserProfile(userObj : any): Observable<Array<any>>{
+
+    return this.http.put("http://localhost:5092/user/update", userObj) as Observable<Array<any>>;
+  }
+
+  public getFullBusinessUser(businessId : number): Observable<Array<any>>{
+  
+    return this.http.get("http://localhost:5092/Business/bus/"+ businessId) as Observable<Array<any>>;
+  }
+
+  public updateBusinessProfile(businessObj : any): Observable<Array<any>>{
+    
+    return this.http.put("http://localhost:5092/Business/Update", businessObj) as Observable<Array<any>>;
+  }
 }

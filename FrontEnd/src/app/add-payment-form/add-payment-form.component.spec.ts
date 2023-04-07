@@ -7,6 +7,7 @@ import { UserDataService } from '../user-data.service';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserHomeComponent } from '../user-home/user-home.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 describe('AddPaymentFormComponent', () => {
@@ -14,6 +15,7 @@ describe('AddPaymentFormComponent', () => {
   let fixture: ComponentFixture<AddPaymentFormComponent>;
   let pfs : PaymentFormService;
   let uds : UserDataService;
+  let cookie : CookieService;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AddPaymentFormComponent ],
@@ -24,6 +26,7 @@ describe('AddPaymentFormComponent', () => {
     })
     .compileComponents();
 
+    cookie = TestBed.inject(CookieService);
     uds = TestBed.inject(UserDataService);
     pfs = TestBed.inject(PaymentFormService);
     fixture = TestBed.createComponent(AddPaymentFormComponent);
@@ -34,11 +37,17 @@ describe('AddPaymentFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should ngOnInit', () => {
+  it('should ngOnInit Personal', () => {
     uds.email = "123@123.com";
-    spyOn(uds, 'retrieveUserIdFromDB').and.returnValue(of(1));
+    cookie.set('userType', 'Personal');
     component.ngOnInit();
-    expect(uds.Id).toBe(1);
+    expect(cookie.get('userType')).toBe('Personal');
+  });
+  it('should ngOnInit Business', () => {
+    uds.email = "123@123.com";
+    cookie.set('userType', 'Business');
+    component.ngOnInit();
+    expect(cookie.get('userType')).toBe('Business');
   });
 
   it('should toggle mode', () => {

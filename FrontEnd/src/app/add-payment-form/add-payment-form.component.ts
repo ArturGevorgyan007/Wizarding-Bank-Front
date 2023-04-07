@@ -5,6 +5,7 @@ import { Card } from '../Interfaces/Card';
 import { Account } from '../Interfaces/Account';
 import { PaymentFormService } from '../add-payment-form.service';
 import { UserDataService } from '../user-data.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-payment-form',
@@ -15,15 +16,32 @@ import { UserDataService } from '../user-data.service';
 export class AddPaymentFormComponent implements OnInit{
   mode : string = "credit";
 
-  constructor(private router: Router, private fb: FormBuilder, private pfs: PaymentFormService, private uds: UserDataService){}
+  constructor(private router: Router, private fb: FormBuilder, private pfs: PaymentFormService, private uds: UserDataService, private cookie: CookieService){}
 
   ngOnInit(): void {
-    this.uds.getUser();
-    this.uds.retrieveUserIdFromDB(this.uds.getUser()).subscribe(data => {
-      this.uds.Id = data;
-      this.CardModel.UserId = this.uds.Id;
-      this.AccModel.UserId = this.uds.Id;
-    });
+    if (this.cookie.get('userType') === 'Personal') {
+      console.log('Personal');
+      this.uds.getUser();
+      this.uds.retrieveUserIdFromDB(this.uds.getUser()).subscribe(data => {
+        this.uds.Id = data;
+        this.CardModel.UserId = this.uds.Id;
+        this.AccModel.UserId = this.uds.Id;
+      });
+    }
+    else if (this.cookie.get('userType') === 'Business') {
+      console.log('Business');
+      this.uds.getUser();
+      this.uds.retrieveBusinessIdFromDB(this.uds.getUser()).subscribe(data => {
+        this.uds.Id = data;
+        this.CardModel.BusinessId = this.uds.Id;
+        this.AccModel.BusinessId = this.uds.Id;
+      });
+    }
+  }
+
+  navigate() : void {
+    if (this.cookie.get('userType') === 'Personal') { this.router.navigate(['/UserHome']); }
+    else if (this.cookie.get('userType') === 'Business') {this.router.navigate(['/BusinessHome']); }
   }
 
   toggleMode(mode : string) : void {
@@ -45,7 +63,7 @@ export class AddPaymentFormComponent implements OnInit{
         this.pfs.addCard(this.CardModel).subscribe(
           data => {
             console.log(data);
-            this.router.navigate(['/UserHome']);
+            this.navigate();
           },
           error => {
             console.log(error);
@@ -57,7 +75,7 @@ export class AddPaymentFormComponent implements OnInit{
         this.pfs.addAccount(this.AccModel).subscribe(
           data => {
             console.log(data);
-            this.router.navigate(['/UserHome']);
+            this.navigate();
           },
           error => {
             console.log(error);
