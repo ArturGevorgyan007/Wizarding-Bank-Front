@@ -11,14 +11,16 @@ body {
     background:rgb(175, 185, 32);
     box-shadow: none;
     border: none;
-    margin-right:250px;
-    margin-left: 1px
+    margin-right:20%;
+    margin-left: 1%
 }
 
 .exit-button {
     background:rgb(255, 0, 0);
     box-shadow: none;
-    border: none
+    border: none;
+    margin-right: 10%;
+    margin-left: 1%;
 }
 
 .profile-button:hover {

@@ -19,7 +19,8 @@ export class AddPaymentFormComponent implements OnInit{
   constructor(private router: Router, private fb: FormBuilder, private pfs: PaymentFormService, private uds: UserDataService, private cookie: CookieService){}
 
   ngOnInit(): void {
-    if (this.cookie.get('userType') == 'Personal') {
+    if (this.cookie.get('userType') === 'Personal') {
+      console.log('Personal');
       this.uds.getUser();
       this.uds.retrieveUserIdFromDB(this.uds.getUser()).subscribe(data => {
         this.uds.Id = data;
@@ -27,7 +28,8 @@ export class AddPaymentFormComponent implements OnInit{
         this.AccModel.UserId = this.uds.Id;
       });
     }
-    else if (this.cookie.get('userType') == 'Business') {
+    else if (this.cookie.get('userType') === 'Business') {
+      console.log('Business');
       this.uds.getUser();
       this.uds.retrieveBusinessIdFromDB(this.uds.getUser()).subscribe(data => {
         this.uds.Id = data;
@@ -35,6 +37,11 @@ export class AddPaymentFormComponent implements OnInit{
         this.AccModel.BusinessId = this.uds.Id;
       });
     }
+  }
+
+  navigate() : void {
+    if (this.cookie.get('userType') === 'Personal') { this.router.navigate(['/UserHome']); }
+    else if (this.cookie.get('userType') === 'Business') {this.router.navigate(['/BusinessHome']); }
   }
 
   toggleMode(mode : string) : void {
@@ -56,7 +63,7 @@ export class AddPaymentFormComponent implements OnInit{
         this.pfs.addCard(this.CardModel).subscribe(
           data => {
             console.log(data);
-            this.router.navigate(['/UserHome']);
+            this.navigate();
           },
           error => {
             console.log(error);
@@ -68,7 +75,7 @@ export class AddPaymentFormComponent implements OnInit{
         this.pfs.addAccount(this.AccModel).subscribe(
           data => {
             console.log(data);
-            this.router.navigate(['/UserHome']);
+            this.navigate();
           },
           error => {
             console.log(error);
