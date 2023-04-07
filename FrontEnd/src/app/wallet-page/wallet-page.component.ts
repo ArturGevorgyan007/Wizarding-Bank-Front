@@ -40,7 +40,7 @@ export class WalletPageComponent implements OnInit{
     //getWalletBalance
     this.service.getWalletBalance(id).subscribe(data => {
       console.log(data);
-      this._amount = data[0]['wallet'];
+      this._amount = data['wallet'];
     });
   }
 
