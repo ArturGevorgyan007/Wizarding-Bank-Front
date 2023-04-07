@@ -103,6 +103,16 @@
           </div>
         </div>
 
+        <div class="alert" *ngIf="success">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{message}}
+        </div>
+
+        <div class="success" *ngIf="success">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{message}}
+        </div>
+
           <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="cardDsiplay" #cards>
             <div class="d-flex flex-row pb-3" style="padding-left: 220px; padding-right: 220px;" *ngFor="let card of cardList">
               <div class = "bcard" tabindex="3" style="width:100%">
@@ -120,6 +130,8 @@
                 </div> -->
             </div>
           </div>
+
+          
         
           <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="bankDisplay">
             <div class="d-flex flex-row pb-3" style="padding-left: 220px; padding-right: 220px;" *ngFor="let bank of bankList">
