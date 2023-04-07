@@ -1,0 +1,14 @@
+<h1>Send Money</h1>
+
+<p>Please enter your desired person's email</p>
+<form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+  <label>
+    Recipient:
+    <label >Email</label>
+    <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
+    <label >Amount</label>
+    <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
+  </label>
+  <br><br>
+  <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
+</form>

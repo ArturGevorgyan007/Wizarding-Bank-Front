@@ -10,6 +10,7 @@ import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-t
 import { LoanApplyComponent } from './loan-apply/loan-apply.component';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
+import { SendAndRequestComponent } from './send-and-request/send-and-request.component';
 
 const routes: Routes = [
   { path: 'UserHome', component: UserHomeComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'Transfer', component : TransferPageComponent},
   { path: 'BusinessHome/Loan', component: LoanApplyComponent },
   { path: 'TransferMoney', component: TransferMoneyComponent},
-  { path: 'Wallet', component: WalletPageComponent}
+  { path: 'Wallet', component: WalletPageComponent},
+  {path: 'SendAndRequest', component : SendAndRequestComponent} 
 ]
 
 @NgModule({

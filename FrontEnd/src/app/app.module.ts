@@ -16,7 +16,8 @@ import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { CookieService } from 'ngx-cookie-service';
-import {cardTransform} from './CardTransformPipe'
+import {cardTransform} from './CardTransformPipe';
+import { SendAndRequestComponent } from './send-and-request/send-and-request.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {cardTransform} from './CardTransformPipe'
     TransferPageComponent,
     WalletPageComponent,
     TransferMoneyComponent,
-    cardTransform
+    cardTransform,
+    SendAndRequestComponent
     
   ],
   imports: [
