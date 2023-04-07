@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-loan-apply',
@@ -16,7 +17,7 @@ import html2canvas from 'html2canvas';
 })
 export class LoanApplyComponent implements OnInit {
 
-  constructor(private router: Router, private loanService: LoanServicesService, private formBuilder: FormBuilder, private userData: UserDataService, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, private loanService: LoanServicesService, private formBuilder: FormBuilder, private userData: UserDataService, private cookieService: CookieService) { }
   loan: Loan = {
     id: 0,
     interestRate: 0,
@@ -58,11 +59,20 @@ export class LoanApplyComponent implements OnInit {
   showCalculation: boolean = false;
   schedule: Array<LoanSchedule> = []
 
+  loanDate: Date;
+
   ngOnInit() {
     this.getCurrentLoan().subscribe(data => {
       this.existingLoan = data as Loan;
+      var newdate = new Date(this.existingLoan.loanPaid)
+      newdate.setMonth(newdate.getMonth() + 1)
+      this.existingLoan.loanPaid = newdate;
+
+
     });
   }
+
+
 
   getCurrentLoan(): Observable<any> {
     return this.loanService.getLoan(this.cookieService.get("userId") as unknown as number);
@@ -102,46 +112,56 @@ export class LoanApplyComponent implements OnInit {
   }
 
   toggle() {
-    this.showCalculation = true;
+    if (this.loanForm.valid) {
+      this.showCalculation = true;
+    }
   }
 
 
   createSchedule() {
-    let dateincriment = 0
-    let balance = this.amount
-    let totInterest = 0
-    let inter = parseFloat((this.amount * this.interest / 100 / 12).toFixed(2))
-    let payment = this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0)*(-1)
-    this.schedule=[]
+    if (this.loanForm.valid) {
 
-    while (true) {
-      inter = balance * this.interest / 100 / 12
-      balance = balance - payment + inter
+      let dateincriment = 1
+      let balance = this.amount
+      let totInterest = 0
+      let inter = parseFloat((this.amount * this.interest / 100 / 12).toFixed(2))
+      let payment = this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0) * (-1)
+      this.schedule = []
 
-      let date : Date = new Date()
-      date.setMonth(date.getMonth()+dateincriment)
-      let data: LoanSchedule = {
-        date: date,
-        payment: parseFloat(payment.toFixed(2)),
-        interest: parseFloat(inter.toFixed(2)),
-        principal: parseFloat((payment - inter).toFixed(2)),
-        balance: parseFloat(balance.toFixed(2)),
-        totalInterest: parseFloat((totInterest + inter).toFixed(2)),
+      while (true) {
+        inter = balance * this.interest / 100 / 12
+        balance = balance - payment + inter
+
+        let date: Date = new Date()
+        date.setMonth(date.getMonth() + dateincriment)
+        let data: LoanSchedule = {
+          date: date,
+          payment: parseFloat(payment.toFixed(2)),
+          interest: parseFloat(inter.toFixed(2)),
+          principal: parseFloat((payment - inter).toFixed(2)),
+          balance: parseFloat(balance.toFixed(2)),
+          totalInterest: parseFloat((totInterest + inter).toFixed(2)),
+        }
+        dateincriment++
+        if (balance < 0)
+          break;
+
+        totInterest = data.totalInterest
+        this.schedule.push(data)
+        console.log(data, date)
       }
-      dateincriment++
-      if (balance < 0)
-        break;
-
-      totInterest = data.totalInterest
-      this.schedule.push(data)
-      console.log(data, date)
+    }
+    else {
+      this.interest = 0;
+      this.amount = 0;
+      this.payment = 0;
+      this.business_type = ''
+      this.showCalculation = false
     }
   }
 
   onLoanFormSubmit(event: Event) {
     if (this.loanForm.valid) {
-      // this.createSchedule();
-      // this.toggle();
       this.userData.retrieveBusinessTypeFromDB(this.cookieService.get('email')).subscribe((data: string) => {
         if (data) {
           this.business_type = data;
@@ -178,11 +198,11 @@ export class LoanApplyComponent implements OnInit {
     }
   }
   acceptLoan(): any {
-    this.loan.interestRate = this.interest
-    this.loan.businessId = this.cookieService.get('userId')
-    this.loan.amount = this.loanForm.controls['amount'].value
-    this.loan.monthlyPay = this.payment,
-      this.loan.dateLoaned = new Date()
+    this.loan.interestRate = this.interest;
+    this.loan.businessId = this.cookieService.get('userId');
+    this.loan.amount = this.loanForm.controls['amount'].value;
+    this.loan.monthlyPay = this.payment;
+    this.loan.dateLoaned = new Date();
     this.loan.loanPaid = this.getPayoffDate(this.loanForm.controls['period'].value * 365)
     this.loanService.addNewLoan(this.loan)
       .subscribe(data => {
@@ -194,7 +214,6 @@ export class LoanApplyComponent implements OnInit {
     this.monthlyAmountButton = true;
     this.customAmountButton = false;
     this.fullAmountButton = false;
-    // this.payLoanForm.controls['amount'].value = this.loan.monthlyPay
   }
 
   toggleCustomBill() {
@@ -207,7 +226,6 @@ export class LoanApplyComponent implements OnInit {
     this.monthlyAmountButton = false;
     this.customAmountButton = false;
     this.fullAmountButton = true;
-    // this.payLoanForm.controls['amount'].value = this.loan.amount
   }
 
   toggleAllBillButtons() {
@@ -217,31 +235,35 @@ export class LoanApplyComponent implements OnInit {
   }
 
   payLoan(amount: number): any {
-    //this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number);
-    this.loanService.makePayment(amount, this.cookieService.get("userId") as unknown as number).subscribe(data => {
+    let principle = (this.existingLoan.amount - this.existingLoan.amountPaid) * (this.existingLoan.interestRate / 100)
+    this.loanService.makePayment(principle, this.cookieService.get("userId") as unknown as number, amount).subscribe(data => {
+      console.log(data);
+      location.reload();
+    });
+  }
+  payFullLoan(): any {
+    this.loanService.makePayment((this.existingLoan.amount - this.existingLoan.amountPaid), this.cookieService.get("userId") as unknown as number, (this.existingLoan.amount - this.existingLoan.amountPaid)).subscribe(data => {
       console.log(data);
       location.reload();
     });
   }
   payCustomLoan(): any {
-    //this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number);
-    this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number).subscribe(data => {
+
+    this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number, this.payLoanForm.controls['payAmount'].value).subscribe(data => {
       console.log(data);
       location.reload();
     });
   }
 
-  exportAsPDF()
-    {
-        let data = document.getElementById('pdf');  
-        html2canvas(data!).then(canvas => {
-        const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
-        let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
-        // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
-        pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);  
-        pdf.save('Filename.pdf');   
-      }); 
-    }
+  exportAsPDF() {
+    let data = document.getElementById('pdf');
+    html2canvas(data!).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
+      let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
+      pdf.save('Filename.pdf');
+    });
+  }
 
 
 }

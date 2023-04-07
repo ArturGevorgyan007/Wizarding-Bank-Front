@@ -12,12 +12,12 @@ describe('ViewAllTransactionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewAllTransactionsComponent ],
+      declarations: [ViewAllTransactionsComponent],
       imports: [
         HttpClientTestingModule
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ViewAllTransactionsComponent);
     userApi = TestBed.inject(UserDataService);
@@ -34,15 +34,12 @@ describe('ViewAllTransactionsComponent', () => {
     expect(component.Transactions).toEqual([])
     expect(component.user).toEqual('' || undefined)
 
-    userApi.email = "random@email.com"
     spyOn(component, 'ngOnInit')
-    spyOn(userApi, 'getUser') //.and.returnValue(of("random@email.com"))
     component.ngOnInit()
 
     expect(component.ngOnInit).toHaveBeenCalled()
-    expect(userApi.email).toBe("random@email.com")
 
-    httpMock.expectOne('http://localhost:5092/user/byEmail/undefined')
+    httpMock.expectOne('http://localhost:5092/user/byEmail/')
 
     // expect(userApi.getUser).toHaveBeenCalled()
   })

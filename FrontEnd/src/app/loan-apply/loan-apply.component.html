@@ -2,7 +2,8 @@
   <ng-container *ngIf="existingLoan.id > 0">
     <div class="row" id="payLoanDiv">
       <div class="row">
-        <h1>Remaining Loan: {{existingLoan.amount - existingLoan.amountPaid}}</h1>
+        <h1>Remaining Loan: {{(existingLoan.amount - existingLoan.amountPaid) | number:'1.0-2'}}</h1>
+        <p>Monthly Payment Due On: {{existingLoan.loanPaid | date: 'shortDate'}}</p>
       </div>
       <form>
         <div class="col"><span>
@@ -11,7 +12,7 @@
               (click)="toggleMonthlyBill()" />
           </span></div>
         <div class="col"><span>
-            <label for="userAmountButton">Custom amount</label>
+            <label for="userAmountButton">Pay to Principle:</label>
             <input type="radio" [checked]="customAmountButton" name="userAmountButton" value="Enter Amount"
               (click)="toggleCustomBill()">
           </span></div>
@@ -40,7 +41,8 @@
         </div>
         <div>
           <ng-container *ngIf="fullAmountButton">
-            <button>Pay Full Bill</button>
+            <button (click)="payFullLoan()">Pay Full Bill</button>
+
           </ng-container>
         </div>
 
@@ -61,11 +63,11 @@
                 <form id="loan-apply" (input)="onLoanFormSubmit($event)" [formGroup]="loanForm">
                   <div class="field padding-bottom--24">
                     <label for="ammount">Loan amount (USD)</label>
-                    <input type="number" name="amount" formControlName="amount">
+                    <input type="number" name="amount" formControlName="amount" required>
                   </div>
                   <div class="field padding-bottom--24">
                     <label for="period">Loan term in years</label>
-                    <input type="number" name="period" formControlName="period">
+                    <input type="number" name="period" formControlName="period" required>
                   </div>
                   <div class="field padding-bottom--24">
                     <input type="submit" name="submit" (click)="createSchedule()" (click)="toggle()">
@@ -77,7 +79,7 @@
         </div>
       </div>
     </div>
-  
+
 
     <div class="login-root split2 right col-sm">
       <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
@@ -102,7 +104,7 @@
                   <p>Business Type: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{business_type}}
                   </p>
                 </div>
-                <div class="field padding-bottom--24">
+                <div class="field padding-bottom--24" *ngIf="!existingLoan.amount">
                   <button type="submit" name="accept" (click)="acceptLoan()" style="border: none">Accept Loan</button>
                 </div>
               </div>
@@ -151,8 +153,6 @@
       </div>
     </div>
   </div>
-  <button class="field button1" (click)="exportAsPDF()" *ngIf="showCalculation" style="border: none">Download the schedule</button>
+  <button class="field button1" (click)="exportAsPDF()" *ngIf="showCalculation" style="border: none">Download the
+    schedule</button>
 </div>
-
-
-

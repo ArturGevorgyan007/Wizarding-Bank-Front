@@ -15,7 +15,6 @@ export class ViewAllTransactionsComponent implements OnInit {
   constructor(private cookieService: CookieService, private userData: UserDataService, private _transactions: TransactionHistoryService) { }
 
   ngOnInit(): void {
-    // if (this.cookieService.get('userType') == 'Personal') {
     this.userData.retrieveUserIdFromDB(this.cookieService.get('email')).subscribe(x => {
       this.userData.Id = x;
       this.user = this.cookieService.get('email');
@@ -23,17 +22,6 @@ export class ViewAllTransactionsComponent implements OnInit {
         this.Transactions = w;
       })
     })
-    // }
-    // else {
-    //   this.userData.retrieve(this.cookieService.get('email')).subscribe(x => {
-    //     this.userData.Id = x;
-    //     this.user = this.cookieService.get('email');
-    //     this._transactions.getTransactions(x).subscribe(w => {
-    //       this.Transactions = w;
-    //     })
-    //   })
-    // }
   }
 
 }
-
