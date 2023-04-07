@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'UserHome/Transactions', component: ViewAllTransactionsComponent },
   { path: 'Transfer', component: TransferPageComponent },
   { path: 'BusinessHome/Loan', component: LoanApplyComponent },
-  {path: 'SendAndRequest', component : SendAndRequestComponent} 
+  { path: 'SendAndRequest', component: SendAndRequestComponent },
   { path: 'TransferMoney', component: TransferMoneyComponent },
   { path: 'Wallet', component: WalletPageComponent },
   { path: 'UserHome/Profile', component: UserProfileComponent },
