@@ -103,14 +103,14 @@
           </div>
         </div>
 
-        <div class="alert" *ngIf="success">
+        <div class="alert" *ngIf="messagecall1">
           <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
             {{message}}
         </div>
 
-        <div class="success" *ngIf="success">
+        <div class="success" *ngIf="messagecall">
           <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            {{message}}
+           <span style="font-weight: bold;"> SUCCESS! </span> {{message}} 
         </div>
 
           <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="cardDsiplay" #cards>

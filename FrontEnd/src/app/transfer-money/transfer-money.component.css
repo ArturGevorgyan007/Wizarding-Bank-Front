@@ -113,9 +113,18 @@ div .bacct:focus {
 
 .alert {
     padding: 20px;
-    background-color: #f44336; /* Red */
+    background-color: #f44336;
     color: white;
     margin-bottom: 15px;
+    width: 320px;
+}
+
+.success {
+    padding: 20px;
+    background-color: green;
+    color: white;
+    margin-bottom: 15px;
+    width: 320px;
 }
   
  /* The close button */
