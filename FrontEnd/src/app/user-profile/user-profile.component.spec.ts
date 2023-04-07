@@ -1,124 +1,45 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UserProfileComponent } from './user-profile.component';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { UserDataService } from '../user-data.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { UserProfileComponent } from './user-profile.component';
+import { UserHomeComponent } from '../user-home/user-home.component';
+import { UserDataService } from '../user-data.service';
+import { CookieService } from 'ngx-cookie-service';
 import { of } from 'rxjs';
-
+import { Router } from '@angular/router';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
   let fixture: ComponentFixture<UserProfileComponent>;
-  let uds: UserDataService;
-  let cookie: CookieService;
-  let router: Router;
   let userDataServiceSpy: jasmine.SpyObj<UserDataService>;
   let cookieServiceSpy: jasmine.SpyObj<CookieService>;
+  let router : Router;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [UserProfileComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([])
+  beforeEach(() => {
+    const spy = jasmine.createSpyObj('UserDataService', ['getUser', 'retrieveUserIdFromDB', 'getFullPersonalUser', 'updateUserProfile']);
+    const cookieSpy = jasmine.createSpyObj('CookieService', ['get']);
+
+    TestBed.configureTestingModule({
+      declarations: [ UserProfileComponent ],
+      imports: [ RouterTestingModule.withRoutes(
+        [{path: 'UserHome', component: UserHomeComponent}]
+      ) ],
+      providers: [
+        { provide: UserDataService, useValue: spy },
+        { provide: CookieService, useValue: cookieSpy }
       ]
     })
-      .compileComponents();
+    .compileComponents();
 
     router = TestBed.inject(Router);
-    cookie = TestBed.inject(CookieService);
-    uds = TestBed.inject(UserDataService);
     fixture = TestBed.createComponent(UserProfileComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    userDataServiceSpy = TestBed.inject(UserDataService) as jasmine.SpyObj<UserDataService>;
+    cookieServiceSpy = TestBed.inject(CookieService) as jasmine.SpyObj<CookieService>;
   });
 
-  it('should create', () => {
+  it('should create UserProfileComponent', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should Get Personal User Email and ID', () => {
-    cookie.set('userType', 'Personal');
-    cookie.set('email', 'test3@gmail.com');
-    spyOn(uds, 'retrieveUserIdFromDB').and.returnValue(of(6));
-    component.userObj = [{}, {}];
-    component.ngOnInit();
-  });
-
-  it('should navigate to user home on exit', () => {
-    const navigateSpy = spyOn(router, 'navigate');
-    component.exit(new Event('click'));
-    expect(navigateSpy).toHaveBeenCalledWith(['/UserHome']);
-  });
-
-  // it('should update user profile on save', () => {
-  //   let tempObj = [{}, {}];
-  //   const updateSpy = spyOn(uds, 'updateUserProfile').and.returnValue(of(tempObj));
-  //   const navigateSpy = spyOn(router, 'navigate');
-  //   component.userObj = [{ fullName: 'Test User', address: '123 Main St', username: 'testuser' }, {}];
-  //   component.name = 'New User Name';
-  //   component.address = '456 Elm St';
-  //   component.saveProfile(new Event('click'));
-  //   expect(updateSpy).toHaveBeenCalledWith({
-  //     name: 'New User Name',
-  //     address: '456 Elm St',
-  //     username: 'testuser'
-  //   });
-
-  //   expect(navigateSpy).toHaveBeenCalledWith(['/UserHome']);
-  // });
-
-  it('should create the component', () => {
-
-    expect(component).toBeTruthy();
-  });
-
-  // describe('ngOnInit', () => {
-
-  //   it('should set Email property from cookie service', () => {
-  //     cookieServiceSpy.get.and.returnValue('test@test.com');
-  //     component.ngOnInit();
-  //     expect(component.Email).toEqual('test@test.com');
-
-  //   });
-
-  //   it('should call getUser method of UserDataService', () => {
-  //     component.ngOnInit();
-  //     expect(userDataServiceSpy.getUser).toHaveBeenCalled();
-  //   });
-
-  //   it('should call retrieveUserIdFromDB method of UserDataService with user data', () => {
-  //     userDataServiceSpy.getUser.and.returnValue('test user');
-  //     component.ngOnInit();
-  //     expect(userDataServiceSpy.retrieveUserIdFromDB).toHaveBeenCalledWith('test user');
-  //   });
-
-  //   it('should set Id property of UserDataService from retrieved user ID', () => {
-  //     userDataServiceSpy.retrieveUserIdFromDB.and.returnValue(of(123));
-  //     component.ngOnInit();
-  //     expect(userDataServiceSpy.Id).toEqual(123);
-  //   });
-
-  //   it('should call getFullPersonalUser method of UserDataService with retrieved user ID', () => {
-  //     userDataServiceSpy.retrieveUserIdFromDB.and.returnValue(of(123));
-  //     component.ngOnInit();
-  //     expect(userDataServiceSpy.getFullPersonalUser).toHaveBeenCalledWith(123);
-  //   });
-
-  //   it('should set userObj, name, address, and username properties from retrieved user data', () => {
-  //     const userData = [{ fullName: 'test user', address: 'test address', username: 'testuser123' }];
-  //     userDataServiceSpy.getFullPersonalUser.and.returnValue(of(userData));
-  //     component.ngOnInit();
-  //     expect(component.userObj).toEqual(userData);
-  //     expect(component.name).toEqual('test user');
-  //     expect(component.address).toEqual('test address');
-  //     expect(component.username).toEqual('testuser123');
-  //   });
-
-  // });
 
   describe('onKey', () => {
     it('should set name property when called with name field', () => {
@@ -132,24 +53,53 @@ describe('UserProfileComponent', () => {
     });
   });
 
+  it('should retrieve user data from UserDataService on init', () => {
+    const email = 'test@example.com';
+    const userId = 123;
+    const userObj = [{
+      fullName: 'Test User',
+      address: '123 Test Street',
+      username: 'testuser'
+    }];
+    cookieServiceSpy.get.and.returnValue(email);
+    userDataServiceSpy.getUser.and.returnValue(email);
+    userDataServiceSpy.retrieveUserIdFromDB.and.returnValue(of(userId));
+    userDataServiceSpy.getFullPersonalUser.and.returnValue(of(userObj));
+
+    fixture.detectChanges();
 
 
+    expect(cookieServiceSpy.get).toHaveBeenCalledWith('email');
+    expect(userDataServiceSpy.getUser).toHaveBeenCalledWith();
+    expect(userDataServiceSpy.retrieveUserIdFromDB).toHaveBeenCalledWith(email);
+    expect(userDataServiceSpy.getFullPersonalUser).toHaveBeenCalledWith(userId);
+    expect(component.userObj).toEqual([userObj[0]]);
+    expect(component.name).toEqual(userObj[0].fullName);
+    expect(component.address).toEqual(userObj[0].address);
+    expect(component.username).toEqual(userObj[0].username);
+  });
 
-  // describe('saveProfile', () => {
-  //   beforeEach(() => {
-  //     component.userObj = [{ fullName: 'test user', address: 'test address', username: 'testuser123' }];
-  //   });
+  it('should update user profile data using UserDataService', () => {
+    const userObj = {
+      fullName: 'Test User',
+      address: '123 Test Street',
+      username: 'testuser'
+    };
+    const updatedName = 'Updated Name';
+    const updatedAddress = '456 Updated Street';
+    component.userObj = [userObj];
+    component.name = updatedName;
+    component.address = updatedAddress;
+    userDataServiceSpy.updateUserProfile.and.returnValue(of(['success']));
 
-  //   it('should update user profile with new name and address and navigate to UserHome', () => {
-  //     userDataServiceSpy.updateUserProfile.and.returnValue(of(['success']));
-  //     const routerNavigateSpy = spyOn(router, 'navigate');
-  //     component.name = 'John Doe';
-  //     component.address = '123 Main St';
-  //     component.saveProfile(new Event('click'));
-  //     expect(userDataServiceSpy.updateUserProfile).toHaveBeenCalledWith({ fullName: 'John Doe', address: '123 Main St', username: 'testuser123' });
-  //     expect(routerNavigateSpy).toHaveBeenCalledWith(['/UserHome']);
-  //   });
-  // });
+    component.saveProfile(new Event('click'));
+
+    expect(userDataServiceSpy.updateUserProfile).toHaveBeenCalledWith(userObj);
+  });
+
+  it('should navigate to UserHome after saving or exiting profile', () => {
+    const router = TestBed.inject(Router);
+  });
 
   describe('exit', () => {
     it('should navigate to UserHome', () => {
@@ -158,4 +108,5 @@ describe('UserProfileComponent', () => {
       expect(routerNavigateSpy).toHaveBeenCalledWith(['/UserHome']);
     });
   });
+
 });
