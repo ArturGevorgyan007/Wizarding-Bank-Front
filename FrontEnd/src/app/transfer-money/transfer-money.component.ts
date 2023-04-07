@@ -18,6 +18,9 @@ export class TransferMoneyComponent implements OnInit{
   display = true;
   displayAdd = false;
   displayFinal = false;
+  message : string = "this message";
+  messagecall = false; 
+  messagecall1 = false;
   UID : any; 
   _amount : any = "";
   cardDsiplay = true;
@@ -80,7 +83,13 @@ export class TransferMoneyComponent implements OnInit{
          if(data != null){
           console.log(data);
           console.log("successful transaction from bank to wallet");
-          this.router.navigateByUrl('Wallet');
+          this.messagecall = true;
+          this.message = "Successful transaction from bank to wallet"
+          //this.router.navigateByUrl('Wallet');
+         } else {
+            console.log("Not enough money");
+            this.messagecall1 = true;
+            this.message = "Invalid transaction from card to wallet. Not enough money.";
          }
        })
     } 
@@ -88,8 +97,17 @@ export class TransferMoneyComponent implements OnInit{
       console.log("Add money from card");
       this.service.cardToWallet(this.typeId,this.UID,this._amount).subscribe(data => {
         console.log(data);
-        console.log("successful transaction from card to wallet");
-        this.router.navigateByUrl('Wallet');
+        if(data != null){
+          console.log("successful transaction from card to wallet");
+          this.messagecall = true;
+          this.message = "Successful transaction from card to wallet"
+          //this.router.navigateByUrl('Wallet');
+        } else {
+          console.log("Not enought money");
+          this.messagecall1 = true;
+          this.message = "Invalid transaction from card to wallet. Not enough money.";
+        } 
+        
       })
     }
     

@@ -91,7 +91,7 @@
         </div>
          
         <div class="row d-flex justify-content-center" style="text-align: center; margin-top: 55px;"> 
-          <p style="font-size: 40px;"> ${{_amount}}</p>
+          <p style="font-size: 40px;">${{_amount}}</p>
         </div>
 
         <div class="row d-flex justify-content-center" style="margin-left: 185px; padding-top: 65px;"> 
@@ -101,6 +101,16 @@
           <div class="col-md-8 col-lg-6 col-xl-4" style="margin-left: -155px;">
             <button class="withBut" #withBank value="b" (click)="setType(withBank.value)"> Add with bank </button>
           </div>
+        </div>
+
+        <div class="alert" *ngIf="messagecall1">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{message}}
+        </div>
+
+        <div class="success" *ngIf="messagecall">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+           <span style="font-weight: bold;"> SUCCESS! </span> {{message}} 
         </div>
 
           <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="cardDsiplay" #cards>
@@ -120,6 +130,8 @@
                 </div> -->
             </div>
           </div>
+
+          
         
           <div class="row d-flex justify-content-center" style="padding-top: 115px;" *ngIf="bankDisplay">
             <div class="d-flex flex-row pb-3" style="padding-left: 220px; padding-right: 220px;" *ngFor="let bank of bankList">
