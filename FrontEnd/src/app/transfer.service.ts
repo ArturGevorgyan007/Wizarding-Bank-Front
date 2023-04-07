@@ -8,8 +8,8 @@ import { Transaction } from './models/transaction';
 })
 export class TransferService {
 
-  apiRoot: string = 'https://wiz-back.azurewebsites.net';
-  //apiRoot: string = 'https://wiz-back.azurewebsites.net/';
+
+  apiRoot: string = 'https://wiz-back.azurewebsites.net/';
 
   constructor(private http: HttpClient) { }
   //When sending money to self, recipient = id, sender = null
