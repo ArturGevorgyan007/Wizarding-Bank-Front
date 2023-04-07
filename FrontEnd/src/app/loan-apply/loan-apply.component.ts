@@ -1,19 +1,23 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserDataService } from '../user-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Loan, LoanSchedule } from '../Interfaces/loan';
 import { LoanServicesService } from '../loan-services.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-loan-apply',
   templateUrl: './loan-apply.component.html',
   styleUrls: ['./loan-apply.component.css']
 })
-export class LoanApplyComponent {
+export class LoanApplyComponent implements OnInit {
 
-  constructor(private router: Router, private loanService: LoanServicesService, private formBuilder: FormBuilder, private userData: UserDataService, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, private loanService: LoanServicesService, private formBuilder: FormBuilder, private userData: UserDataService, private cookieService: CookieService) { }
   loan: Loan = {
     id: 0,
     interestRate: 0,
@@ -22,11 +26,30 @@ export class LoanApplyComponent {
     monthlyPay: 0,
     dateLoaned: new Date(),
     loanPaid: new Date(),
+    amountPaid: 0
+  }
+  existingLoan: Loan = {
+    id: 0,
+    interestRate: 0,
+    amount: 0,
+    businessId: "0",
+    monthlyPay: 0,
+    dateLoaned: new Date(),
+    loanPaid: new Date(),
+    amountPaid: 0
   }
   loanForm: FormGroup = this.formBuilder.group({
     amount: new FormControl('', [Validators.required, Validators.maxLength(256)]),
     period: new FormControl(new Date(), [Validators.required]),
   })
+
+  payLoanForm: FormGroup = this.formBuilder.group({
+    payAmount: new FormControl('')
+  })
+
+  monthlyAmountButton: boolean = false;
+  customAmountButton: boolean = false;
+  fullAmountButton: boolean = false;
 
   interest: number = 0;
   amount: number = 0;
@@ -36,6 +59,24 @@ export class LoanApplyComponent {
   showCalculation: boolean = false;
   schedule: Array<LoanSchedule> = []
 
+  loanDate: Date;
+
+  ngOnInit() {
+    this.getCurrentLoan().subscribe(data => {
+      this.existingLoan = data as Loan;
+      var newdate = new Date(this.existingLoan.loanPaid)
+      newdate.setMonth(newdate.getMonth() + 1)
+      this.existingLoan.loanPaid = newdate;
+
+
+    });
+  }
+
+
+
+  getCurrentLoan(): Observable<any> {
+    return this.loanService.getLoan(this.cookieService.get("userId") as unknown as number);
+  }
 
   PMT(ir: any, np: any, pv: any, fv: any, type: any) {
     /*
@@ -71,36 +112,56 @@ export class LoanApplyComponent {
   }
 
   toggle() {
-    this.showCalculation = true;
+    if (this.loanForm.valid) {
+      this.showCalculation = true;
+    }
   }
 
+
   createSchedule() {
-    let dateincrement = 0
-    let balance = this.amount
-    let totInterest = 0
-    while (balance > 0) {
-      let data: LoanSchedule = {
-        date: new Date(),
-        payment: this.payment,
-        interest: balance * this.interest / 100,
-        principal: this.payment - this.interest,
-        balance: balance - this.payment,
-        totalInterest: totInterest + this.interest,
+    if (this.loanForm.valid) {
+
+      let dateincriment = 1
+      let balance = this.amount
+      let totInterest = 0
+      let inter = parseFloat((this.amount * this.interest / 100 / 12).toFixed(2))
+      let payment = this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0) * (-1)
+      this.schedule = []
+
+      while (true) {
+        inter = balance * this.interest / 100 / 12
+        balance = balance - payment + inter
+
+        let date: Date = new Date()
+        date.setMonth(date.getMonth() + dateincriment)
+        let data: LoanSchedule = {
+          date: date,
+          payment: parseFloat(payment.toFixed(2)),
+          interest: parseFloat(inter.toFixed(2)),
+          principal: parseFloat((payment - inter).toFixed(2)),
+          balance: parseFloat(balance.toFixed(2)),
+          totalInterest: parseFloat((totInterest + inter).toFixed(2)),
+        }
+        dateincriment++
+        if (balance < 0)
+          break;
+
+        totInterest = data.totalInterest
+        this.schedule.push(data)
+        console.log(data, date)
       }
-      balance = balance - this.payment
-      if (balance < 0) {
-        break;
-      }
-      totInterest = data.totalInterest
-      this.schedule.push(data)
-      console.log(data)
+    }
+    else {
+      this.interest = 0;
+      this.amount = 0;
+      this.payment = 0;
+      this.business_type = ''
+      this.showCalculation = false
     }
   }
 
   onLoanFormSubmit(event: Event) {
     if (this.loanForm.valid) {
-      // this.createSchedule();
-      this.toggle();
       this.userData.retrieveBusinessTypeFromDB(this.cookieService.get('email')).subscribe((data: string) => {
         if (data) {
           this.business_type = data;
@@ -129,31 +190,80 @@ export class LoanApplyComponent {
 
           this.period = this.loanForm.controls['period'].value
 
-          this.payment = parseInt(this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0).toFixed(2)) * (-1)
+          this.payment = parseFloat(this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0).toFixed(2)) * (-1)
           if (isNaN(this.payment)) this.payment = 0;
         }
       })
 
-
-      // interest rate: check if this business type is student or not or by amount loaned
-
-      // get datetime of when this loan was requested
-
-      // get user's bin
-
     }
   }
   acceptLoan(): any {
-    this.loan.interestRate = this.interest
-    this.loan.businessId = this.cookieService.get('userId')
-    this.loan.amount = this.loanForm.controls['amount'].value
-    this.loan.monthlyPay = this.payment,
-      this.loan.dateLoaned = new Date()
+    this.loan.interestRate = this.interest;
+    this.loan.businessId = this.cookieService.get('userId');
+    this.loan.amount = this.loanForm.controls['amount'].value;
+    this.loan.monthlyPay = this.payment;
+    this.loan.dateLoaned = new Date();
     this.loan.loanPaid = this.getPayoffDate(this.loanForm.controls['period'].value * 365)
     this.loanService.addNewLoan(this.loan)
       .subscribe(data => {
         this.router.navigate(['/BusinessHome'])
       })
   }
+
+  toggleMonthlyBill() {
+    this.monthlyAmountButton = true;
+    this.customAmountButton = false;
+    this.fullAmountButton = false;
+  }
+
+  toggleCustomBill() {
+    this.monthlyAmountButton = false;
+    this.customAmountButton = true;
+    this.fullAmountButton = false;
+  }
+
+  toggleFullBill() {
+    this.monthlyAmountButton = false;
+    this.customAmountButton = false;
+    this.fullAmountButton = true;
+  }
+
+  toggleAllBillButtons() {
+    this.monthlyAmountButton = false;
+    this.customAmountButton = false;
+    this.fullAmountButton = false;
+  }
+
+  payLoan(amount: number): any {
+    let principle = (this.existingLoan.amount - this.existingLoan.amountPaid) * (this.existingLoan.interestRate / 100)
+    this.loanService.makePayment(principle, this.cookieService.get("userId") as unknown as number, amount).subscribe(data => {
+      console.log(data);
+      location.reload();
+    });
+  }
+  payFullLoan(): any {
+    this.loanService.makePayment((this.existingLoan.amount - this.existingLoan.amountPaid), this.cookieService.get("userId") as unknown as number, (this.existingLoan.amount - this.existingLoan.amountPaid)).subscribe(data => {
+      console.log(data);
+      location.reload();
+    });
+  }
+  payCustomLoan(): any {
+
+    this.loanService.makePayment(this.payLoanForm.controls['payAmount'].value, this.cookieService.get("userId") as unknown as number, this.payLoanForm.controls['payAmount'].value).subscribe(data => {
+      console.log(data);
+      location.reload();
+    });
+  }
+
+  exportAsPDF() {
+    let data = document.getElementById('pdf');
+    html2canvas(data!).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
+      let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
+      pdf.save('Filename.pdf');
+    });
+  }
+
 
 }

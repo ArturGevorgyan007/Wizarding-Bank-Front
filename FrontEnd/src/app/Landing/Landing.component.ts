@@ -10,8 +10,8 @@ import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
 @Component({
   selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css'],
+  templateUrl: './Landing.component.html',
+  styleUrls: ['./Landing.component.css'],
 })
 export class LandingComponent implements OnInit {
   constructor(private cookieService: CookieService, private router: Router, public authService: AuthService, public userData: UserDataService) { }
