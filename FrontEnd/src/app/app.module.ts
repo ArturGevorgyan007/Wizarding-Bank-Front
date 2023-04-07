@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserHomeComponent } from './user-home/user-home.component';
@@ -8,16 +10,21 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserDataService } from './user-data.service';
-import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
-import { HttpClientModule } from '@angular/common/http';
-import { LoanApplyComponent } from './loan-apply/loan-apply.component';
+import { AddPaymentFormComponent } from './add-payment-form/add-payment-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ViewAllTransactionsComponent } from './view-all-transactions/view-all-transactions.component';
+import { LoanApplyComponent } from './loan-apply/loan-apply.component';
 import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { CookieService } from 'ngx-cookie-service';
 import {cardTransform} from './CardTransformPipe';
 import { SendAndRequestComponent } from './send-and-request/send-and-request.component'
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BusinessProfileComponent } from './business-profile/business-profile.component';
+
 
 @NgModule({
   declarations: [
@@ -26,18 +33,22 @@ import { SendAndRequestComponent } from './send-and-request/send-and-request.com
     LandingComponent,
     BusinessHomeComponent,
     NavbarComponent,
+    AddPaymentFormComponent,
     ViewAllTransactionsComponent,
     LoanApplyComponent,
     TransferPageComponent,
     WalletPageComponent,
     TransferMoneyComponent,
     cardTransform,
-    SendAndRequestComponent
-    
+    SendAndRequestComponent,
+    UserProfileComponent,
+    BusinessProfileComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -47,8 +58,7 @@ import { SendAndRequestComponent } from './send-and-request/send-and-request.com
       authorizationParams: {
         redirect_uri: 'http://localhost:4200'
       }
-    }),
-    HttpClientModule
+    })
   ],
   providers: [UserDataService],
   bootstrap: [AppComponent]

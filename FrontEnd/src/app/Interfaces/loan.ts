@@ -1,0 +1,18 @@
+export interface Loan {
+    id: number;
+    amount: number;
+    businessId: string;
+    interestRate: number;
+    dateLoaned: Date;
+    loanPaid: Date;
+    monthlyPay: number;
+}
+
+export interface LoanSchedule {
+    date: Date;
+    payment: number;
+    principal: number;
+    interest: number;
+    totalInterest: number;
+    balance: number
+}
