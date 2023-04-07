@@ -19,7 +19,7 @@ export class TransferMoneyComponent implements OnInit{
   displayAdd = false;
   displayFinal = false;
   UID : any; 
-  _amount : any = "$";
+  _amount : any = "";
   cardDsiplay = true;
   bankDisplay = false;
   typeId : any = 0;
