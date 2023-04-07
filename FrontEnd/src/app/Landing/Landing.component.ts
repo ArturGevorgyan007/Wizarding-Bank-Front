@@ -10,8 +10,8 @@ import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
 @Component({
   selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css'],
+  templateUrl: './Landing.component.html',
+  styleUrls: ['./Landing.component.css'],
 })
 export class LandingComponent implements OnInit {
   constructor(private cookieService: CookieService, private router: Router, public authService: AuthService, public userData: UserDataService) { }
@@ -22,7 +22,7 @@ export class LandingComponent implements OnInit {
           console.log(c)
           if (c["email"]) {
             console.log(c['email'])
-            this.cookieService.set('email', c['email'])
+            this.cookieService.set('email', c['email'], 0.4)
             if (this.cookieService.get('userType') == 'Business') {
               this.userData.retrieveBusinessIdFromDB(this.cookieService.get('email')).subscribe(data => {
                 if (data) {
@@ -48,13 +48,13 @@ export class LandingComponent implements OnInit {
 
   async login() {
     await this.authService.logout()
-    this.cookieService.set('userType', 'Personal');
+    this.cookieService.set('userType', 'Personal', 0.4);
     this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } })
 
   }
   async businessLogin() {
     await this.authService.logout();
-    this.cookieService.set('userType', 'Business')
+    this.cookieService.set('userType', 'Business', 0.4)
     this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } })
   }
 

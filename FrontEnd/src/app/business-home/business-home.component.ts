@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { JwtDecoderService } from '../jwt-decoder.service';
 import { UserDataService } from '../user-data.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-business-home',
@@ -10,9 +12,12 @@ import { UserDataService } from '../user-data.service';
 })
 export class BusinessHomeComponent implements OnInit {
   token: string | undefined | null = localStorage.getItem('access_token');
-  constructor(private myAuthService: AuthService, private jwtDecoder: JwtDecoderService, private userData: UserDataService) { }
+  constructor(private jwtDecoder: JwtDecoderService, private userData: UserDataService,private cookieService: CookieService, private router: Router, public authService: AuthService) { }
+  
   ngOnInit(): void {
-    console.log(this.userData.getUser())
+    this.userData.email = this.cookieService.get('email')
+    this.userData.Id = this.cookieService.get('userId')
+    console.log(this.userData.Id)
   }
 
 }
