@@ -131,6 +131,7 @@ a {
   margin: 0px auto;
   width: 100%;
   max-width: 80%;
+  min-height: 400px;
   background: white;
   border-radius: 4px;
   box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
@@ -197,6 +198,23 @@ input[type="submit"] {
   color: blue;
   font-weight: 600;
   cursor: pointer;
+}
+
+.button1 {
+  /* background-color: rgb(84, 105, 212); */
+  /* box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
+                  rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
+                  rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, 
+                  rgb(84, 105, 212) 0px 0px 0px 1px, 
+                  rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
+                  rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
+                  rgba(60, 66, 87, 0.08) 0px 2px 5px 0px; */
+  color: blue;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;  
+  justify-content: center;  
+  align-items: center;
 }
 
 .field-checkbox input {
@@ -275,8 +293,8 @@ a.ssolink {
 } */
 
 .split1 {
-  height: 91.1%;
-  width: 40%;
+  height: 90%;
+  width: 50%;
   position: relative;
   display: flexbox;
   z-index: 1;
@@ -286,8 +304,8 @@ a.ssolink {
 }
 
 .split2 {
-  height: 91.1%;
-  width: 60%;
+  height: 90%;
+  width: 50%;
   display: flexbox;
   position: relative;
   z-index: 1;

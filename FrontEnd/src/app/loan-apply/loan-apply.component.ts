@@ -6,6 +6,8 @@ import { Loan, LoanSchedule } from '../Interfaces/loan';
 import { LoanServicesService } from '../loan-services.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-loan-apply',
@@ -108,39 +110,38 @@ export class LoanApplyComponent implements OnInit {
     let dateincriment = 0
     let balance = this.amount
     let totInterest = 0
-    let inter = parseFloat((balance * this.interest / 100 / 12).toFixed(2))
+    let inter = parseFloat((this.amount * this.interest / 100 / 12).toFixed(2))
+    let payment = this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0)*(-1)
+    this.schedule=[]
 
     while (true) {
-      if (balance < this.payment) {
-        balance = parseFloat((balance - this.payment + inter).toFixed(0))
-      }
-      else {
-        balance = parseFloat((balance - this.payment + inter).toFixed(2))
-        inter = parseFloat((balance * this.interest / 100 / 12).toFixed(2))
-      }
+      inter = balance * this.interest / 100 / 12
+      balance = balance - payment + inter
 
+      let date : Date = new Date()
+      date.setMonth(date.getMonth()+dateincriment)
       let data: LoanSchedule = {
-        date: new Date(),
-        payment: this.payment,
-        interest: inter,
-        principal: parseFloat((this.payment - inter).toFixed(2)),
-        balance: balance,
+        date: date,
+        payment: parseFloat(payment.toFixed(2)),
+        interest: parseFloat(inter.toFixed(2)),
+        principal: parseFloat((payment - inter).toFixed(2)),
+        balance: parseFloat(balance.toFixed(2)),
         totalInterest: parseFloat((totInterest + inter).toFixed(2)),
       }
-
+      dateincriment++
       if (balance < 0)
         break;
 
       totInterest = data.totalInterest
       this.schedule.push(data)
-      console.log(data)
+      console.log(data, date)
     }
   }
 
   onLoanFormSubmit(event: Event) {
     if (this.loanForm.valid) {
       // this.createSchedule();
-      this.toggle();
+      // this.toggle();
       this.userData.retrieveBusinessTypeFromDB(this.cookieService.get('email')).subscribe((data: string) => {
         if (data) {
           this.business_type = data;
@@ -169,7 +170,7 @@ export class LoanApplyComponent implements OnInit {
 
           this.period = this.loanForm.controls['period'].value
 
-          this.payment = parseInt(this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0).toFixed(2)) * (-1)
+          this.payment = parseFloat(this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0).toFixed(2)) * (-1)
           if (isNaN(this.payment)) this.payment = 0;
         }
       })
@@ -229,6 +230,18 @@ export class LoanApplyComponent implements OnInit {
       location.reload();
     });
   }
+
+  exportAsPDF()
+    {
+        let data = document.getElementById('pdf');  
+        html2canvas(data!).then(canvas => {
+        const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
+        let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+        // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
+        pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);  
+        pdf.save('Filename.pdf');   
+      }); 
+    }
 
 
 }
