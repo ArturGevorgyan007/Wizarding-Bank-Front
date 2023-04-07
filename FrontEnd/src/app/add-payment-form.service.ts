@@ -5,16 +5,16 @@ import { Card } from './Interfaces/Card';
 import { Account } from './Interfaces/Account';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class PaymentFormService{
-  constructor(private http: HttpClient){}
-    
-  addCard(newCard : Card) : Observable<Card> {
-    return this.http.post('http://localhost:5092/Card/Add', newCard) as Observable<Card>;
+export class PaymentFormService {
+  constructor(private http: HttpClient) { }
+
+  addCard(newCard: Card): Observable<Card> {
+    return this.http.post('https://wiz-back.azurewebsites.net/Card/Add', newCard) as Observable<Card>;
   }
-  
-  addAccount(newAccount : Account) : Observable<Account> {
-    return this.http.post('http://localhost:5092/Account/Add', newAccount) as Observable<Account>;
+
+  addAccount(newAccount: Account): Observable<Account> {
+    return this.http.post('https://wiz-back.azurewebsites.net/Account/Add', newAccount) as Observable<Account>;
   }
 }

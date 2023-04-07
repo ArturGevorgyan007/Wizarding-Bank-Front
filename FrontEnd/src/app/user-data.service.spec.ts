@@ -31,7 +31,7 @@ describe('UserDataService', () => {
       expect(userId).toEqual(dummyUserId);
     });
 
-    const req = httpMock.expectOne(`http://localhost:5092/user/byEmail/test@example.com`);
+    const req = httpMock.expectOne(`https://wiz-back.azurewebsites.net/user/byEmail/test@example.com`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyUserId);
   });
@@ -43,7 +43,7 @@ describe('UserDataService', () => {
       expect(businessId).toEqual(dummyBusinessId);
     });
 
-    const req = httpMock.expectOne(`http://localhost:5092/Business/busId/test@example.com`);
+    const req = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Business/busId/test@example.com`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyBusinessId);
   });
@@ -55,7 +55,7 @@ describe('UserDataService', () => {
       expect(businessType).toEqual(dummyBusinessType);
     });
 
-    const req = httpMock.expectOne(`http://localhost:5092/Business/busType/test@example.com`);
+    const req = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Business/busType/test@example.com`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyBusinessType);
   });
@@ -71,7 +71,7 @@ describe('UserDataService', () => {
       expect(userCards).toEqual(dummyUserCards);
     });
 
-    const req = httpMock.expectOne(`http://localhost:5092/Card/User?userId=${dummyUserId}`);
+    const req = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Card/User?userId=${dummyUserId}`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyUserCards);
   });
@@ -87,7 +87,7 @@ describe('UserDataService', () => {
       expect(userAccounts).toEqual(dummyUserAccounts);
     });
 
-    const req = httpMock.expectOne(`http://localhost:5092/Account/UserAccounts?id=${dummyUserId}`);
+    const req = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Account/UserAccounts?id=${dummyUserId}`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyUserAccounts);
   });
