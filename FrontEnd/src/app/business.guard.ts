@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BusinessGuard implements CanActivate {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cookieService: CookieService) { }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (/*Fill in with DB check to make sure the user is available in the user table*/ true) {
+    if (this.cookieService.get('userType') == 'Business' && this.cookieService.get('Id')) {
       return true;
 
     } else {
