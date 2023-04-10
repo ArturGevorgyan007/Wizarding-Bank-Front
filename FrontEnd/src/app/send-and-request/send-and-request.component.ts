@@ -15,6 +15,7 @@ import { TransactionHistoryService } from '../transaction-history.service';
 export class SendAndRequestComponent implements OnInit {
 
   uID : any; 
+  uEmail : any;
   user: string | undefined;
   Transactions: Array<Transaction> = [];
 
@@ -22,7 +23,7 @@ export class SendAndRequestComponent implements OnInit {
    
   
    ngOnInit(): void {
-    this.uID = 7; 
+    this.uID = 11; 
     // this.uID = parseInt(this.cookieService.get('userId'));
     this.getRequest(this.uID);
   }
@@ -63,14 +64,28 @@ export class SendAndRequestComponent implements OnInit {
   }
 
   getRequest(id : number){
-    this.tservice.getTransactions(id).subscribe(t => {
-      let desc : string;
-      for(let i = 0; i < t.length; i++){
-        desc = t[i]['description'];
-        if(desc.includes("Request")){
-          this.Transactions[i] = t[i];
-        }
+    this.uservice.getUser2(id).subscribe(data => {
+      if(data != null){
+        this.uEmail = data['email'];
+        this.tservice.getTransactions(id).subscribe(t => {
+          if(t != null){
+            console.log(t);
+            let desc : string;
+            let email : string;
+            for(let i = 0; i < t.length; i++){
+              desc = t[i]['description'];
+              email = t[i]['senderEmail'];
+              if(desc != null  && this.uEmail == email){
+                if(desc.includes("Request")){
+                  this.Transactions[i] = t[i];
+                }
+              }
+              
+            } 
+          }
+      })
       }
+      
     })
   }
 }

@@ -9,6 +9,7 @@ export class UserDataService {
   addUser(arg0: string) {
     throw new Error('Method not implemented.');
   }
+  apiRoot : any = "http://localhost:5092/";
   public email: any;
   public Id: any;
   constructor(private http: HttpClient) { }
@@ -21,7 +22,7 @@ export class UserDataService {
   public retrieveUserIdFromDB(email: string): Observable<number> {
     return this.http.get("http://localhost:5092/user/byEmail/" + email) as Observable<number>;
   }
-  
+
   public getUserId(): number {
     return this.Id
   }
@@ -67,5 +68,9 @@ export class UserDataService {
 
   public getWalletBalance(userId : number): Observable<any>{
     return this.http.get("http://localhost:5092/user/" + userId) as Observable<any>;
+  }
+
+  public getUser2(id : number) : Observable<any>{
+    return this.http.get(this.apiRoot + "user/" + id) as Observable<any>;
   }
 }
