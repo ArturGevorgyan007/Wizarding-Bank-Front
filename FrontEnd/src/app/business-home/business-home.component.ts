@@ -12,12 +12,22 @@ import { Router } from '@angular/router';
 })
 export class BusinessHomeComponent implements OnInit {
   token: string | undefined | null = localStorage.getItem('access_token');
-  constructor(private jwtDecoder: JwtDecoderService, private userData: UserDataService,private cookieService: CookieService, private router: Router, public authService: AuthService) { }
-  
+  _wallet: any = "";
+  constructor(private jwtDecoder: JwtDecoderService, private userData: UserDataService, private cookieService: CookieService, private router: Router, public authService: AuthService) { }
+
   ngOnInit(): void {
     this.userData.email = this.cookieService.get('email')
     this.userData.Id = this.cookieService.get('userId')
     console.log(this.userData.Id)
+    this.getWalletAmount(this.userData.Id)
+  }
+
+  getWalletAmount(id: any) {
+    //getWalletBalance
+    this.userData.getWalletBalance(id).subscribe(data => {
+      console.log(data);
+      this._wallet = data['wallet'];
+    });
   }
 
 }
