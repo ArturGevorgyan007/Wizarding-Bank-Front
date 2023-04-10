@@ -11,11 +11,11 @@ export class BusinessGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot | null,
     state: RouterStateSnapshot | null): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.cookieService.get('userType') == 'Business' && this.cookieService.get('Id')) {
+    if (this.cookieService.get('userType') == 'Business' && this.cookieService.get('userId')) {
       return true;
 
     } else {
-      this.router.navigate(['/Home'])
+      this.router.navigate(['/'])
       return false;
     }
   }

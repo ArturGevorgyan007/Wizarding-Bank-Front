@@ -11,7 +11,7 @@ export class PersonalGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.cookieService.get('userType') == 'Personal' && this.cookieService.get('Id') != '') {
+    if (this.cookieService.get('userType') == 'Personal' && this.cookieService.get('userId') != '') {
       return true;
 
     } else {
