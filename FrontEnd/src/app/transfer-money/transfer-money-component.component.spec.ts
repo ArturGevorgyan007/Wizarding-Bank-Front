@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 describe('TransferMoneyComponent', () => {
   let component: TransferMoneyComponent;
   let fixture: ComponentFixture<TransferMoneyComponent>;
-  let mockTransferService;
+  let mockTransferService: any;
   let mockUserDataService;
   let mockRouter;
   let mockCookieService : any;
@@ -58,4 +58,24 @@ describe('TransferMoneyComponent', () => {
     expect(component.displayAccounts).toHaveBeenCalledWith(1);
     expect(component.displayCards).toHaveBeenCalledWith(1);
   });
+
+  it('should call the appropriate service method to transfer money from bank to wallet when the type is bank', () => {
+    // arrange
+    component.type = 'b';
+    component.typeId = 1;
+    component.UID = 2;
+    component._amount = 10;
+    const mockResponse = { success: true };
+    
+    // act
+    component.addMoney();
+  
+    // assert
+    expect(component.service.accountToWallet).toHaveBeenCalledWith(1, 2, 10);
+    expect(component.messagecall).toBe(false);
+    expect(component.message).toBe('this message');
+  });
+  
+  
+
 });

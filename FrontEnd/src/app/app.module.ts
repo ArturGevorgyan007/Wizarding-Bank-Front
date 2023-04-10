@@ -42,7 +42,7 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
     cardTransform,
     SendAndRequestComponent,
     UserProfileComponent,
-    BusinessProfileComponent
+    BusinessProfileComponent,
 
   ],
   imports: [

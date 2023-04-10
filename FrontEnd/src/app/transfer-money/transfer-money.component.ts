@@ -13,7 +13,7 @@ import { CookieService } from '../../../node_modules/ngx-cookie-service';
 })
 export class TransferMoneyComponent implements OnInit{
 
-  constructor(private service : TransferService, private user_service : UserDataService, private router : Router, private cookieService: CookieService){}
+  constructor(public service : TransferService, private user_service : UserDataService, private router : Router, private cookieService: CookieService){}
 
   display = true;
   displayAdd = false;
@@ -76,7 +76,6 @@ export class TransferMoneyComponent implements OnInit{
   }
   
   addMoney(){
-    console.log(this._amount, this.type, "user id: 1");
     if(this.type == "b"){
       console.log("Add money from bank", this.typeId, this._amount);
       const accountToWalletObs = this.service.accountToWallet(this.typeId,this.UID,this._amount);
@@ -87,7 +86,6 @@ export class TransferMoneyComponent implements OnInit{
             console.log("successful transaction from bank to wallet");
             this.messagecall = true;
             this.message = "Successful transaction from bank to wallet"
-            //this.router.navigateByUrl('Wallet');
           } else {
             console.log("Not enough money");
             this.messagecall1 = true;
