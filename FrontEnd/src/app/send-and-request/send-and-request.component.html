@@ -1,4 +1,4 @@
-<section id="sendMoney">
+<section id="sendMoney" *ngIf="payDisplay">
   <h1>Send Money</h1>
 
   <p>Please enter your desired person's email</p>
@@ -15,7 +15,7 @@
   </form>
 </section>
 
-<section id="requestMoney">
+<section id="requestMoney" *ngIf="requestDisplay">
   <h1>Request Money</h1>
   <p>Please enter your desired person's email</p>
   <form [formGroup]="requestForm" (ngSubmit)="onRequest()">
@@ -33,7 +33,7 @@
   </form>
 </section>
 
-<section id="pendingRequests">
+<section id="pendingRequests" *ngIf="requestsDisplay">
   <div class="transac-table">
     <table class="table">
         <thead>
@@ -45,9 +45,8 @@
         </thead>
 
         <tbody>
-            <ng-container *ngIf="Transactions.length > 0">
-                <tr *ngFor="let transac of Transactions" [ngClass]="{'minus' : transac.senderEmail == user,
-                'plus' : transac.senderEmail != user}">
+            <ng-container *ngIf="Requests.length > 0">
+                <tr *ngFor="let transac of Requests">
                     <td *ngIf="transac.recipientEmail != undefined; else default">
                         {{transac.recipientEmail}}
                     </td>
@@ -56,11 +55,29 @@
                     </ng-template>
                     <td>{{transac.amount}}</td>
                     <td>{{transac.createdAt | date: 'shortDate'}}</td>
+                    <td><button (click)="payRequest(transac)"> Pay </button></td>
                 </tr>
             </ng-container>
         </tbody>
     </table>
 </div>
+</section>
+
+<section id="payRequestS" *ngIf="payRequestD">
+  <h1>Pay Rquest</h1>
+
+  <p>Please enter your desired person's email</p>
+  <form [formGroup]="transferForm" (ngSubmit)="pay()">
+    <label>
+      Recipient:
+      <label >Email</label>
+      <input id="semail" type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
+      <label >Amount</label>
+      <input id="samount" type="number" formControlName="amount" placeholder="$100" required class="form-control">
+    </label>
+    <br><br>
+    <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
+  </form>
 </section>
 
 

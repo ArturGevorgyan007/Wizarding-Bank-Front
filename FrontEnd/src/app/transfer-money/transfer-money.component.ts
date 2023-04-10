@@ -116,7 +116,8 @@ export class TransferMoneyComponent implements OnInit{
   displayCards(id : any){
     this.user_service.getUserCards(this.UID).subscribe(data => {
       console.log(data);
-      for(let i = 0; i < data.length; i++){
+      if(data != null){
+        for(let i = 0; i < data.length; i++){
         let card = {} as Card; 
         card.cardId = data[i]['id'];
         card.balance = data[i]['balance'];
@@ -124,22 +125,27 @@ export class TransferMoneyComponent implements OnInit{
         card.cvv = data[i]['cvv'];
         card.expDate = data[i]['expiryDate'];
         this.cardList.push(card);
+        }
+        console.log(this.cardList);
       }
-      console.log(this.cardList);
+      
     });
   }
 
   displayAccounts(id : any){
     this.user_service.getUserAccounts(this.UID).subscribe(data => {
       console.log(data);
-      for(let i = 0; i < data.length; i++){
+      if(data != null){
+        for(let i = 0; i < data.length; i++){
         let bacct = {} as bankAccount;
         bacct.acctNum = data[i]['accountNumber'];
         bacct.balance = data[i]['balance'];
         bacct.bankAcctId = data[i]['id'];
         this.bankList.push(bacct);
+        }
+        console.log(this.bankList);
       }
-      console.log(this.bankList);
+      
     });
   }
 

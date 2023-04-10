@@ -14,10 +14,16 @@ import { TransactionHistoryService } from '../transaction-history.service';
 })
 export class SendAndRequestComponent implements OnInit {
 
+  payDisplay : boolean = false;
+  requestDisplay: boolean = false; 
+  requestsDisplay : boolean = true;
+  payRequestD: boolean = false;
   uID : any; 
   uEmail : any;
+  tamt : any; 
+  tid : number; 
   user: string | undefined;
-  Transactions: Array<Transaction> = [];
+  Requests: Array<Transaction> = [];
 
   constructor(private fb: FormBuilder,private router : Router, private cookieService: CookieService, private service : TransferService, private uservice : UserDataService, private tservice : TransactionHistoryService){}
    
@@ -69,24 +75,46 @@ export class SendAndRequestComponent implements OnInit {
         this.uEmail = data['email'];
         this.tservice.getTransactions(id).subscribe(t => {
           if(t != null){
-            console.log(t);
             let desc : string;
             let email : string;
             for(let i = 0; i < t.length; i++){
-              desc = t[i]['description'];
-              email = t[i]['senderEmail'];
-              if(desc != null  && this.uEmail == email){
-                if(desc.includes("Request")){
-                  this.Transactions[i] = t[i];
-                }
+              
+              if(t[i]['senderEmail'] != null && t[i]['description'] != null){
+                const desc = t[i]['description'];
+                if(this.uEmail == t[i]['senderEmail']){
+                  if(desc.includes("Request")){
+                    this.Requests.push(t[i]);
+                  }
+              }
               }
               
             } 
           }
-      })
+        })
       }
       
     })
+  }
+
+  payRequest(transact : Transaction){
+    this.transferForm.controls['email'].setValue(transact.recipientEmail);
+    this.transferForm.controls['amount'].setValue(transact.amount);
+    this.tamt = transact.amount;
+    this.tid = transact.id; 
+    this.payRequestD = true;
+  }
+
+  pay(){
+    const amt = this.transferForm.controls['amount'].value;
+    if(this.tamt == amt){
+      console.log(`Paid request ${this.tamt}`);
+      console.log(this.tid);
+      this.service.updateRequest(this.uID, amt, 7, "Request: ", this.tid).subscribe(data =>{
+        console.log(data);
+      })
+    } else {
+      console.log(`Paid only ${amt} of ${this.tamt}`);
+    }
   }
 }
 
