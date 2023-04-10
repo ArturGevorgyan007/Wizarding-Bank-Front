@@ -11,7 +11,7 @@ export class UserGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot | null,
     state: RouterStateSnapshot | null): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.cookieService.get('Id')) {
+    if (this.cookieService.get('userId')) {
       return true;
 
     } else {
