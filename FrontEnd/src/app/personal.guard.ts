@@ -6,16 +6,16 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class BusinessGuard implements CanActivate {
+export class PersonalGuard implements CanActivate {
   constructor(private router: Router, private cookieService: CookieService) { }
   canActivate(
-    route: ActivatedRouteSnapshot | null,
-    state: RouterStateSnapshot | null): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.cookieService.get('userType') == 'Business' && this.cookieService.get('Id')) {
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (this.cookieService.get('userType') == 'Personal' && this.cookieService.get('Id')) {
       return true;
 
     } else {
-      this.router.navigate(['/Home'])
+      this.router.navigate(['/'])
       return false;
     }
   }

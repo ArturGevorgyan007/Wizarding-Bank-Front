@@ -125,7 +125,7 @@ export class LoanApplyComponent implements OnInit {
       let balance = this.amount
       let totInterest = 0
       let inter = parseFloat((this.amount * this.interest / 100 / 12).toFixed(2))
-      let payment = this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0) * (-1)
+      let payment = this.PMT(this.interest / 1200, this.period, this.amount, 0, 0) * (-1)
       this.schedule = []
 
       while (true) {
@@ -190,7 +190,7 @@ export class LoanApplyComponent implements OnInit {
 
           this.period = this.loanForm.controls['period'].value
 
-          this.payment = parseFloat(this.PMT(this.interest / 1200, this.period * 12, this.amount, 0, 0).toFixed(2)) * (-1)
+          this.payment = parseFloat(this.PMT(this.interest / 1200, this.period, this.amount, 0, 0).toFixed(2)) * (-1)
           if (isNaN(this.payment)) this.payment = 0;
         }
       })
@@ -258,10 +258,30 @@ export class LoanApplyComponent implements OnInit {
   exportAsPDF() {
     let data = document.getElementById('pdf');
     html2canvas(data!).then(canvas => {
-      const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
-      let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
-      pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
-      pdf.save('Filename.pdf');
+      // const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
+      // let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+      // pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
+      // pdf.save('Filename.pdf');
+
+      var imgData = canvas.toDataURL('image/jpeg');
+      var imgWidth = 210;
+      var pageHeight = 295;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+      var doc = new jspdf('p', 'mm');
+      var position = 10; // give some top padding to first page
+
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        // position += heightLeft - imgHeight; // top padding for other pages
+        position = heightLeft - imgHeight + 10; // top padding for other pages
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      doc.save('file.pdf');
     });
   }
 

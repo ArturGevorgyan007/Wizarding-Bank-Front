@@ -10,22 +10,28 @@
             <div class="collapse navbar-collapse" id="navbarsExample04">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <!-- <ng-container *ngIf="peronal; else businessHome"> -->
-                            <a class="nav-link active" aria-current="page" href="/UserHome">Home</a>
-                        <!-- </ng-container> -->
-                        <!-- <ng-template #businessHome>
-                            <a class="nav-link active" aria-current="page" href="/UserHome">Home</a>
-                        </ng-template> -->
-                    </li>          
-                    <li class="nav-item"><a class="nav-link"  aria-current="page" href="/TransferMoney">Transfer</a></li>
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+
+
+
 
                     <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+
+
+                    <li class="nav-item" *ngIf="(userData.$navbar_toggle | async) === true">
+                        <a class="nav-link" aria-current="page" href="/TransferMoney">Transfer</a>
+                    </li>
+                    <li class="nav-item" *ngIf="(userData.$navbar_toggle | async) === true">
                         <a class="nav-link" (click)="goToWallet()">Wallet</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
-                    </li> -->
-                    <li class="nav-item">
+                    </li>
+                    <li class="nav-item" *ngIf="(userData.$navbar_toggle | async) === true">
+
                         <a class="nav-link" (click)="Logout()">Logout</a>
                     </li>
 
@@ -36,7 +42,7 @@
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            
+
                         </ul>
                     </li>
                 </ul>

@@ -66,8 +66,8 @@
                     <input type="number" name="amount" formControlName="amount" required>
                   </div>
                   <div class="field padding-bottom--24">
-                    <label for="period">Loan term in years</label>
-                    <input type="number" name="period" formControlName="period" required>
+                    <label for="period">Loan term in months</label>
+                    <input type="number" name="period" formControlName="period" required max="60">
                   </div>
                   <div class="field padding-bottom--24">
                     <input type="submit" name="submit" (click)="createSchedule()" (click)="toggle()">
@@ -90,7 +90,14 @@
           <div class="formbg-outer">
             <div class="formbg">
               <div *ngIf="!showCalculation" class="formbg-inner padding-horizontal--48">
-                <p>Show some text what bank offers</p>
+                <p>Wizzard bank loan offer is a financial product offered by bank to businesses in need of funds. This
+                  offer provides an opportunity for borrowers to access money to finance various projects and
+                  activities, such
+                  as buying an assets, funding a startup, or expanding an existing business. Bank loan offers come with
+                  different terms and conditions, which can vary depending on the borrower's creditworthiness, income,
+                  and the amount requested. Loans are usually subject to interest charges and fees that borrowers must
+                  pay back over a specified period. Our loan offer can be an excellent way to access the capital you
+                  need to achieve your financial goals.</p>
               </div>
               <div *ngIf="showCalculation" class="formbg-inner padding-horizontal--48">
                 <div class="field padding-bottom--24">

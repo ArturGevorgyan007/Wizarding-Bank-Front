@@ -26,6 +26,7 @@ export class LandingComponent implements OnInit {
             if (this.cookieService.get('userType') == 'Business') {
               this.userData.retrieveBusinessIdFromDB(this.cookieService.get('email')).subscribe(data => {
                 if (data) {
+                  this.userData.authenticate()
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/BusinessHome']);
                 }
@@ -34,6 +35,7 @@ export class LandingComponent implements OnInit {
             else if (this.cookieService.get('userType') == 'Personal') {
               this.userData.retrieveUserIdFromDB(this.cookieService.get('email')).subscribe(data => {
                 if (data) {
+                  this.userData.authenticate()
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/UserHome']);
                 }
@@ -49,13 +51,13 @@ export class LandingComponent implements OnInit {
   async login() {
     await this.authService.logout()
     this.cookieService.set('userType', 'Personal', 0.4);
-    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/' } })
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/' }, appState: { target: 'Personal' } })
 
   }
   async businessLogin() {
     await this.authService.logout();
     this.cookieService.set('userType', 'Business', 0.4)
-    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/' } })
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/' }, appState: { target: 'Business' } })
   }
 
 
