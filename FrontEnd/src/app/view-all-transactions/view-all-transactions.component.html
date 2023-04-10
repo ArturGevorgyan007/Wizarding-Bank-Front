@@ -1,4 +1,16 @@
+<ng-container *ngIf="viewTransact">
+    <div id="transact-details-div">
+        <button id="exit-btn" (click)="toggleExit()">X</button>
+        <div id="transaction-details">
+            <p>{{transacString}}</p>
+            <!-- <p>I am transaction details paragraph</p> -->
+        </div>
+    </div>
+</ng-container>
+
 <div class="transac-table">
+    <h3>Transaction History</h3>
+    <br/>
     <table class="table">
         <thead>
             <tr>
@@ -12,8 +24,7 @@
 
         <tbody>
             <ng-container *ngIf="Transactions.length > 0">
-                <tr *ngFor="let transac of Transactions" [ngClass]="{'minus' : transac.senderEmail == user,
-                'plus' : transac.senderEmail != user}">
+                <tr *ngFor="let transac of Transactions">
                     <td *ngIf="transac.recipientEmail != undefined; else default">
                         {{transac.recipientEmail}}
                     </td>
@@ -27,14 +38,21 @@
                     <ng-template #default>
                         <td>You</td>
                     </ng-template>
-                    <td>{{transac.amount}}</td>
+                    <td [ngClass]="{'minus' : transac.senderEmail == user,
+                    'plus' : transac.senderEmail != user}">${{transac.amount}}</td>
                     <td>{{transac.createdAt | date: 'shortDate'}}</td>
-                    <td>{{transac.description}}</td>
-
-
-
+                    <td class="transac-description" (click)="viewTransaction($event)">{{transac.description}}</td>
                 </tr>
             </ng-container>
+            <!-- <tr>
+                <td>recipientEmail@gmail.com</td>
+                <td>senderEmail@gmail.com</td>
+                <td [ngClass]="'minus'">$100</td>
+                <td>02/12/23</td>
+                <td class="transac-description" (click)="viewTransaction($event)">I HOPE TO BE AN OVERFLOWING TEXT SO THAT I CAN TEST WHAT WILL HAPPEN WHEN THE TEXT BECOMES WAY TOO LONG FOR ME TO FIT IN THE BOX. SHOULD I USE A SCROLL OR JUST EXPAND?</td>
+            </tr> -->
         </tbody>
     </table>
+
 </div>
+
