@@ -4,6 +4,7 @@ import { JwtDecoderService } from '../jwt-decoder.service';
 import { UserDataService } from '../user-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { Transaction } from '../Interfaces/transaction';
 
 @Component({
   selector: 'app-business-home',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./business-home.component.css']
 })
 export class BusinessHomeComponent implements OnInit {
+  Transactions: Array<Transaction> = []
+  user: string | undefined;
   token: string | undefined | null = localStorage.getItem('access_token');
   constructor(private jwtDecoder: JwtDecoderService, private userData: UserDataService,private cookieService: CookieService, private router: Router, public authService: AuthService) { }
   

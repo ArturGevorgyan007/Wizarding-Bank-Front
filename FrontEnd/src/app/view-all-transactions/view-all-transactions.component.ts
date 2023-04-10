@@ -35,7 +35,8 @@ export class ViewAllTransactionsComponent implements OnInit {
 
     this.transacString = (event.target as HTMLInputElement).textContent as string;
     // console.log("view transaction clicked: ", this.viewTransact)
-    this.viewTransact = !this.viewTransact
+    if(this.viewTransact) {}
+    else this.viewTransact = !this.viewTransact
     console.log((event.target as HTMLInputElement).textContent)
 
   }

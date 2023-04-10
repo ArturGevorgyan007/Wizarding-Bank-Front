@@ -1,56 +1,34 @@
-<div style="top: 2%; margin-left: 2%;" class="container split1">
+<div style="top: 2%;" class="container split1 d-flex flex-column justify-content-left">
     <!-- Account Section -->
-    <div class="container d-flex justify-content-left"
-        style="margin-left: 4%; width: fit-content;">
-        <div class="card wallet" style="margin-bottom: 5%">
-            <p class="text-dark">My Wallet</p>
-            <div class="card-bottom pt-3 px-3 mb-2">
-                <div class="d-flex flex-row justify-content-between text-align-center">
-                    <div class="d-flex flex-column"><span>Balance amount</span>
-                        <p>&dollar; <span class="text-white">2,958.12</span></p>
-                    </div>
+    <div class="card wallet">
+        <h3 class="text-dark">My Wallet</h3>
+        <div class="card-bottom pt-3 px-3 mb-2">
+            <div class="d-flex flex-row justify-content-between text-align-center">
+                <div class="d-flex flex-column">
+                    <span>Balance amount</span>
+                    <p>&dollar; <span class="text-white">2,958.12 overflowingmoney paragraph</span></p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container d-flex justify-content-left disappear" style="margin-left: 4%;">
-        <div class="card disappear" style="padding-left: 15%;">
-            <p class="text-dark disappear">Actions</p>
-            <div class="card-new disappear">
-                <ul style="list-style: none;">
-                    <li><a href="#">New transaction</a></li>
-                    <li><a routerLink="Transactions">View Transactions</a></li>
-                    <li><a href="#">View accounts</a></li>
-                    <li><a routerLink="Profile">Change personal details</a></li>
-                    <li><a routerLink="/AddPayment" href="#">Add New Payment Method</a></li>
-                </ul>
-            </div>
+
+    <div class="card actions disappear">
+        <p class="text-dark" style="margin-left: 6%;">Actions</p>
+        <div class="card-new">
+            <ul style="list-style: none;">
+                <li><a href="#">New transaction</a></li>
+                <li><a routerLink="Transactions">View Transactions</a></li>
+                <li><a href="#">View accounts</a></li>
+                <li><a routerLink="Profile">Change personal details</a></li>
+                <li><a routerLink="/AddPayment" href="#">Add New Payment Method</a></li>
+            </ul>
         </div>
     </div>
 </div>
-<!-- <table class="table table-hover right split2">
-    <tr>
-        <th>Sender</th>
-        <th>Amount</th>
-        <th>Recipient</th>
-        <th>Date</th>
-        <th>Description</th>
-    </tr>
-    <ng-container *ngFor="let Transaction of Transactions">
-        <tr [ngClass]="{'minus' : Transaction.senderId == user,
-                       'plus' : Transaction.senderId != user}">
-            <td>{{Transaction.senderId}}</td>
-            <td>{{Transaction.amount}}</td>
-            <td>{{Transaction.recipientId}}</td>
-            <td>{{Transaction.createdAt | date:'fullDate'}}</td>
-            <td>{{Transaction.description}}</td>
-        </tr>
-    </ng-container>
-</table> -->
-<div class="container split2" style="margin-bottom: 2%; top:10px; width: 700px;">
+
+<div class="container split2 d-flex flex-row p-12">
     <div class="card transaction-history-div">
-        <a routerLink="Transactions" class="text-dark" style="margin-bottom: 15px;"><h3>Transaction History</h3></a>
-        <div class="d-flex flex-row justify-content-between text-align-center">
+        <a routerLink="Transactions" class="text-dark" style="margin-bottom: 15px; margin-left: 3%;"><h3>Transaction History</h3></a>
             <section>
                 <details *ngFor="let Transaction of Transactions">
                     <summary>Date: {{Transaction.createdAt | date: 'shortDate'}}&emsp;Amount: ${{Transaction.amount}}
@@ -60,7 +38,7 @@
                     <p>Description: {{Transaction.description}}</p>
                 </details>
 
-                <!-- <details>
+                <details>
                     <summary>Date: 02/12/20&emsp;Amount: $100</summary>
                     <p>Recipient: recipient@gmail.com</p>
                     <p>Sender: sender@gmail.com</p>
@@ -70,10 +48,8 @@
                     <summary>Date: 02/12/20&emsp;Amount: $100</summary>
                     <p>Recipient: recipient@gmail.com</p>
                     <p>Sender: sender@gmail.com</p>
-                    <p>Description: For food</p>
-                </details> -->
+                    <p style="max-width: 300px;">Description: For food</p>
+                </details>
             </section>
-
-        </div>
     </div>
 </div>
