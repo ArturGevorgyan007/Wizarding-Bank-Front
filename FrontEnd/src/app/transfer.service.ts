@@ -54,4 +54,14 @@ export class TransferService {
     return this.http.post(this.apiRoot + 'Transaction/transactions/internal?type=1', body) as Observable<any>; 
   }
   
+  requestMoney(userId : number, amount : number, recipientId : number, description : string) : Observable<any> {
+    var body : Transaction = {
+      "amount": amount,
+      "description": "Request" + description,
+      "recipientId": userId,
+      "status": "pending",
+      "senderId": recipientId
+    };
+    return this.http.post(this.apiRoot + "/Transaction/transaction", body) as Observable<any>;
+  }
 }

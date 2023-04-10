@@ -12,3 +12,18 @@
   <br><br>
   <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
 </form>
+
+<h1>Request Money</h1>
+
+<p>Please enter your desired person's email</p>
+<form [formGroup]="requestForm" (ngSubmit)="onRequest()">
+  <label>
+    Recipient:
+    <label >Email</label>
+    <input type="email" formControlName="remail" placeholder="foo@bar.com" required class="form-control">
+    <label >Amount</label>
+    <input type="number" formControlName="ramount" placeholder="$100" required class="form-control">
+  </label>
+  <br><br>
+  <button type="submit" [disabled]="requestForm.invalid">Request</button>
+</form>
