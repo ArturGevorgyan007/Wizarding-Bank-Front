@@ -5,13 +5,12 @@ body {
     font-family: 'Noto Sans', sans-serif;
 }
 
-
-
 .card {
     border: none;
     border-radius: 10px;
-    width: 275px;
-    margin-top: 3%;
+    min-width: 300px;
+    width: fit-content;
+    padding: 20px 5%
 }
 
 .fa-ellipsis-v {
@@ -24,7 +23,7 @@ body {
 .text-dark {
     font-weight: bold;
     margin-top: 8px;
-    font-size: 13px;
+    font-size: 20px;
     letter-spacing: 0.5px;
 }
 
@@ -65,17 +64,20 @@ body {
     top: 0;
     overflow-x: visible;
     padding-top: 60px;
+    margin-left: 50%;
 }
 
 .split2 {
     height: 85%;
-    width: 70%;
+    min-width: 100%;
     position: fixed;
     z-index: 1;
-    top: 0;
+    /* top: 0; */
     overflow-x: visible;
     padding-top: 60px;
-    margin-left: 45%;
+    margin-left: 50%;
+    margin-top: 10px;
+    width: 500px;
 }
 
 /* Control the left side */
@@ -105,10 +107,50 @@ body {
 
     .split1 {
         position: relative;
+        margin-left: auto;
+        width: 100%;
     }
-
+    
     .split2 {
         position: relative;
-        margin-left: auto;
+        margin-left: 15%;
+        margin-right: 20%;
     }
+    
+    .container {
+        min-width: 80%;
+        min-height: 100%;
+    }
+    
+    .wallet {
+        margin-left: 20%;
+        padding-left: 10%;
+        margin-right: 20%;
+    }
+
+    .transaction-history-div {
+        padding: 5% 15%;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+details {
+    margin-bottom: 10px;
+}
+
+details summary {
+    margin-bottom: 6px;
+}
+
+details p {
+    margin: 0 0;
+    margin-left: 10%;
+    margin-right: 5%;
+}
+
+.transaction-history-div {
+    min-width: fit-content;
 }
