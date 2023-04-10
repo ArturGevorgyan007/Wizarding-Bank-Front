@@ -14,8 +14,8 @@ import { CookieService } from '../../../node_modules/ngx-cookie-service';
 })
 export class TransferPageComponent implements OnInit{
   mode : string = "card";
-  constructor(private cookieSerive : CookieService, private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
-  UID = parseInt(this.cookieSerive.get('userId')) 
+  constructor(private cookieserive : CookieService, private router: Router, private fb: FormBuilder, private api:TransferService, private userData: UserDataService){}
+  UID = parseInt(this.cookieserive.get('userId')) 
   
   transaction : string;
   cards : any[];
@@ -28,12 +28,12 @@ export class TransferPageComponent implements OnInit{
   ngOnInit(): void {
 
     //get all cards
-      this.userData.getUserCards(this.UID).subscribe((data:any) => {
-        this.cards = data
-      })
+    this.userData.getUserCards(this.UID)?.subscribe((data:any) => {
+      this.cards = data
+    })
 
       //get all bank accounts
-      this.userData.getUserAccounts(this.UID).subscribe((data:any) => {
+      this.userData.getUserAccounts(this.UID)?.subscribe((data:any) => {
         this.banks = data
       })
 
@@ -73,7 +73,7 @@ export class TransferPageComponent implements OnInit{
 
            //get wallet balance
            this.userData.getWalletBalance(this.UID).subscribe(data => {
-            if (data == null ){}
+            if (data == null ){return}
             else{
               this.walletamt = data['wallet']; 
               if(this.walletamt >= A){
@@ -97,15 +97,18 @@ export class TransferPageComponent implements OnInit{
 
       // get wallet balance
       this.userData.getWalletBalance(this.UID).subscribe(data => {
-        if (data == null ){}
-            else{
-              this.walletamt = data['wallet']; 
-              if(this.walletamt >= A){
-                this.api.walletToAccount(this.UID, B, A).subscribe(data => {if(data != null) this.transaction = data['amount']});
-              }
-              else alert('Not enough money') 
-            }
-      
+        if (data == null) {
+          return; // add null check
+        } else {
+          this.walletamt = data['wallet']; 
+          if (this.walletamt >= A) {
+            this.api.walletToAccount(this.UID, B, A).subscribe(data => {
+              if (data != null) this.transaction = data['amount'];
+            });
+          } else {
+            alert('Not enough money');
+          }
+        }
       });
 
       

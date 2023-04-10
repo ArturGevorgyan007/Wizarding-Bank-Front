@@ -60,7 +60,8 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
       }
     })
   ],
-  providers: [UserDataService],
+  providers: [UserDataService, CookieService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
