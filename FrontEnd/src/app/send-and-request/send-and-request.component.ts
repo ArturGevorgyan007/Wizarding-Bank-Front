@@ -12,20 +12,22 @@ import { TransactionHistoryService } from '../transaction-history.service';
   templateUrl: './send-and-request.component.html',
   styleUrls: ['./send-and-request.component.css']
 })
-export class SendAndRequestComponent {
+export class SendAndRequestComponent implements OnInit {
 
   uID : any; 
   user: string | undefined;
   Transactions: Array<Transaction> = [];
 
-  constructor(private fb: FormBuilder,private router : Router, private cookieService: CookieService, private service : TransferService, private uservice : UserDataService, private tservice : TransactionHistoryService){
-   // this.uID = parseInt(this.cookieService.get('userId'));
-   this.uID = 11; 
-   this.tservice.getTransactions(this.uID).subscribe(w => {
-    this.Transactions = w;
-  })
+  constructor(private fb: FormBuilder,private router : Router, private cookieService: CookieService, private service : TransferService, private uservice : UserDataService, private tservice : TransactionHistoryService){}
+   
+  
+   ngOnInit(): void {
+    this.uID = 7; 
+    // this.uID = parseInt(this.cookieService.get('userId'));
+    this.getRequest(this.uID);
   }
-    transferForm : FormGroup = this.fb.group({
+    
+  transferForm : FormGroup = this.fb.group({
           email: ['', Validators.required],
           amount: [null, [Validators.required, Validators.min(0)]]
     });
@@ -35,9 +37,7 @@ export class SendAndRequestComponent {
       ramount: new FormControl('', [Validators.required, Validators.min(0)])
     });
 
-  ngOninit(){
-
-  }
+  
 
   onSubmit() {
     const email = this.transferForm.value.email;
@@ -60,7 +60,18 @@ export class SendAndRequestComponent {
         })
       }
     })
-    
+  }
+
+  getRequest(id : number){
+    this.tservice.getTransactions(id).subscribe(t => {
+      let desc : string;
+      for(let i = 0; i < t.length; i++){
+        desc = t[i]['description'];
+        if(desc.includes("Request")){
+          this.Transactions[i] = t[i];
+        }
+      }
+    })
   }
 }
 

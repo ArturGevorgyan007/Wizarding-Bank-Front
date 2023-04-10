@@ -39,10 +39,8 @@
         <thead>
             <tr>
                 <th scope="col">Recipient</th>
-                <th scope="col">Sender</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Date</th>
-                <th scope="col">Description</th>
             </tr>
         </thead>
 
@@ -56,16 +54,8 @@
                     <ng-template #default>
                         <td>You</td>
                     </ng-template>
-
-                    <td *ngIf="transac.senderEmail != undefined; else default">
-                        {{transac.senderEmail}}
-                    </td>
-                    <ng-template #default>
-                        <td>You</td>
-                    </ng-template>
                     <td>{{transac.amount}}</td>
                     <td>{{transac.createdAt | date: 'shortDate'}}</td>
-                    <td>{{transac.description}}</td>
                 </tr>
             </ng-container>
         </tbody>
