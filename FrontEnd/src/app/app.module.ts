@@ -43,7 +43,7 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
     SendAndRequestComponent,
     UserProfileComponent,
     BusinessProfileComponent,
-
+    
   ],
   imports: [
     BrowserModule,
@@ -60,7 +60,7 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
       }
     })
   ],
-  providers: [UserDataService, CookieService],
+  providers: [UserDataService, CookieService, TransferMoneyComponent],
 
   bootstrap: [AppComponent]
 })
