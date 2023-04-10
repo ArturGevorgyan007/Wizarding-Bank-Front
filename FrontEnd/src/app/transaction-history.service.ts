@@ -14,6 +14,6 @@ export class TransactionHistoryService {
     return this.http.get("http://localhost:5092/Transaction/transaction/number/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
   }
   getTransactions(id: number): Observable<Array<Transaction>> {
-    return this.http.get("http://localhost:5092/Transaction/transaction/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
+    return this.http.get("http://localhost:5092/Transaction/transaction/" + id) as Observable<Array<Transaction>>;
   }
 }

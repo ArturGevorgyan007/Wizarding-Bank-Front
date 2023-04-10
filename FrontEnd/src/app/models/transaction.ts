@@ -6,6 +6,6 @@ export interface Transaction {
     "createdAt"?: string,
     "description"?: string,
     "recipientId"?: number,
-    "status"?: string,
+    "status"?: number,
     "senderId"?: number
 }

@@ -1,31 +1,78 @@
-<h1>Send Money</h1>
+<section id="sendMoney">
+  <h1>Send Money</h1>
 
-<p>Please enter your desired person's email</p>
-<form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
-  <label>
-    Recipient:
-    <label >Email</label>
-    <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
-    <label >Amount</label>
-    <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
-  </label>
-  <br><br>
-  <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
-</form>
+  <p>Please enter your desired person's email</p>
+  <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+    <label>
+      Recipient:
+      <label >Email</label>
+      <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
+      <label >Amount</label>
+      <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
+    </label>
+    <br><br>
+    <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
+  </form>
+</section>
 
-<h1>Request Money</h1>
+<section id="requestMoney">
+  <h1>Request Money</h1>
+  <p>Please enter your desired person's email</p>
+  <form [formGroup]="requestForm" (ngSubmit)="onRequest()">
+    <label>
+      Recipient:
+      <label >Email</label>
+      <input type="email" formControlName="remail" placeholder="foo@bar.com" required class="form-control">
+      <label >Amount</label>
+      <input type="number" formControlName="ramount" placeholder="$100" required class="form-control">
+      <label >Description</label>
+      <input type="text" formControlName="description" placeholder="Description of your request" required class="form-control" ngModel maxlength="150">
+    </label>
+    <br><br>
+    <button type="submit" [disabled]="requestForm.invalid">Request</button>
+  </form>
+</section>
 
-<p>Please enter your desired person's email</p>
-<form [formGroup]="requestForm" (ngSubmit)="onRequest()">
-  <label>
-    Recipient:
-    <label >Email</label>
-    <input type="email" formControlName="remail" placeholder="foo@bar.com" required class="form-control">
-    <label >Amount</label>
-    <input type="number" formControlName="ramount" placeholder="$100" required class="form-control">
-    <label >Description</label>
-    <input type="text" formControlName="description" placeholder="Description of your request" required class="form-control" ngModel maxlength="150">
-  </label>
-  <br><br>
-  <button type="submit" [disabled]="requestForm.invalid">Request</button>
-</form>
+<section id="pendingRequests">
+  <div class="transac-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Recipient</th>
+                <th scope="col">Sender</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <ng-container *ngIf="Transactions.length > 0">
+                <tr *ngFor="let transac of Transactions" [ngClass]="{'minus' : transac.senderEmail == user,
+                'plus' : transac.senderEmail != user}">
+                    <td *ngIf="transac.recipientEmail != undefined; else default">
+                        {{transac.recipientEmail}}
+                    </td>
+                    <ng-template #default>
+                        <td>You</td>
+                    </ng-template>
+
+                    <td *ngIf="transac.senderEmail != undefined; else default">
+                        {{transac.senderEmail}}
+                    </td>
+                    <ng-template #default>
+                        <td>You</td>
+                    </ng-template>
+                    <td>{{transac.amount}}</td>
+                    <td>{{transac.createdAt | date: 'shortDate'}}</td>
+                    <td>{{transac.description}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+</section>
+
+
+
+

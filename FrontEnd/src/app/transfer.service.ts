@@ -57,11 +57,13 @@ export class TransferService {
   requestMoney(userId : number, amount : number, recipientId : number, description : string) : Observable<any> {
     var body : Transaction = {
       "amount": amount,
-      "description": "Request" + description,
+      "description": "Request: " + description,
       "recipientId": userId,
-      "status": "pending",
+      "status": 1,
       "senderId": recipientId
     };
-    return this.http.post(this.apiRoot + "/Transaction/transaction", body) as Observable<any>;
+    return this.http.post(this.apiRoot + "Transaction/", body) as Observable<any>;
   }
+
+  walletToWallet(){}
 }

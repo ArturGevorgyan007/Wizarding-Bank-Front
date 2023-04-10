@@ -18,7 +18,7 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
 
 const routes: Routes = [
   { path: 'UserHome', component: UserHomeComponent },
-  { path: '', component: LandingComponent },
+  { path: '', component: SendAndRequestComponent },
   { path: 'BusinessHome', component: BusinessHomeComponent },
   { path: 'AddPayment', component: AddPaymentFormComponent },
   { path: 'UserHome/Transactions', component: ViewAllTransactionsComponent },
