@@ -8,16 +8,13 @@ import { TransferService } from './transfer.service';
 describe('TransferService', () => {
   let httpTestingController: HttpTestingController;
   let service: TransferService;
-  let mockHttpClient: jasmine.SpyObj<any>;
 
   beforeEach(() => {
-    mockHttpClient = jasmine.createSpyObj('HttpClient', ['post']);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        TransferService,
-        { provide: HttpClient, useValue: mockHttpClient }
+        TransferService
       ]
     });
 
@@ -39,8 +36,6 @@ describe('TransferService', () => {
 
       // Mock the response from the API
       const expectedResponse = { success: true };
-      mockHttpClient.post.and.returnValue(of(expectedResponse));
-
       // Call the function and subscribe to the result
       let result;
       service.cardToWallet(cardId, userId, amount).subscribe(res => {
