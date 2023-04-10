@@ -9,13 +9,13 @@ import { Observable } from 'rxjs';
 export class UserGuard implements CanActivate {
   constructor(private router: Router, private cookieService: CookieService) { }
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    route: ActivatedRouteSnapshot | null,
+    state: RouterStateSnapshot | null): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.cookieService.get('Id')) {
       return true;
 
     } else {
-      this.router.navigate(['/Home'])
+      this.router.navigate(['/'])
       return false;
     }
   }

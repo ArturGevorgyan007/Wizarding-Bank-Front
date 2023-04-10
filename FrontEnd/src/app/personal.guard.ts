@@ -15,7 +15,7 @@ export class PersonalGuard implements CanActivate {
       return true;
 
     } else {
-      this.router.navigate(['/Home'])
+      this.router.navigate(['/'])
       return false;
     }
   }

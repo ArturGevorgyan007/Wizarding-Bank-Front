@@ -26,6 +26,7 @@ export class LandingComponent implements OnInit {
             if (this.cookieService.get('userType') == 'Business') {
               this.userData.retrieveBusinessIdFromDB(this.cookieService.get('email')).subscribe(data => {
                 if (data) {
+                  this.userData.authenticate()
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/BusinessHome']);
                 }
@@ -34,6 +35,7 @@ export class LandingComponent implements OnInit {
             else if (this.cookieService.get('userType') == 'Personal') {
               this.userData.retrieveUserIdFromDB(this.cookieService.get('email')).subscribe(data => {
                 if (data) {
+                  this.userData.authenticate()
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/UserHome']);
                 }

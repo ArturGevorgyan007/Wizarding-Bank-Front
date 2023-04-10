@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +66,17 @@ export class UserDataService {
 
   public getWalletBalance(userId: number): Observable<any> {
     return this.http.get("https://wiz-back.azurewebsites.net/user/" + userId) as Observable<any>;
+  }
+
+  // current_state = sessionStorage.getItem("loggedin");
+
+  public $navbar_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  public authenticate() {
+    this.$navbar_toggle.next(true);
+  }
+
+  public deauthenticate() {
+    this.$navbar_toggle.next(false);
   }
 }
