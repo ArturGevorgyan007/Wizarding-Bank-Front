@@ -21,6 +21,7 @@ export class UserDataService {
   public retrieveUserIdFromDB(email: string): Observable<number> {
     return this.http.get("http://localhost:5092/user/byEmail/" + email) as Observable<number>;
   }
+  
   public getUserId(): number {
     return this.Id
   }
