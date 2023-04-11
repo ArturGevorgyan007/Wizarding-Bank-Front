@@ -24,7 +24,7 @@ export class LandingComponent implements OnInit {
           if (c["email"]) {
             console.log(c['email'])
             this.cookieService.set('email', c['email'], 0.4)
-            sessionStorage.setItem("loggedin", 'true')
+            // sessionStorage.setItem("loggedin", 'true')
             if (this.cookieService.get('userType') == 'Business') {
               this.userData.retrieveBusinessIdFromDB(this.cookieService.get('email')).subscribe(data => {
                 if (data) {

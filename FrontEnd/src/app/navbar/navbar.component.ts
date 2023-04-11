@@ -15,7 +15,6 @@ export class NavbarComponent {
     this.cookieService.set('userType', '')
     this.cookieService.set('email', '')
     this.authService.logout()
-    sessionStorage.setItem("loggedin", 'false')
     this.userData.deauthenticate()
   }
   goToWallet() {
