@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { TransferService} from '../transfer.service';
 import { UserDataService } from '../user-data.service';
 import { TransactionHistoryService } from '../transaction-history.service';
+import { Observable, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-send-and-request',
@@ -24,6 +25,8 @@ export class SendAndRequestComponent implements OnInit {
   ramount : number; 
   user: string | undefined;
   Requests: Array<Transaction> = [];
+  users : string[] = [];
+  filteredUsers: Observable<string[]>;
   rTransac : Transaction;
 
   constructor(private fb: FormBuilder,private router : Router, private cookieService: CookieService, private service : TransferService, private uservice : UserDataService, private tservice : TransactionHistoryService){}
@@ -34,9 +37,9 @@ export class SendAndRequestComponent implements OnInit {
     // this.uID = parseInt(this.cookieService.get('userId'));
     this.getRequest(this.uID);
     this.setBalance(this.uID);
-    
   }
-    
+   
+  emailt = new FormControl('');
   transferForm : FormGroup = this.fb.group({
           email: ['', Validators.required],
           amount: [null, [Validators.required, Validators.min(0)]],
@@ -104,14 +107,9 @@ export class SendAndRequestComponent implements OnInit {
                     if(t[i]['status'] == 1){
                       t[i].ramount = t[i].amount
                       for(let j = 0; j < t.length; j++){
-                        console.log(t[j]);
                         let str = t[j]['description'];
-                        console.log(str);
-                        let str2 = "PR: " + t[i].id;
-                        console.log(str2);
                         if(str.includes("PR: " + t[i].id)){
                           t[i].ramount -= t[j].amount;
-                          console.log(t[j]);
                         }
                       }
                       this.Requests.push(t[i]);
@@ -177,6 +175,23 @@ export class SendAndRequestComponent implements OnInit {
         }
       });
     }
+
+    filterUsers(){
+      this.filteredUsers = this.emailt.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value || '')),
+      );
+    }
+
+    private _filter(value: string): string[] {
+      const filterValue = this._normalizeValue(value);
+      return this.users.filter(user => this._normalizeValue(user).includes(filterValue));
+    }
+  
+    private _normalizeValue(value: string): string {
+      return value.toLowerCase().replace(/\s/g, '');
+    }
+
     
 }
 

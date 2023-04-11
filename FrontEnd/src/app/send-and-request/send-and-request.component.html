@@ -6,6 +6,14 @@
     <label>
       Recipient:
       <label >Email</label>
+      <!-- <div>
+        <input type="emailt" formControlName="email" placeholder="foo@bar.com" required class="form-control" [matAutocomplete]="auto" id="userEmails" list="dymEmailList">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let u of filteredUsers | async" [value]="u">
+            {{user}}
+          </mat-option>
+        </mat-autocomplete>
+      </div> -->
       <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
       <label >Amount</label>
       <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
