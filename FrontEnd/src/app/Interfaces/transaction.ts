@@ -5,5 +5,5 @@ export interface Transaction {
     recipientEmail: string;
     createdAt: Date;
     description: string;
-    status:number;
+    status: number;
 }

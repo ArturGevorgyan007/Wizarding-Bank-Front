@@ -3,7 +3,7 @@ export interface Transaction {
     "amount"?: number,
     "cardId"?: number,
     "accountId"?: number,
-    "createdAt"?: string,
+    "createdAt"?: string | Date,
     "description"?: string,
     "recipientId"?: number,
     "status"?: number,

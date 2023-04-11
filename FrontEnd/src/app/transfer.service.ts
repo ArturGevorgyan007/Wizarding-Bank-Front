@@ -77,16 +77,16 @@ export class TransferService {
   }
 
 
-  updateRequest(userId : number, amount : number, recipientId : number, description : string, id : number): Observable<any>{
+  updateRequest(userId : number, recipientId : number, transac : any): Observable<any>{
     var body : Transaction = {
-      "id": id,
-      "amount": amount,
-      "description": description,
+      "id": transac.id,
+      "amount": transac.amount,
+      "createdAt" : transac.Date,
+      "description": transac.description,
       "recipientId": recipientId,
       "status": 1,
       "senderId": userId
     };
-
     return this.http.put(this.apiRoot + "Transaction/", body) as Observable<any>
     
   }

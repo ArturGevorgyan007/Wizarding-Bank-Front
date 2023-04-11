@@ -20,10 +20,10 @@ export class SendAndRequestComponent implements OnInit {
   payRequestD: boolean = false;
   uID : any; 
   uEmail : any;
-  tamt : any; 
-  tid : number; 
+  wallet : number;
   user: string | undefined;
   Requests: Array<Transaction> = [];
+  rTransac : Transaction;
 
   constructor(private fb: FormBuilder,private router : Router, private cookieService: CookieService, private service : TransferService, private uservice : UserDataService, private tservice : TransactionHistoryService){}
    
@@ -32,14 +32,18 @@ export class SendAndRequestComponent implements OnInit {
     this.uID = 11; 
     // this.uID = parseInt(this.cookieService.get('userId'));
     this.getRequest(this.uID);
+    this.setBalance(this.uID);
+    
   }
     
   transferForm : FormGroup = this.fb.group({
           email: ['', Validators.required],
-          amount: [null, [Validators.required, Validators.min(0)]]
+          amount: [null, [Validators.required, Validators.min(0)]],
+          description : new FormControl('', [Validators.required])
     });
+    
     requestForm : FormGroup = this.fb.group({
-      description : new FormControl('', [Validators.required]),
+      rdescription : new FormControl('', [Validators.required]),
       remail: new FormControl('', [Validators.required]),
       ramount: new FormControl('', [Validators.required, Validators.min(0)])
     });
@@ -51,6 +55,20 @@ export class SendAndRequestComponent implements OnInit {
     const amount = this.transferForm.value.amount;
     console.log(`Transfer ${amount} to ${email}`);
     // Perform the transfer here
+    this.uservice.retrieveUserIdFromDB(this.rTransac.recipientEmail).subscribe(data => {
+      if(data != null){
+        const id = data;
+        this.service.userToUser(this.uID, amount, id, "yay").subscribe(data => {
+          console.log(data);
+          if(data != null){
+            console.log("success");
+          } else{
+            console.log("we're unable to process your transfer at this moment.")
+          }
+        });
+      }
+    });
+    
   }
 
   onRequest(){
@@ -58,7 +76,7 @@ export class SendAndRequestComponent implements OnInit {
     //userId : number, amount : number, recipientId : number, description : string
     const email = this.requestForm.value.remail;
     const amount = this.requestForm.value.ramount;
-    const desc = this.requestForm.value.description;
+    const desc = this.requestForm.value.rdescription;
     this.uservice.retrieveUserIdFromDB(email).subscribe(udata => {
       if(udata != null){
         const rId = udata;
@@ -75,19 +93,15 @@ export class SendAndRequestComponent implements OnInit {
         this.uEmail = data['email'];
         this.tservice.getTransactions(id).subscribe(t => {
           if(t != null){
-            let desc : string;
-            let email : string;
             for(let i = 0; i < t.length; i++){
-              
               if(t[i]['senderEmail'] != null && t[i]['description'] != null){
                 const desc = t[i]['description'];
                 if(this.uEmail == t[i]['senderEmail']){
-                  if(desc.includes("Request")){
+                  if(desc.includes("Request") && t[i]['status'] == 1){
                     this.Requests.push(t[i]);
                   }
+                }
               }
-              }
-              
             } 
           }
         })
@@ -99,22 +113,53 @@ export class SendAndRequestComponent implements OnInit {
   payRequest(transact : Transaction){
     this.transferForm.controls['email'].setValue(transact.recipientEmail);
     this.transferForm.controls['amount'].setValue(transact.amount);
-    this.tamt = transact.amount;
-    this.tid = transact.id; 
+    this.rTransac = transact;
     this.payRequestD = true;
   }
 
   pay(){
     const amt = this.transferForm.controls['amount'].value;
-    if(this.tamt == amt){
-      console.log(`Paid request ${this.tamt}`);
-      console.log(this.tid);
-      this.service.updateRequest(this.uID, amt, 7, "Request: ", this.tid).subscribe(data =>{
-        console.log(data);
-      })
+    if(this.wallet > amt){
+      this.uservice.retrieveUserIdFromDB(this.rTransac.recipientEmail).subscribe(data => {
+        if(data != null){
+          let id = data;
+          if(this.rTransac.amount == amt){
+            console.log(`Paid request ${this.rTransac.amount}`);
+            console.log(this.rTransac.id);
+            this.service.updateRequest(this.uID, id, this.rTransac).subscribe(data =>{
+              console.log(data);
+              if(data!= null){
+                this.uservice.updateUserWallet(this.uID, -amt).subscribe(w => {
+                  console.log(w);
+                  console.log("Succesfully payed request......success html box where x takes you back home");
+                });
+              }
+            });
+          } else {
+            console.log(`Paid only ${amt} of ${this.rTransac.amount}`);
+            const msg = "PR: " + id;
+            this.service.userToUser(this.uID, amt, id, msg).subscribe(data => {
+              console.log(data);
+              if(data != null){
+                console.log("Paid this much.....go back to home success html box where x takes you back home");
+              } 
+            });
+          }
+        } 
+      });
     } else {
-      console.log(`Paid only ${amt} of ${this.tamt}`);
+       console.log("Not enough money....error message");
     }
   }
+
+    setBalance(id : number){
+      this.uservice.getWalletBalance(id).subscribe(data => {
+        console.log(data);
+        if(data != null){
+          this.wallet = data['wallet'];
+        }
+      });
+    }
+    
 }
 

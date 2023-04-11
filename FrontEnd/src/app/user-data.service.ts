@@ -73,4 +73,9 @@ export class UserDataService {
   public getUser2(id : number) : Observable<any>{
     return this.http.get(this.apiRoot + "user/" + id) as Observable<any>;
   }
+
+  public updateUserWallet(id : number, amt : number) : Observable<any>{
+    return this.http.get(this.apiRoot + "user/wallet/update/" + id + "/" + amt) as Observable<any>;
+  }
+  
 }
