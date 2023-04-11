@@ -6,4 +6,5 @@ export interface Transaction {
     createdAt: Date;
     description: string;
     status: number;
+    ramount : number;
 }

@@ -9,6 +9,8 @@
       <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
       <label >Amount</label>
       <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
+      <label >Description</label>
+      <input type="text" formControlName="description" placeholder="Write description?" required class="form-control" ngModel maxlength="150">
     </label>
     <br><br>
     <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
@@ -41,6 +43,7 @@
                 <th scope="col">Recipient</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Date</th>
+                <th scope="col"> Remaining Balance </th>
             </tr>
         </thead>
 
@@ -55,6 +58,7 @@
                     </ng-template>
                     <td>{{transac.amount}}</td>
                     <td>{{transac.createdAt | date: 'shortDate'}}</td>
+                    <td> {{transac.ramount}}</td>
                     <td><button (click)="payRequest(transac)"> Pay </button></td>
                 </tr>
             </ng-container>
@@ -67,7 +71,7 @@
   <h1>Pay Rquest</h1>
 
   <p>Please enter your desired person's email</p>
-  <form [formGroup]="transferForm" (ngSubmit)="pay()">
+  <form [formGroup]="transferForm">
     <label>
       Recipient:
       <label >Email</label>
@@ -76,7 +80,7 @@
       <input id="samount" type="number" formControlName="amount" placeholder="$100" required class="form-control">
     </label>
     <br><br>
-    <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
+    <button type="submit" (click)="pay()">Transfer</button>
   </form>
 </section>
 
