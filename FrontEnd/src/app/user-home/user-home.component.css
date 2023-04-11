@@ -68,7 +68,6 @@
 
 .split1 .card {
     margin-bottom: 25px;
-    /* margin-left: 0; */
     width: 100%;
 }
 
@@ -170,7 +169,6 @@ details p {
 }
 
 .wallet {
-    padding: 10px 25px;
     max-width: 80%;
 }
 

@@ -68,7 +68,6 @@
 
 .split1 .card {
     margin-bottom: 25px;
-    /* margin-left: 0; */
     width: 100%;
 }
 
@@ -113,8 +112,8 @@
         position: relative;
         flex-direction: column;
         justify-content: left;
-        min-width: 57%;
-        max-width: 50%;
+        min-width: 70%;
+        max-width: 70%;
         min-height: 100%;
         margin-left: 18%;
         margin-right: 20%;
@@ -132,7 +131,7 @@
     }
 
     .wallet {
-        max-width: 50%;
+        max-width: 70%;
     }
 
     .wallet .flex-column {
@@ -170,12 +169,11 @@ details p {
 }
 
 .wallet {
-    padding: 10px 25px;
-    max-width: 100%;
+    max-width: 80%;
 }
 
 .actions {
-    max-width: 100%;
+    max-width: 80%;
 }
 
 .wallet p {
