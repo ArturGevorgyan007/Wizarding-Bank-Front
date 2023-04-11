@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   constructor(private cookieService: CookieService, private authService: AuthService, public userData: UserDataService, private router: Router) { }
   Logout(): void {
-    sessionStorage.setItem("loggedin", 'false')
-    this.userData.deauthenticate()
     this.cookieService.set('userType', '')
     this.cookieService.set('email', '')
     this.authService.logout()
+    // sessionStorage.setItem("loggedin", 'false')
+    this.userData.deauthenticate()
   }
   goToWallet() {
     this.router.navigateByUrl('Wallet');
