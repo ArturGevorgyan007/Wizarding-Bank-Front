@@ -9,7 +9,7 @@ export class UserDataService {
   addUser(arg0: string) {
     throw new Error('Method not implemented.');
   }
-  apiRoot : any = "http://localhost:5092/";
+  apiRoot: any = "https://wiz-back.azurewebsites.net/";
   public email: any;
   public Id: any;
   constructor(private http: HttpClient) { }
@@ -80,12 +80,12 @@ export class UserDataService {
     this.$navbar_toggle.next(false);
   }
 
-  public getUser2(id : number) : Observable<any>{
+  public getUser2(id: number): Observable<any> {
     return this.http.get(this.apiRoot + "user/" + id) as Observable<any>;
   }
 
-  public updateUserWallet(id : number, amt : number) : Observable<any>{
+  public updateUserWallet(id: number, amt: number): Observable<any> {
     return this.http.get(this.apiRoot + "user/wallet/update/" + id + "/" + amt) as Observable<any>;
   }
-  
+
 }
