@@ -17,12 +17,14 @@ export class WalletPageComponent implements OnInit{
 
   _amount : any = ""; 
   userID : any = "";
+  acctType : any;
   cardList : Card[] = [];
   bankList : bankAccount[] = [];
   userId = this.cookieService.get('userId');
 
 
   ngOnInit(): void {
+    this.acctType = this.cookieService.get('userType'); 
     this.userID = parseInt(this.cookieService.get('userId')) ;
     this.getCurrentAmount(this.userID);
     this.displayAccounts(this.userID);
