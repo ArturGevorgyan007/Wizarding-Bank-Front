@@ -271,13 +271,14 @@ export class LoanApplyComponent implements OnInit {
       var doc = new jspdf('p', 'mm');
       var position = 10; // give some top padding to first page
 
-      doc.addImage(imgData, 'PNG', 15, 15, imgWidth-30, imgHeight-30);
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
       while (heightLeft >= 0) {
         position += heightLeft - imgHeight; // top padding for other pages
+        // position = heightLeft - imgHeight + 10; // top padding for other pages
         doc.addPage();
-        doc.addImage(imgData, 'PNG', 15, 15, imgWidth-30, imgHeight-30);
+        doc.addImage(imgData, 'PNG', 0, position+10, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
       doc.save('file.pdf');
