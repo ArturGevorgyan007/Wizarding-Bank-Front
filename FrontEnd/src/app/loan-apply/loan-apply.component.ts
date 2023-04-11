@@ -285,5 +285,11 @@ export class LoanApplyComponent implements OnInit {
     });
   }
 
-
+  Validate() {
+    var s=document.getElementById("loanTerm")! as HTMLInputElement;
+    if (parseInt(s.value)<0)
+      s.value="";
+    if (parseInt(s.value)>60)
+      s.value="";  
+  }
 }
