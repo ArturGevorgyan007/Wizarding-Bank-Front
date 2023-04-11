@@ -42,8 +42,8 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
     cardTransform,
     SendAndRequestComponent,
     UserProfileComponent,
-    BusinessProfileComponent
-
+    BusinessProfileComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -60,7 +60,7 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
       }
     })
   ],
-  providers: [UserDataService, CookieService],
+  providers: [UserDataService, CookieService, TransferMoneyComponent],
 
   bootstrap: [AppComponent]
 })
