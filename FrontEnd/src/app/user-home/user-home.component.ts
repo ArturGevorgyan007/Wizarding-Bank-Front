@@ -16,7 +16,7 @@ import { CookieService } from '../../../node_modules/ngx-cookie-service';
 export class UserHomeComponent implements OnInit {
   Transactions: Array<Transaction> = []
   user: string | undefined;
-
+  _wallet: any = "";
   token: string | undefined | null = localStorage.getItem('access_token');
 
   constructor(private cookieService: CookieService, private transactions: TransactionHistoryService, public authService: Auth0Service, private jwtDecoder: JwtDecoderService, private userData: UserDataService, private route: Router) { }
@@ -27,10 +27,19 @@ export class UserHomeComponent implements OnInit {
     this.userData.retrieveUserIdFromDB(this.userData.getUser()).subscribe(x => {
       this.userData.Id = x;
       this.user = this.userData.Id;
+      this.getWalletAmount(x);
       this.transactions.getMostRecentTransactions(x).subscribe(w => {
         this.Transactions = w;
       })
     })
+  }
+
+  getWalletAmount(id: any) {
+    //getWalletBalance
+    this.userData.getWalletBalance(id).subscribe(data => {
+      console.log(data);
+      this._wallet = data['wallet'];
+    });
   }
 
 }

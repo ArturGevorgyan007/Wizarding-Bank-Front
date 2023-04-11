@@ -41,7 +41,7 @@ describe('LoanServicesService', () => {
       service.addNewLoan(loan).subscribe(response => {
         expect(response).toEqual(expectedResponse);
       });
-      const req = httpMock.expectOne('http://localhost:5092/Loan/New');
+      const req = httpMock.expectOne('https://wiz-back.azurewebsites.net/Loan/New');
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(loan);
       req.flush(expectedResponse);
@@ -57,7 +57,7 @@ describe('LoanServicesService', () => {
       service.makePayment(payment, id, amount).subscribe(response => {
         expect(response).toEqual(expectedResponse);
       });
-      const req = httpMock.expectOne(`http://localhost:5092/Loan/Pay/${id}/${amount}/${payment}`);
+      const req = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Loan/Pay/${id}/${amount}/${payment}`);
       expect(req.request.method).toBe('PUT');
       req.flush(expectedResponse);
     });
@@ -70,7 +70,7 @@ describe('LoanServicesService', () => {
       service.getLoan(id).subscribe(response => {
         expect(response).toEqual(expectedResponse);
       });
-      const req = httpMock.expectOne(`http://localhost:5092/Loan/Info/${id}`);
+      const req = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Loan/Info/${id}`);
       expect(req.request.method).toBe('GET');
       req.flush(expectedResponse);
     });

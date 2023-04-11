@@ -14,21 +14,25 @@ import { TransferMoneyComponent } from './transfer-money/transfer-money.componen
 import { SendAndRequestComponent } from './send-and-request/send-and-request.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
+import { BusinessGuard } from './business.guard';
+import { PersonalGuard } from './personal.guard';
 
 
 const routes: Routes = [
-  { path: 'UserHome', component: UserHomeComponent },
-  { path: '', component: SendAndRequestComponent },
-  { path: 'BusinessHome', component: BusinessHomeComponent },
-  { path: 'AddPayment', component: AddPaymentFormComponent },
-  { path: 'UserHome/Transactions', component: ViewAllTransactionsComponent },
-  { path: 'Transfer', component: TransferPageComponent },
-  { path: 'BusinessHome/Loan', component: LoanApplyComponent },
-  { path: 'SendAndRequest', component: SendAndRequestComponent },
-  { path: 'TransferMoney', component: TransferMoneyComponent },
-  { path: 'Wallet', component: WalletPageComponent },
-  { path: 'UserHome/Profile', component: UserProfileComponent },
-  { path: 'BusinessHome/Profile', component: BusinessProfileComponent }
+
+  { path: 'UserHome', component: UserHomeComponent, canActivate: [PersonalGuard] },
+  { path: '', component: LandingComponent },
+  { path: 'BusinessHome', component: BusinessHomeComponent, canActivate: [BusinessGuard] },
+  { path: 'AddPayment', component: AddPaymentFormComponent, canActivate: [UserGuard] },
+  { path: 'UserHome/Transactions', component: ViewAllTransactionsComponent, canActivate: [UserGuard] },
+  { path: 'Transfer', component: TransferPageComponent, canActivate: [UserGuard] },
+  { path: 'BusinessHome/Loan', component: LoanApplyComponent, canActivate: [BusinessGuard] },
+  { path: 'SendAndRequest', component: SendAndRequestComponent, canActivate: [UserGuard] },
+  { path: 'TransferMoney', component: TransferMoneyComponent, canActivate: [UserGuard] },
+  { path: 'Wallet', component: WalletPageComponent, canActivate: [UserGuard] },
+  { path: 'UserHome/Profile', component: UserProfileComponent, canActivate: [PersonalGuard] },
+  { path: 'BusinessHome/Profile', component: BusinessProfileComponent, canActivate: [BusinessGuard] }
+
 ]
 
 @NgModule({

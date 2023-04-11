@@ -28,9 +28,9 @@ export class UserProfileComponent implements OnInit{
     });
     this.uds.getFullPersonalUser(this.uds.Id).subscribe(data => {
       this.userObj = data;
-      this.name = data[0].fullName;
-      this.address = data[0].address;
-      this.username = data[0].username;
+      this.name = this.userObj.fullName;
+      this.address = this.userObj.address;
+      this.username = this.userObj.username;
     });
   }
 
@@ -44,9 +44,9 @@ export class UserProfileComponent implements OnInit{
   }
 
   saveProfile(event : Event){
-    this.userObj[0].fullName = this.name;
-    this.userObj[0].address = this.address;
-    this.uds.updateUserProfile(this.userObj[0]).subscribe(data => console.log(data));
+    this.userObj.fullName = this.name;
+    this.userObj.address = this.address;
+    this.uds.updateUserProfile(this.userObj).subscribe(data => console.log(data));
     this.router.navigate(['/UserHome']);
   }
 

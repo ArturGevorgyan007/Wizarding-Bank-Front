@@ -20,7 +20,7 @@ import { TransferPageComponent } from './transfer-page/transfer-page.component';
 import { WalletPageComponent } from './wallet-page/wallet-page.component';
 import { TransferMoneyComponent } from './transfer-money/transfer-money.component';
 import { CookieService } from 'ngx-cookie-service';
-import {cardTransform} from './CardTransformPipe';
+import { cardTransform } from './CardTransformPipe';
 import { SendAndRequestComponent } from './send-and-request/send-and-request.component'
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
@@ -42,8 +42,8 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
     cardTransform,
     SendAndRequestComponent,
     UserProfileComponent,
-    BusinessProfileComponent
-
+    BusinessProfileComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -56,11 +56,12 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
       authorizationParams: {
-        redirect_uri: 'http://localhost:4200'
+        redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/'
       }
     })
   ],
-  providers: [UserDataService],
+  providers: [UserDataService, CookieService, TransferMoneyComponent],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

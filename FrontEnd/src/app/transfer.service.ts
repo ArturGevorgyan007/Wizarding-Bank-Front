@@ -8,25 +8,26 @@ import { Transaction } from './models/transaction';
 })
 export class TransferService {
 
-  apiRoot: string = 'http://localhost:5092/';
-  //apiRoot: string = 'https://wiz-back.azurewebsites.net/';
 
-  constructor(private http: HttpClient) {}
+  apiRoot: string = 'https://wiz-back.azurewebsites.net/';
+
+  constructor(private http: HttpClient) { }
   //When sending money to self, recipient = id, sender = null
   //TODO: wrap functions to accept name email etc
   //Card-to-wallet
-  cardToWallet(cardId : number, userId : number, amount : number) : Observable<any>{
-    var body : Transaction = {
+  cardToWallet(cardId: number, userId: number, amount: number): Observable<any> {
+    var body: Transaction = {
       "cardId": cardId,
       "recipientId": userId,
       "amount": amount
     };
     return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=3', body) as Observable<any>; 
+
   }
-  
+
   //wallet-to-card
-  walletToCard(userId : number, cardId : number, amount : number) : Observable<any> {
-    var body : Transaction = {
+  walletToCard(userId: number, cardId: number, amount: number): Observable<any> {
+    var body: Transaction = {
       "senderId": userId,
       "cardId": cardId,
       "amount": amount,
@@ -35,8 +36,8 @@ export class TransferService {
   }
 
   //bankAccount-to-wallet
-  accountToWallet(accountId : number, userId : number, amount : number) : Observable<any> {
-    var body : Transaction = {
+  accountToWallet(accountId: number, userId: number, amount: number): Observable<any> {
+    var body: Transaction = {
       "accountId": accountId,
       "recipientId": userId,
       "amount": amount
@@ -45,8 +46,8 @@ export class TransferService {
   }
 
   //wallet-to-bankAccount
-  walletToAccount(userId : number, accountId : number, amount : number) : Observable<any> {
-    var body : Transaction = {
+  walletToAccount(userId: number, accountId: number, amount: number): Observable<any> {
+    var body: Transaction = {
       "accountId": accountId,
       "senderId": userId,
       "amount": amount

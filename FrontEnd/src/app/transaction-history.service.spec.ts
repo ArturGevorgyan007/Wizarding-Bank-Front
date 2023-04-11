@@ -43,7 +43,7 @@ describe('TransactionHistoryService', () => {
         expect(response).toEqual(transactions);
       });
 
-      const request = httpMock.expectOne(`http://localhost:5092/Transaction/transaction/number/${userId}`);
+      const request = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Transaction/transaction/number/${userId}`);
       expect(request.request.method).toBe('GET');
       request.flush(transactions);
     });
@@ -67,7 +67,7 @@ describe('TransactionHistoryService', () => {
         expect(response).toEqual(transactions);
       });
 
-      const request = httpMock.expectOne(`http://localhost:5092/Transaction/transaction/${userId}`);
+      const request = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Transaction/transaction/${userId}`);
       expect(request.request.method).toBe('GET');
       request.flush(transactions);
     });

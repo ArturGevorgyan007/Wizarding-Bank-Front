@@ -13,7 +13,7 @@ import { CookieService } from '../../../node_modules/ngx-cookie-service';
 })
 export class TransferMoneyComponent implements OnInit{
 
-  constructor(private service : TransferService, private user_service : UserDataService, private router : Router, private cookieService: CookieService){}
+  constructor(public service : TransferService, public user_service : UserDataService, private router : Router, private cookieService: CookieService){}
 
   display = true;
   displayAdd = false;
@@ -54,7 +54,6 @@ export class TransferMoneyComponent implements OnInit{
   }
 
   change(){
-    console.log("should show card or account options");
   }
 
   setType(type : any){
@@ -62,81 +61,72 @@ export class TransferMoneyComponent implements OnInit{
       this.type = "b";
       this.cardDsiplay = false;
       this.bankDisplay = true;
-      console.log("with bank", this.type);
       
       //populate with bank accounts
     } else {
       this.type = "c";
       this.bankDisplay = false;
       this.cardDsiplay = true;
-      console.log("with card", this.type);
       //populate with cards 
       
     }
   }
   
   addMoney(){
-    console.log(this._amount, this.type, "user id: 1");
     if(this.type == "b"){
-      console.log("Add money from bank", this.typeId, this._amount);
-       this.service.accountToWallet(this.typeId,this.UID,this._amount).subscribe(data => {
-         if(data != null){
-          console.log(data);
-          console.log("successful transaction from bank to wallet");
-          this.messagecall = true;
-          this.message = "Successful transaction from bank to wallet"
-          //this.router.navigateByUrl('Wallet');
-         } else {
-            console.log("Not enough money");
+      const accountToWalletObs = this.service.accountToWallet(this.typeId,this.UID,this._amount);
+      if (accountToWalletObs) {
+        accountToWalletObs.subscribe(data => {
+          if(data != null){
+            this.messagecall = true;
+            this.message = "Successful transaction from bank to wallet"
+          } else {
             this.messagecall1 = true;
             this.message = "Invalid transaction from card to wallet. Not enough money.";
-         }
-       })
+            return;
+          }
+        });
+      } 
     } 
     else {
-      console.log("Add money from card");
-      this.service.cardToWallet(this.typeId,this.UID,this._amount).subscribe(data => {
-        console.log(data);
-        if(data != null){
-          console.log("successful transaction from card to wallet");
-          this.messagecall = true;
-          this.message = "Successful transaction from card to wallet"
-          //this.router.navigateByUrl('Wallet');
-        } else {
-          console.log("Not enought money");
-          this.messagecall1 = true;
-          this.message = "Invalid transaction from card to wallet. Not enough money.";
-        } 
-        
-      })
-    }
-    
-  }
+      const cardToWalletObs = this.service.cardToWallet(this.typeId,this.UID,this._amount);
+      if (cardToWalletObs) {
+        cardToWalletObs.subscribe(data => {
+          if(data != null){
+            this.messagecall = true;
+            this.message = "Successful transaction from card to wallet"
+          } else {
+            this.messagecall1 = true;
+            this.message = "Invalid transaction from card to wallet. Not enough money.";
+            return;
+          } 
+        });
+      } 
+    }    
+}
 
   displayCards(id : any){
-    this.user_service.getUserCards(this.UID).subscribe(data => {
-      console.log(data);
-      if(data != null){
+    this.user_service.getUserCards(this.UID)?.subscribe(data => {
+      if(data != null)
+      {
         for(let i = 0; i < data.length; i++){
-        let card = {} as Card; 
-        card.cardId = data[i]['id'];
-        card.balance = data[i]['balance'];
-        card.cardNumber = data[i]['cardNumber'];
-        card.cvv = data[i]['cvv'];
-        card.expDate = data[i]['expiryDate'];
-        this.cardList.push(card);
+          let card = {} as Card; 
+          card.cardId = data[i]['id'];
+          card.balance = data[i]['balance'];
+          card.cardNumber = data[i]['cardNumber'];
+          card.cvv = data[i]['cvv'];
+          card.expDate = data[i]['expiryDate'];
+          this.cardList.push(card);
         }
-        console.log(this.cardList);
+
       }
-      
     });
   }
 
   displayAccounts(id : any){
-    this.user_service.getUserAccounts(this.UID).subscribe(data => {
-      console.log(data);
-      if(data != null){
-        for(let i = 0; i < data.length; i++){
+    this.user_service.getUserAccounts(this.UID)?.subscribe(data => {
+      if(data != null)
+      for(let i = 0; i < data.length; i++){
         let bacct = {} as bankAccount;
         bacct.acctNum = data[i]['accountNumber'];
         bacct.balance = data[i]['balance'];
@@ -145,17 +135,14 @@ export class TransferMoneyComponent implements OnInit{
         }
         console.log(this.bankList);
       }
-      
     });
   }
 
   setCard(id : any){
     this.typeId = id;
-    console.log(this.typeId);
   }
 
   setBAcct(id : any){
     this.typeId = id;
-    console.log(this.typeId);
   }
 }

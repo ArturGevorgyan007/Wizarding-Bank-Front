@@ -28,6 +28,7 @@ export class LandingComponent implements OnInit {
                 if (data) {
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/BusinessHome']);
+                  this.userData.authenticate()
                 }
               })
             }
@@ -36,6 +37,7 @@ export class LandingComponent implements OnInit {
                 if (data) {
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/UserHome']);
+                  this.userData.authenticate()
                 }
               })
             }
@@ -49,15 +51,12 @@ export class LandingComponent implements OnInit {
   async login() {
     await this.authService.logout()
     this.cookieService.set('userType', 'Personal', 0.4);
-    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } })
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/' }, appState: { target: 'Personal' } })
 
   }
   async businessLogin() {
     await this.authService.logout();
     this.cookieService.set('userType', 'Business', 0.4)
-    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'http://localhost:4200/' } })
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/' }, appState: { target: 'Business' } })
   }
-
-
-
 }
