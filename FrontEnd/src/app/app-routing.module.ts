@@ -19,6 +19,7 @@ import { PersonalGuard } from './personal.guard';
 
 
 const routes: Routes = [
+
   { path: 'UserHome', component: UserHomeComponent, canActivate: [PersonalGuard] },
   { path: '', component: LandingComponent },
   { path: 'BusinessHome', component: BusinessHomeComponent, canActivate: [BusinessGuard] },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'Wallet', component: WalletPageComponent, canActivate: [UserGuard] },
   { path: 'UserHome/Profile', component: UserProfileComponent, canActivate: [PersonalGuard] },
   { path: 'BusinessHome/Profile', component: BusinessProfileComponent, canActivate: [BusinessGuard] }
+
 ]
 
 @NgModule({

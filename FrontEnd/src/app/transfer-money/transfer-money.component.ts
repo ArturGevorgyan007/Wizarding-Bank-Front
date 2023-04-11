@@ -132,8 +132,9 @@ export class TransferMoneyComponent implements OnInit{
         bacct.balance = data[i]['balance'];
         bacct.bankAcctId = data[i]['id'];
         this.bankList.push(bacct);
+        }
+        console.log(this.bankList);
       }
-
     });
   }
 

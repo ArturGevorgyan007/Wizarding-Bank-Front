@@ -14,6 +14,8 @@ export class TransactionHistoryService {
     return this.http.get("https://wiz-back.azurewebsites.net/Transaction/transaction/number/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
   }
   getTransactions(id: number): Observable<Array<Transaction>> {
+
     return this.http.get("https://wiz-back.azurewebsites.net/Transaction/transaction/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
+
   }
 }
