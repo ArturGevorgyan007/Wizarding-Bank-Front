@@ -17,6 +17,7 @@ export class LandingComponent implements OnInit {
   constructor(private cookieService: CookieService, private router: Router, public authService: AuthService, public userData: UserDataService) { }
   async ngOnInit(): Promise<void> {
     if (this.authService.isAuthenticated$) {
+      sessionStorage.setItem("loggedin", 'true')
       this.userData.authenticate()
       await this.authService.user$.subscribe(c => {
         if (c) {

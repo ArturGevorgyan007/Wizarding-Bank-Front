@@ -70,8 +70,16 @@ export class UserDataService {
     return this.http.get("https://wiz-back.azurewebsites.net/user/" + userId) as Observable<any>;
   }
 
-  public $navbar_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  current_state = sessionStorage.getItem("loggedin");
 
+  ParseBoolean(value : string | null) : boolean {
+    if (value==="true")
+      return true;
+    else
+      return false;
+  }
+  public $navbar_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.ParseBoolean(this.current_state))
+  
   public authenticate() {
     this.$navbar_toggle.next(true);
   }
