@@ -24,10 +24,8 @@ export class WalletPageComponent implements OnInit{
 
 
   ngOnInit(): void {
-    //this.acctType = this.cookieService.get('userType'); 
-    //this.userID = parseInt(this.cookieService.get('userId')) ;
-    this.acctType = "Business";
-    this.userID = 3;
+    this.acctType = this.cookieService.get('userType'); 
+    this.userID = parseInt(this.cookieService.get('userId')) ;
     this.getCurrentAmount(this.userID);
     this.displayAccounts(this.userID);
     this.displayCards(this.userID);

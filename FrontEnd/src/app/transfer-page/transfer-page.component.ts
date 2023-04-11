@@ -77,7 +77,7 @@ export class TransferPageComponent implements OnInit{
             else{
               this.walletamt = data['wallet']; 
               if(this.walletamt >= A){
-                this.api.walletToCard(this.UID, C, A).subscribe(data => {if(data != null) this.transaction = data['amount']});
+                this.api.walletToCard(this.UID, C, A, true).subscribe(data => {if(data != null) this.transaction = data['amount']});
 
               }
               else alert('Not enough money')
@@ -102,7 +102,7 @@ export class TransferPageComponent implements OnInit{
         } else {
           this.walletamt = data['wallet']; 
           if (this.walletamt >= A) {
-            this.api.walletToAccount(this.UID, B, A).subscribe(data => {
+            this.api.walletToAccount(this.UID, B, A, true).subscribe(data => {
               if (data != null) this.transaction = data['amount'];
             });
           } else {
