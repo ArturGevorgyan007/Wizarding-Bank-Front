@@ -56,15 +56,15 @@ describe('UserProfileComponent', () => {
   it('should retrieve user data from UserDataService on init', () => {
     const email = 'test@example.com';
     const userId = 123;
-    const userObj = [{
+    const userObj = {
       fullName: 'Test User',
       address: '123 Test Street',
       username: 'testuser'
-    }];
+    };
     cookieServiceSpy.get.and.returnValue(email);
     userDataServiceSpy.getUser.and.returnValue(email);
     userDataServiceSpy.retrieveUserIdFromDB.and.returnValue(of(userId));
-    userDataServiceSpy.getFullPersonalUser.and.returnValue(of(userObj));
+    userDataServiceSpy.getFullPersonalUser.and.returnValue(of([userObj]));
 
     fixture.detectChanges();
 
@@ -73,10 +73,7 @@ describe('UserProfileComponent', () => {
     expect(userDataServiceSpy.getUser).toHaveBeenCalledWith();
     expect(userDataServiceSpy.retrieveUserIdFromDB).toHaveBeenCalledWith(email);
     expect(userDataServiceSpy.getFullPersonalUser).toHaveBeenCalledWith(userId);
-    expect(component.userObj).toEqual([userObj[0]]);
-    expect(component.name).toEqual(userObj[0].fullName);
-    expect(component.address).toEqual(userObj[0].address);
-    expect(component.username).toEqual(userObj[0].username);
+    expect(component.userObj).toEqual([userObj]);
   });
 
   it('should update user profile data using UserDataService', () => {
@@ -87,7 +84,7 @@ describe('UserProfileComponent', () => {
     };
     const updatedName = 'Updated Name';
     const updatedAddress = '456 Updated Street';
-    component.userObj = [userObj];
+    component.userObj = userObj;
     component.name = updatedName;
     component.address = updatedAddress;
     userDataServiceSpy.updateUserProfile.and.returnValue(of(['success']));

@@ -18,8 +18,7 @@ describe('TransactionHistoryService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         TransactionHistoryService,
-        { provide: UserDataService, useValue: userDataServiceSpy },
-        { provide: HttpClient, useValue: httpMock }
+        { provide: UserDataService, useValue: userDataServiceSpy }
       ]
     });
     service = TestBed.inject(TransactionHistoryService);
