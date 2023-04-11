@@ -24,8 +24,10 @@ export class WalletPageComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.acctType = this.cookieService.get('userType'); 
-    this.userID = parseInt(this.cookieService.get('userId')) ;
+    //this.acctType = this.cookieService.get('userType'); 
+    //this.userID = parseInt(this.cookieService.get('userId')) ;
+    this.acctType = "Business";
+    this.userID = 3;
     this.getCurrentAmount(this.userID);
     this.displayAccounts(this.userID);
     this.displayCards(this.userID);
@@ -43,7 +45,7 @@ export class WalletPageComponent implements OnInit{
     if(this.acctType == 'Business'){
       this.service.getWalletBBalance(id).subscribe(data => {
         console.log(data);
-        this._amount = data['wallet'];
+        this._amount = data[0]['wallet'];
       });
     } 
     else {

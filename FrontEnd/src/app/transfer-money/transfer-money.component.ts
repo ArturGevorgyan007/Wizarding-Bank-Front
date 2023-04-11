@@ -125,13 +125,13 @@ export class TransferMoneyComponent implements OnInit{
 
   displayAccounts(id : any){
     this.user_service.getUserAccounts(this.UID)?.subscribe(data => {
-      if(data != null)
-      for(let i = 0; i < data.length; i++){
-        let bacct = {} as bankAccount;
-        bacct.acctNum = data[i]['accountNumber'];
-        bacct.balance = data[i]['balance'];
-        bacct.bankAcctId = data[i]['id'];
-        this.bankList.push(bacct);
+      if(data != null){
+        for(let i = 0; i < data.length; i++){
+          let bacct = {} as bankAccount;
+          bacct.acctNum = data[i]['accountNumber'];
+          bacct.balance = data[i]['balance'];
+          bacct.bankAcctId = data[i]['id'];
+          this.bankList.push(bacct);
         }
         console.log(this.bankList);
       }
