@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class UserDataService {
   apiRoot: any = "https://wiz-back.azurewebsites.net/";
   public email: any;
   public Id: any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
   public getUser(): string {
     return this.email;
   }
@@ -70,8 +71,16 @@ export class UserDataService {
     return this.http.get("https://wiz-back.azurewebsites.net/user/" + userId) as Observable<any>;
   }
 
-  public $navbar_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  current_state = this.cookieService.get('userType');
 
+  ParseBoolean(value : string | null) : boolean {
+    if (value != '' )
+      return true;
+    else
+      return false;
+  }
+  public $navbar_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.ParseBoolean(this.current_state))
+  
   public authenticate() {
     this.$navbar_toggle.next(true);
   }

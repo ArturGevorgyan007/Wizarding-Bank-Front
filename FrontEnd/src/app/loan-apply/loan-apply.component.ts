@@ -272,18 +272,26 @@ export class LoanApplyComponent implements OnInit {
       var position = 10; // give some top padding to first page
 
       doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      doc.text("Page 1",10,10);
       heightLeft -= pageHeight;
 
       while (heightLeft >= 0) {
-        // position += heightLeft - imgHeight; // top padding for other pages
-        position = heightLeft - imgHeight + 10; // top padding for other pages
+        position += heightLeft - imgHeight; // top padding for other pages
+        // position = heightLeft - imgHeight + 10; // top padding for other pages
         doc.addPage();
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        doc.text("Page 2",10,10)
+        doc.addImage(imgData, 'PNG', 0, position+10, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
       doc.save('file.pdf');
     });
   }
 
-
+  Validate() {
+    var s=document.getElementById("loanTerm")! as HTMLInputElement;
+    if (parseInt(s.value)<0)
+      s.value="";
+    if (parseInt(s.value)>60)
+      s.value="";  
+  }
 }

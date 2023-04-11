@@ -19,14 +19,18 @@ export class WalletPageComponent implements OnInit{
   userID : any = "";
   cardList : Card[] = [];
   bankList : bankAccount[] = [];
-  userId = this.cookieService.get('userId');
-
+  type : any; 
 
   ngOnInit(): void {
-    this.userID = parseInt(this.cookieService.get('userId')) ;
-    this.getCurrentAmount(this.userID);
-    this.displayAccounts(this.userID);
-    this.displayCards(this.userID);
+    if (this.cookieService.get('userType') == 'Business') {
+      console.log("THIS IS A BUSINESS");
+    } else if(this.cookieService.get('userType') == 'Personal'){
+      console.log("THIS IS PERSONAL");
+    }
+    //this.userID = parseInt(this.cookieService.get('userId')) ;
+   // this.getCurrentAmount(this.userID);
+    //this.displayAccounts(this.userID);
+   // this.displayCards(this.userID);
   }
 
   linkCardorAcct(){}
@@ -39,14 +43,12 @@ export class WalletPageComponent implements OnInit{
   getCurrentAmount(id : any){
     //getWalletBalance
     this.service.getWalletBalance(id).subscribe(data => {
-      console.log(data);
       this._amount = data['wallet'];
     });
   }
 
   displayAccounts(id : any){
     this.service.getUserAccounts(id).subscribe(data => {
-      console.log(data);
       for(let i = 0; i < data.length; i++){
         let bacct = {} as bankAccount;
         bacct.acctNum = data[i]['accountNumber'];
@@ -54,13 +56,11 @@ export class WalletPageComponent implements OnInit{
         bacct.bankAcctId = data[i]['id'];
         this.bankList.push(bacct);
       }
-      console.log(this.bankList);
     });
   }
 
   displayCards(id : any){
     this.service.getUserCards(id).subscribe(data => {
-      console.log(data);
       for(let i = 0; i < data.length; i++){
         let card = {} as Card; 
         card.cardId = data[i]['id'];
@@ -70,7 +70,6 @@ export class WalletPageComponent implements OnInit{
         card.expDate = data[i]['expiryDate'];
         this.cardList.push(card);
       }
-      console.log(this.cardList);
     });
   }
 }
