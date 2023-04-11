@@ -33,6 +33,12 @@ export class UserDataService {
     return this.http.get(this.apiRoot + 'Card/User', { params: qparams }) as Observable<Array<any>>;
   }
 
+  public getBusinessCards(id : number) : Observable<Array<any>>{
+    let qparams = new HttpParams()
+      .set('userId', id);
+    return this.http.get(this.apiRoot + "Card/Business", {params: qparams}) as Observable<Array<any>>;
+  }
+
   public retrieveBusinessIdFromDB(email: string): Observable<number> {
     return this.http.get("https://wiz-back.azurewebsites.net/Business/busId/" + email) as Observable<number>;
   }
@@ -46,6 +52,10 @@ export class UserDataService {
     let qparams = new HttpParams()
       .set('id', userId/*this.Id*/)
     return this.http.get(this.apiRoot + 'Account/UserAccounts', { params: qparams }) as Observable<Array<any>>;
+  }
+
+  public getBankAccounts() : Observable<Array<any>> {
+    return this.http.get(this.apiRoot + "Account/Accounts") as Observable<Array<any>>;
   }
 
   public getFullPersonalUser(userId: number): Observable<Array<any>> {

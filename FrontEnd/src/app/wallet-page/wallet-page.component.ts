@@ -40,41 +40,81 @@ export class WalletPageComponent implements OnInit{
 
   getCurrentAmount(id : any){
     //getWalletBalance
-    this.service.getWalletBalance(id).subscribe(data => {
-      console.log(data);
-      this._amount = data['wallet'];
-    });
+    if(this.acctType == 'Business'){
+      this.service.getWalletBBalance(id).subscribe(data => {
+        console.log(data);
+        this._amount = data['wallet'];
+      });
+    } 
+    else {
+      this.service.getWalletBalance(id).subscribe(data => {
+            console.log(data);
+            this._amount = data['wallet'];
+      });
+    }
+    
   }
 
   displayAccounts(id : any){
-    this.service.getUserAccounts(id).subscribe(data => {
-      console.log(data);
-      for(let i = 0; i < data.length; i++){
-        let bacct = {} as bankAccount;
-        bacct.acctNum = data[i]['accountNumber'];
-        bacct.balance = data[i]['balance'];
-        bacct.bankAcctId = data[i]['id'];
-        this.bankList.push(bacct);
-      }
-      console.log(this.bankList);
-    });
+    if(this.acctType == 'Business'){
+      this.service.getBankAccounts().subscribe(data => {
+        if(data != null){
+          for(let i = 0; i < data.length; i++){
+            if(data[i]['businessId'] == id){
+              let bacct = {} as bankAccount;
+              bacct.acctNum = data[i]['accountNumber'];
+              bacct.balance = data[i]['balance'];
+              bacct.bankAcctId = data[i]['id'];
+              this.bankList.push(bacct);
+            }
+          }
+        } 
+      });
+    }
+    else{
+      this.service.getUserAccounts(id).subscribe(data => {
+        if(data != null){
+          for(let i = 0; i < data.length; i++){
+            let bacct = {} as bankAccount;
+            bacct.acctNum = data[i]['accountNumber'];
+            bacct.balance = data[i]['balance'];
+            bacct.bankAcctId = data[i]['id'];
+            this.bankList.push(bacct);
+          }
+        }
+      });
+    }
   }
 
   displayCards(id : any){
-    this.service.getUserCards(id).subscribe(data => {
-      console.log(data);
-      for(let i = 0; i < data.length; i++){
-        let card = {} as Card; 
-        card.cardId = data[i]['id'];
-        card.balance = data[i]['balance'];
-        card.cardNumber = data[i]['cardNumber'];
-        card.cvv = data[i]['cvv'];
-        card.expDate = data[i]['expiryDate'];
-        this.cardList.push(card);
-      }
-      console.log(this.cardList);
-    });
+    if(this.acctType == "Business"){
+      this.service.getBusinessCards(id).subscribe(data => {
+        for(let i = 0; i < data.length; i++){
+          let card = {} as Card; 
+          card.cardId = data[i]['id'];
+          card.balance = data[i]['balance'];
+          card.cardNumber = data[i]['cardNumber'];
+          card.cvv = data[i]['cvv'];
+          card.expDate = data[i]['expiryDate'];
+          this.cardList.push(card);
+        }
+      });
+    } 
+    else{
+      this.service.getUserCards(id).subscribe(data => {
+        for(let i = 0; i < data.length; i++){
+          let card = {} as Card; 
+          card.cardId = data[i]['id'];
+          card.balance = data[i]['balance'];
+          card.cardNumber = data[i]['cardNumber'];
+          card.cvv = data[i]['cvv'];
+          card.expDate = data[i]['expiryDate'];
+          this.cardList.push(card);
+        }
+      });
+    }
   }
+    
 }
 
 export interface Card{
