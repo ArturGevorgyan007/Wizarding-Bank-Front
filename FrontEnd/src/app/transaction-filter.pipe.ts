@@ -5,7 +5,7 @@ import { Transaction } from './Interfaces/transaction';
 @Pipe({
   name: 'filterByStatus',
 })
-export class FilterByStatusPipe implements PipeTransform {
+export class TransactionFilterPipe implements PipeTransform {
   transform(transactions: Transaction[]): Transaction[] {
     if (!transactions) {
       return [];

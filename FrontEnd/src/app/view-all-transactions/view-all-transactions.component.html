@@ -24,7 +24,7 @@
 
         <tbody>
             <ng-container *ngIf="Transactions.length > 0">
-                <tr *ngFor="let transac of Transactions | filterByStatus">
+                <tr *ngFor="let transac of Transactions | TransactionFilterPipe">
                     <td *ngIf="transac.recipientEmail != undefined; else default">
                         {{transac.recipientEmail}}
                     </td>

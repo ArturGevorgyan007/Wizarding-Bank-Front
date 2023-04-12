@@ -4,7 +4,7 @@ import { UserDataService } from '../user-data.service';
 import { TransactionHistoryService } from '../transaction-history.service';
 import { CookieService } from '../../../node_modules/ngx-cookie-service';
 import { overflowWrap } from 'html2canvas/dist/types/css/property-descriptors/overflow-wrap';
-import { FilterByStatusPipe } from '../transaction-filter.pipe';
+import { TransactionFilterPipe } from '../transaction-filter.pipe';
 @Component({
   selector: 'app-view-all-transactions',
   templateUrl: './view-all-transactions.component.html',
