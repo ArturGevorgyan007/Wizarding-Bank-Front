@@ -36,8 +36,8 @@ export class TransferMoneyComponent implements OnInit{
       this.busi = true;
     } 
     this.setType("c");
-    //this.UID = parseInt(this.cookieService.get('userId')) ;
-    this.UID = 3;
+    this.UID = parseInt(this.cookieService.get('userId')) ;
+    //this.UID = 3;
     this.displayAccounts(this.UID);
     this.displayCards(this.UID);
   }

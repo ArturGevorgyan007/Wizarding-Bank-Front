@@ -34,8 +34,8 @@ export class SendAndRequestComponent implements OnInit {
    
   
    ngOnInit(): void {
-    this.uID = 6; 
-    // this.uID = parseInt(this.cookieService.get('userId'));
+    //this.uID = 6; 
+    this.uID = parseInt(this.cookieService.get('userId'));
     this.acctType = this.cookieService.get('userType');
     this.getRequest(this.uID);
     this.setBalance(this.uID);

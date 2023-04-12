@@ -26,8 +26,8 @@ export class TransferPageComponent implements OnInit{
   acctType : any;
 
   ngOnInit(): void {
-   // this.UID = parseInt(this.cookieService.get('userId')) 
-   this.UID = 3;
+   this.UID = parseInt(this.cookieService.get('userId')) 
+   //this.UID = 3;
     this.acctType = this.cookieService.get('userType');
     //get all cards
     if(this.acctType == 'Business'){
