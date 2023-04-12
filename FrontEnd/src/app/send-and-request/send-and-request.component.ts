@@ -29,6 +29,7 @@ export class SendAndRequestComponent implements OnInit {
   users : string[] = [];
   filteredUsers: Observable<string[]>;
   rTransac : Transaction;
+  isDisabled = true;
 
   constructor(private fb: FormBuilder,private router : Router, private cookieService: CookieService, private service : TransferService, private uservice : UserDataService, private tservice : TransactionHistoryService){}
    
@@ -258,11 +259,11 @@ export class SendAndRequestComponent implements OnInit {
     this.transferForm.controls['email'].setValue(transact.recipientEmail);
     this.transferForm.controls['amount'].setValue(transact.ramount);
     this.rTransac = transact;
-    this.payRequestD = true;
   }
 
   pay(){
     const amt = this.transferForm.controls['amount'].value;
+    // set button to enabled 
     if(this.wallet > amt){
       this.uservice.retrieveUserIdFromDB(this.rTransac.recipientEmail).subscribe(data => {
         if(data != null){
@@ -338,6 +339,7 @@ export class SendAndRequestComponent implements OnInit {
        console.log("Not enough money....error message");
     }
   }
+
 
     setBalance(id : number){
       if(this.acctType == "Business"){

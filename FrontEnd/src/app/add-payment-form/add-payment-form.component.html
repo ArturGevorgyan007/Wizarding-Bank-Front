@@ -7,15 +7,13 @@
           <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
             <li class="nav-item">
               <a data-toggle="pill" (click)="toggleMode('credit')" class="nav-link rounded-pill pointer" [ngClass] = "mode === 'credit' ? 'active' : ''">
-                                  <i class="fa fa-credit-card"></i>
-                                  Credit Card
-                                </a>
+              Credit Card
+              </a>
             </li>
             <li class="nav-item">
               <a data-toggle="pill" (click)="toggleMode('bank')" class="nav-link rounded-pill pointer" [ngClass] = "mode === 'bank' ? 'active' : ''">
-                                  <i class="fa fa-university"></i>
-                                   Bank Account
-                               </a>
+                Bank Account
+              </a>
             </li>
           </ul>
           <!-- End -->
@@ -35,9 +33,6 @@
                   <label for="cardNumber">Card number</label>
                   <div class="input-group">
                     <input type="tel" inputmode="numeric" [(ngModel)]="cardnum" name="cardNumber" pattern="[0-9\s]{16}" maxlength="16" placeholder="Your card number" class="form-control" required>
-                    <div class="input-group-append">
-                      <span class="input-group-text text-muted"><i class="bi bi-credit-card"></i></span>
-                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -52,7 +47,6 @@
                   <div class="col-sm-4">
                     <div class="form-group mb-4">
                       <label title="Three-digits code on the back of your card">CVV
-                                                  <i class="fa fa-question-circle"></i>
                                               </label>
                       <input type="tel" inputmode="numeric" [(ngModel)]="cardcvv" name="cardCvv" pattern="[0-9\s]{3,4}" maxlength="4" placeholder="CVV" required class="form-control" required>
                     </div>

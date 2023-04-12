@@ -6,15 +6,11 @@
           <ul role="tablist" class="nav flex-column bg-light nav-pills nav-fill mb-5">
             <li class="nav-item">
               <a data-toggle="pill" (click)="toggleMode('card')" class="nav-link  pointer" [ngClass] = "mode === 'card' ? 'active' : ''">
-                                  <i class="fa fa-card-card"></i>
-                                  Transfer to Card
-                                </a>
+                Transfer to Card</a>
             </li>
             <li class="nav-item">
               <a data-toggle="pill" (click)="toggleMode('bank')" class="nav-link pointer" [ngClass] = "mode === 'bank' ? 'active' : ''">
-                                  <i class="fa fa-university"></i>
-                                   Transfer to Bank
-                               </a>
+                Transfer to Bank</a>
             </li>
           </ul>
           <!-- End -->
@@ -27,15 +23,15 @@
             <div id="nav-tab-card" class="tab-pane fade" [ngClass]="mode === 'card' ? 'show active' : ''" (click)="unselect()">
               <span *ngIf="transaction">${{transaction}} was moved successfully</span>  
               <table>
-                    <thead>
-                        <th>Card ID</th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let i of cards">
-                            <button (click)="select($event, i.id, 'card')" class="selected-input"><td>{{i.cardNumber | cardTransform}}</td></button>
-                            <td></td>
-                        </tr>
-                    </tbody>
+                  <thead>
+                      <th>Card ID</th>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let i of cards">
+                          <button (click)="select($event, i.id, 'card')" class="btn btn-primary btn-block rounded-pill shadow-sm"><td>{{i.cardNumber | cardTransform}}</td></button>
+                          <td></td>
+                      </tr>
+                  </tbody>
                 </table>
                 <form [formGroup]="cardForm" (ngSubmit)="processCardForm($event)">
                 <div class="form-group" style="padding-bottom: 3ex;">
@@ -45,7 +41,7 @@
 
                 </div>
 
-                <button type="submit" *ngIf="selected"> Submit  </button>
+                <button type="submit" class="btn btn-primary btn-block shadow-sm" *ngIf="selected"> Submit  </button>
               </form>
             </div>
             <!-- End -->
@@ -60,8 +56,8 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let i of banks">
-                            <button (click)="select($event, i.id, 'bank')" class="selected-input"><td>{{i.accountNumber | cardTransform}}</td></button> 
-                            <td></td>
+                            <button (click)="select($event, i.id, 'bank')" class="btn btn-primary btn-block rounded-pill shadow-sm"><td>{{i.accountNumber | cardTransform}}</td></button> 
+                            <!-- <td></td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -74,7 +70,7 @@
     
                     </div>
     
-                    <button type="submit" *ngIf="selected"> Submit  </button>
+                    <button type="submit" class="btn btn-primary btn-block shadow-sm" *ngIf="selected"> Submit  </button>
                   </form>
             <!-- End -->
           </div>

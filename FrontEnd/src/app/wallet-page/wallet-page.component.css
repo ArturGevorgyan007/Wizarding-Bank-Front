@@ -1,24 +1,14 @@
 .column {
     float: left;
-    width: 50%;
   }
 
-.d-flex{
-    width: 350px;
-    margin-left: 50px;
-}
-
 #linkButton{
-    margin-left: 100px;
-    width: 350px;
+    /* width: 350px; */
 }
 
 .yellow-button{
     width: 280px;
     height: 56px;
-    left: 337px;
-    top: 595px;
-
     background: #FECE22;
     border-radius: 12px;
     border: #FECE22;
@@ -26,13 +16,47 @@
     color: #262626;
     font-weight: 700;
     font-size: 16px;
-    line-height: 21px;
 }
 
 #transferButton{
-    margin-right: 380px;
 }
 .link-p{
     font-weight: bold; 
     color: #FECE22;
+}
+
+.container {
+    justify-content: center;
+    padding: 40px 20%
+}
+
+.shadow-sm {
+    padding: 40px 20%;
+    text-align: center;
+}
+
+.cards {
+    border: 1.5px solid rgb(121, 121, 121);
+    border-radius: 15px;
+    justify-content: center;
+    min-width: fit-content;
+    max-width: 300px;
+    margin: 10px 30%;
+    padding-top: 10px;
+}
+
+.action-buttons-div {
+    margin: 20px 0;
+}
+
+.action-btn {
+    margin: 0 15px;
+}
+
+.action-btn:hover {
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+h2 {
+    font-size: 36px;
 }
