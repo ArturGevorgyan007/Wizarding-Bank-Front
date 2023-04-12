@@ -136,11 +136,11 @@ export class LoanApplyComponent implements OnInit {
         let date: Date = new Date()
         date.setMonth(date.getMonth() + dateincriment)
         let data: LoanSchedule = {
-          date: new Date(date.toLocaleDateString('en-US', {
+          date: date.toLocaleDateString('en-US', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
-          })),
+          }),
           payment: parseFloat(payment.toFixed(2)),
           principal: parseFloat((payment - inter).toFixed(2)),
           interest: parseFloat(inter.toFixed(2)),
@@ -313,7 +313,7 @@ export class LoanApplyComponent implements OnInit {
     var doc = new jsPDF.default();
     console.log(this.schedule.map(Object.values));
     (doc as any).autoTable({
-      header: [['Payment Date', 'Payment', 'Principal', 'Interest', 'Total Interest', 'Balance']],
+      head: [['Payment Date', 'Payment', 'Principal', 'Interest', 'Total Interest', 'Balance']],
       body: this.schedule.map(Object.values)
     })
     console.log("test2");
