@@ -193,37 +193,6 @@ export class SendAndRequestComponent implements OnInit {
   }
 
   getRequest(id : number){
-    if(this.acctType == "Business"){
-      this.uservice.getWalletBBalance(id).subscribe(data => {
-        if(data != null){
-          this.uEmail = data[0]['email'];
-          this.tservice.getTransactions(id).subscribe(t => {
-            if(t != null){
-              for(let i = 0; i < t.length; i++){
-                if(t[i]['senderEmail'] != null && t[i]['description'] != null){
-                  const desc = t[i]['description'];
-                  if(this.uEmail == t[i]['senderEmail']){
-                    if(desc.includes("Request")){
-                      if(t[i]['status'] == 1){
-                        t[i].ramount = t[i].amount
-                        for(let j = 0; j < t.length; j++){
-                          let str = t[j]['description'];
-                          if(str.includes("PR: " + t[i].id)){
-                            t[i].ramount -= t[j].amount;
-                          }
-                        }
-                        this.Requests.push(t[i]);
-                      } 
-                    }
-                  }
-                }
-              }
-            } 
-          });
-        }
-      });
-    } 
-    else {
       this.uservice.getUser2(id).subscribe(data => {
         if(data != null){
           this.uEmail = data['email'];
@@ -252,7 +221,6 @@ export class SendAndRequestComponent implements OnInit {
           });
         }
       });
-    }
   }
 
   payRequest(transact : Transaction){
