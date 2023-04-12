@@ -76,6 +76,7 @@ button{
 .withBut:focus{
     border-color: #FECE22;
 }
+
 .withBut:hover{
     border-color: #FECE22;
     background-color: #FECE22;

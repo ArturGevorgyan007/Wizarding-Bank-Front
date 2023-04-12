@@ -79,8 +79,8 @@ export class TransferService {
       "recipientId": recipientId,
       "status": 0,
       "senderId": userId,
-      "senderType" : true,
-      "recpientType" : false
+      "senderType" : stype,
+      "recpientType" : rtype
     };
     return this.http.post(this.apiRoot + "Transaction/transaction/userToUser", body) as Observable<any>;
   }
@@ -93,7 +93,7 @@ export class TransferService {
       "createdAt" : transac.Date,
       "description": transac.description,
       "recipientId": recipientId,
-      "status": 1,
+      "status": 0,
       "senderId": userId, 
       "senderType" : transac.sType,
       "recpientType" : transac.rType

@@ -1,3 +1,15 @@
+<section id="subNav">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td> <button class="yellow-btn"> Send </button></td>
+        <td><button class="yellow-btn"> Request </button></td>
+        <td> <button class="yellow-btn"> Requests </button> </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
 <section id="sendMoney" *ngIf="payDisplay">
   <h1>Send Money</h1>
 
@@ -6,14 +18,6 @@
     <label>
       Recipient:
       <label >Email</label>
-      <!-- <div>
-        <input type="emailt" formControlName="email" placeholder="foo@bar.com" required class="form-control" [matAutocomplete]="auto" id="userEmails" list="dymEmailList">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let u of filteredUsers | async" [value]="u">
-            {{user}}
-          </mat-option>
-        </mat-autocomplete>
-      </div> -->
       <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
       <label >Amount</label>
       <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
@@ -48,10 +52,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Recipient</th>
+                <th scope="col">Requested By</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Date</th>
-                <th scope="col"> Remaining Balance </th>
+                <th scope="col"> Remaining Balance</th>
             </tr>
         </thead>
 
