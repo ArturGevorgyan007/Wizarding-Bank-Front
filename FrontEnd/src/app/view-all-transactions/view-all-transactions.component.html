@@ -10,7 +10,7 @@
 
 <div class="transac-table">
     <h3>Transaction History</h3>
-    <br/>
+    <br />
     <table class="table">
         <thead>
             <tr>
@@ -24,7 +24,7 @@
 
         <tbody>
             <ng-container *ngIf="Transactions.length > 0">
-                <tr *ngFor="let transac of Transactions">
+                <tr *ngFor="let transac of Transactions" *ngIf="transac.status == 0">
                     <td *ngIf="transac.recipientEmail != undefined; else default">
                         {{transac.recipientEmail}}
                     </td>
@@ -55,4 +55,3 @@
     </table>
 
 </div>
-
