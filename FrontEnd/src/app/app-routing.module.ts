@@ -21,7 +21,7 @@ import { PersonalGuard } from './personal.guard';
 const routes: Routes = [
 
   { path: 'UserHome', component: UserHomeComponent, canActivate: [PersonalGuard] },
-  { path: '', component: TransferPageComponent },
+  { path: '', component: SendAndRequestComponent },
   { path: 'BusinessHome', component: BusinessHomeComponent, canActivate: [BusinessGuard] },
   { path: 'AddPayment', component: AddPaymentFormComponent, canActivate: [UserGuard] },
   { path: 'UserHome/Transactions', component: ViewAllTransactionsComponent, canActivate: [UserGuard] },

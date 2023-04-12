@@ -59,20 +59,20 @@ export class TransferService {
     return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=1', body) as Observable<any>; 
   }
   
-  requestMoney(userId : number, amount : number, recipientId : number, description : string) : Observable<any> {
+  requestMoney(userId : number, amount : number, recipientId : number, description : string, stype : boolean, rtype : boolean) : Observable<any> {
     var body : Transaction = {
       "amount": amount,
       "description": "Request: " + description,
       "recipientId": userId,
       "status": 1,
       "senderId": recipientId,
-      "senderType" : true,
-      "recpientType" : false
+      "senderType" : stype,
+      "recpientType" : rtype
     };
     return this.http.post(this.apiRoot + "Transaction/", body) as Observable<any>;
   }
 
-  userToUser(userId : number, amount : number, recipientId : number, description : string) : Observable<any>{
+  userToUser(userId : number, amount : number, recipientId : number, description : string, stype : boolean, rtype : boolean) : Observable<any>{
     var body : Transaction = {
       "amount": amount,
       "description": description,
@@ -95,8 +95,8 @@ export class TransferService {
       "recipientId": recipientId,
       "status": 1,
       "senderId": userId, 
-      "senderType" : true,
-      "recpientType" : false
+      "senderType" : transac.sType,
+      "recpientType" : transac.rType
     };
     return this.http.put(this.apiRoot + "Transaction/", body) as Observable<any>
     

@@ -7,4 +7,6 @@ export interface Transaction {
     description: string;
     status: number;
     ramount : number;
+    sType : boolean; 
+    rType: boolean;
 }

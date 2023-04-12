@@ -19,6 +19,7 @@ export class SendAndRequestComponent implements OnInit {
   requestDisplay: boolean = true; 
   requestsDisplay : boolean = true;
   payRequestD: boolean = false;
+  acctType : string; 
   uID : any; 
   uEmail : any;
   wallet : number;
@@ -35,6 +36,7 @@ export class SendAndRequestComponent implements OnInit {
    ngOnInit(): void {
     this.uID = 6; 
     // this.uID = parseInt(this.cookieService.get('userId'));
+    this.acctType = this.cookieService.get('userType');
     this.getRequest(this.uID);
     this.setBalance(this.uID);
   }
@@ -59,21 +61,76 @@ export class SendAndRequestComponent implements OnInit {
     const amount = this.transferForm.value.amount;
     const desc = this.transferForm.value.description;
     console.log(`Transfer ${amount} to ${email}`);
-    // Perform the transfer here
-    this.uservice.retrieveUserIdFromDB(email).subscribe(data => {
-      if(data != null){
-        const id = data;
-        this.service.userToUser(this.uID, amount, id, desc).subscribe(data => {
-          console.log(data);
-          if(data != null){
+    // if business 
+    if(this.acctType  == "Business"){
+      this.uservice.retrieveBusinessIdFromDB(email).subscribe(data => {
+        if(data != null){ //if recipient is a business
+          const id = data;
+          this.service.userToUser(this.uID, amount, id, desc, true, true).subscribe(data => {
+            console.log(data);
+            if(data != null){
             console.log("success");
             this.router.navigateByUrl('SendAndRequest');
-          } else{
-            console.log("we're unable to process your transfer at this moment.")
-          }
-        });
-      }
-    });
+            } 
+            else{
+              console.log("we're unable to process your transfer at this moment.")
+            }
+          });      
+        } 
+        else { //if recipient is not a business
+          this.uservice.retrieveUserIdFromDB(email).subscribe(data => {
+            if(data != null){
+              const id = data;
+              this.service.userToUser(this.uID, amount, id, desc, true, false).subscribe(data => {
+                console.log(data);
+                if(data != null){
+                console.log("success");
+                this.router.navigateByUrl('SendAndRequest');
+                } 
+                else{
+                  console.log("we're unable to process your transfer at this moment.")
+                }
+              });      
+            }    
+          });
+        }    
+      });
+    } 
+    else { //if current user is not a business 
+      this.uservice.retrieveBusinessIdFromDB(email).subscribe(data => {
+        if(data != null){ //if recipient is a business
+          const id = data;
+          this.service.userToUser(this.uID, amount, id, desc, false, true).subscribe(data => {
+            console.log(data);
+            if(data != null){
+            console.log("success");
+            this.router.navigateByUrl('SendAndRequest');
+            } 
+            else{
+              console.log("we're unable to process your transfer at this moment.")
+            }
+          });      
+        } 
+        else { //if recipient is not a business
+          this.uservice.retrieveUserIdFromDB(email).subscribe(data => {
+            if(data != null){
+              const id = data;
+              this.service.userToUser(this.uID, amount, id, desc, false, false).subscribe(data => {
+                console.log(data);
+                if(data != null){
+                console.log("success");
+                this.router.navigateByUrl('SendAndRequest');
+                } 
+                else{
+                  console.log("we're unable to process your transfer at this moment.")
+                }
+              });      
+            }    
+          });
+        }    
+      });
+    }
+    
     
   }
 
@@ -83,45 +140,118 @@ export class SendAndRequestComponent implements OnInit {
     const email = this.requestForm.value.remail;
     const amount = this.requestForm.value.ramount;
     const desc = this.requestForm.value.rdescription;
-    this.uservice.retrieveUserIdFromDB(email).subscribe(udata => {
-      if(udata != null){
-        const rId = udata;
-        this.service.requestMoney(this.uID, amount, rId, desc).subscribe(data => {
-          console.log(data);
-        })
-      }
-    })
+    if(this.acctType == "Business"){ //if current user is a business
+      this.uservice.retrieveUserIdFromDB(email).subscribe(udata => {
+        if(udata != null){
+          const uId = udata;
+          this.service.requestMoney(this.uID, amount, uId, desc, true, true).subscribe(data => {
+            if(data != null){
+              //sucess
+            } //no sucess
+          })
+        } 
+        else {
+          this.uservice.retrieveUserIdFromDB(email).subscribe(rdata => {
+            if(rdata != null){
+              const rId = rdata;
+              this.service.requestMoney(this.uID, amount, rId, desc, true, false).subscribe(data => {
+                if(data != null){
+                  //sucess
+                } //no sucess
+              })
+            }
+          })
+        }
+      })
+    } 
+    else{ //if current user is not a business
+      this.uservice.retrieveUserIdFromDB(email).subscribe(udata => {
+        if(udata != null){ // if requestee is a business
+          const uId = udata;
+          this.service.requestMoney(this.uID, amount, uId, desc, false, true).subscribe(data => {
+            if(data != null){
+              //sucess
+            } //no sucess
+          })
+        } 
+        else { // if requestee is not a business
+          this.uservice.retrieveUserIdFromDB(email).subscribe(rdata => {
+            if(rdata != null){
+              const rId = rdata;
+              this.service.requestMoney(this.uID, amount, rId, desc, false, false).subscribe(data => {
+                if(data != null){
+                  //sucess
+                } //no sucess
+              })
+            }
+          })
+        }
+      })
+    }
+    
   }
 
   getRequest(id : number){
-    this.uservice.getUser2(id).subscribe(data => {
-      if(data != null){
-        this.uEmail = data['email'];
-        this.tservice.getTransactions(id).subscribe(t => {
-          if(t != null){
-            for(let i = 0; i < t.length; i++){
-              if(t[i]['senderEmail'] != null && t[i]['description'] != null){
-                const desc = t[i]['description'];
-                if(this.uEmail == t[i]['senderEmail']){
-                  if(desc.includes("Request")){
-                    if(t[i]['status'] == 1){
-                      t[i].ramount = t[i].amount
-                      for(let j = 0; j < t.length; j++){
-                        let str = t[j]['description'];
-                        if(str.includes("PR: " + t[i].id)){
-                          t[i].ramount -= t[j].amount;
+    if(this.acctType == "Business"){
+      this.uservice.getWalletBBalance(id).subscribe(data => {
+        if(data != null){
+          this.uEmail = data[0]['email'];
+          this.tservice.getTransactions(id).subscribe(t => {
+            if(t != null){
+              for(let i = 0; i < t.length; i++){
+                if(t[i]['senderEmail'] != null && t[i]['description'] != null){
+                  const desc = t[i]['description'];
+                  if(this.uEmail == t[i]['senderEmail'] && t[i]['sType'] == true){
+                    if(desc.includes("Request")){
+                      if(t[i]['status'] == 1){
+                        t[i].ramount = t[i].amount
+                        for(let j = 0; j < t.length; j++){
+                          let str = t[j]['description'];
+                          if(str.includes("PR: " + t[i].id)){
+                            t[i].ramount -= t[j].amount;
+                          }
                         }
-                      }
-                      this.Requests.push(t[i]);
-                    } 
+                        this.Requests.push(t[i]);
+                      } 
+                    }
                   }
                 }
               }
-            }
-          } 
-        });
-      }
-    });
+            } 
+          });
+        }
+      });
+    } 
+    else {
+      this.uservice.getUser2(id).subscribe(data => {
+        if(data != null){
+          this.uEmail = data['email'];
+          this.tservice.getTransactions(id).subscribe(t => {
+            if(t != null){
+              for(let i = 0; i < t.length; i++){
+                if(t[i]['senderEmail'] != null && t[i]['description'] != null){
+                  const desc = t[i]['description'];
+                  if(this.uEmail == t[i]['senderEmail'] && t[i]['sType'] == false){
+                    if(desc.includes("Request")){
+                      if(t[i]['status'] == 1){
+                        t[i].ramount = t[i].amount
+                        for(let j = 0; j < t.length; j++){
+                          let str = t[j]['description'];
+                          if(str.includes("PR: " + t[i].id)){
+                            t[i].ramount -= t[j].amount;
+                          }
+                        }
+                        this.Requests.push(t[i]);
+                      } 
+                    }
+                  }
+                }
+              }
+            } 
+          });
+        }
+      });
+    }
   }
 
   payRequest(transact : Transaction){
@@ -143,22 +273,65 @@ export class SendAndRequestComponent implements OnInit {
             this.service.updateRequest(this.uID, id, this.rTransac).subscribe(data =>{
               console.log(data);
               if(data!= null){
-                this.uservice.updateUserWallet(this.uID, -amt).subscribe(w => {
-                  console.log(w);
-                  console.log("Succesfully payed request......success html box where x takes you back home");
-                });
+                if(this.acctType == "Business"){
+                  this.uservice.updateBusinessWallet(this.uID, -amt).subscribe(w => {
+                    console.log(w);
+                    console.log("Succesfully payed request......success html box where x takes you back home");
+                  });
+                } else {
+                  this.uservice.updateUserWallet(this.uID, -amt).subscribe(w => {
+                    console.log(w);
+                    console.log("Succesfully payed request......success html box where x takes you back home");
+                  });
+                }
               }
             });
           } else {
             console.log(`Paid only ${amt} of ${this.rTransac.amount}`);
             const msg = "PR: " + this.rTransac.id;
-            this.service.userToUser(this.uID, amt, id, msg).subscribe(data => {
+            this.service.userToUser(this.uID, amt, id, msg, this.rTransac.sType, this.rTransac.rType).subscribe(data => {
               console.log(data);
               if(data != null){
                 console.log("Paid this much.....go back to home success html box where x takes you back home");
               } 
             });
           }
+        } 
+        else {
+          this.uservice.retrieveBusinessIdFromDB(this.rTransac.recipientEmail).subscribe(data => {
+            if(data != null){
+              let id = data;
+              if(this.rTransac.amount == amt){
+                console.log(`Paid request ${this.rTransac.amount}`);
+                console.log(this.rTransac.id);
+                this.service.updateRequest(this.uID, id, this.rTransac).subscribe(data =>{
+                  console.log(data);
+                  if(data!= null){
+                    if(this.acctType == "Business"){
+                      this.uservice.updateBusinessWallet(this.uID, -amt).subscribe(w => {
+                        console.log(w);
+                        console.log("Succesfully payed request......success html box where x takes you back home");
+                      });
+                    } else {
+                      this.uservice.updateUserWallet(this.uID, -amt).subscribe(w => {
+                        console.log(w);
+                        console.log("Succesfully payed request......success html box where x takes you back home");
+                      });
+                    }
+                  }
+                });
+              } else {
+                console.log(`Paid only ${amt} of ${this.rTransac.amount}`);
+                const msg = "PR: " + this.rTransac.id;
+                this.service.userToUser(this.uID, amt, id, msg, this.rTransac.sType, true).subscribe(data => {
+                  console.log(data);
+                  if(data != null){
+                    console.log("Paid this much.....go back to home success html box where x takes you back home");
+                  } 
+                });
+              }
+            }
+          })
         } 
       });
     } else {
@@ -167,31 +340,22 @@ export class SendAndRequestComponent implements OnInit {
   }
 
     setBalance(id : number){
-      this.uservice.getWalletBalance(id).subscribe(data => {
-        console.log(data['wallet']);
-        console.log(data);
-        if(data != null){
-          this.wallet = data['wallet'];
-        }
-      });
+      if(this.acctType == "Business"){
+        this.uservice.getWalletBBalance(id).subscribe(data => {
+          if(data != null){
+            this.wallet = data['wallet'];
+          }
+        });
+      } 
+      else {
+        this.uservice.getWalletBalance(id).subscribe(data => {
+          if(data != null){
+            this.wallet = data['wallet'];
+          }
+        });
+      }
+      
     }
 
-    filterUsers(){
-      this.filteredUsers = this.emailt.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value || '')),
-      );
-    }
-
-    private _filter(value: string): string[] {
-      const filterValue = this._normalizeValue(value);
-      return this.users.filter(user => this._normalizeValue(user).includes(filterValue));
-    }
-  
-    private _normalizeValue(value: string): string {
-      return value.toLowerCase().replace(/\s/g, '');
-    }
-
-    
 }
 
