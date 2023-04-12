@@ -201,7 +201,7 @@ export class SendAndRequestComponent implements OnInit {
               for(let i = 0; i < t.length; i++){
                 if(t[i]['senderEmail'] != null && t[i]['description'] != null){
                   const desc = t[i]['description'];
-                  if(this.uEmail == t[i]['senderEmail'] && t[i]['sType'] == true){
+                  if(this.uEmail == t[i]['senderEmail']){
                     if(desc.includes("Request")){
                       if(t[i]['status'] == 1){
                         t[i].ramount = t[i].amount
@@ -231,7 +231,7 @@ export class SendAndRequestComponent implements OnInit {
               for(let i = 0; i < t.length; i++){
                 if(t[i]['senderEmail'] != null && t[i]['description'] != null){
                   const desc = t[i]['description'];
-                  if(this.uEmail == t[i]['senderEmail'] && t[i]['sType'] == false){
+                  if(this.uEmail == t[i]['senderEmail']){
                     if(desc.includes("Request")){
                       if(t[i]['status'] == 1){
                         t[i].ramount = t[i].amount
