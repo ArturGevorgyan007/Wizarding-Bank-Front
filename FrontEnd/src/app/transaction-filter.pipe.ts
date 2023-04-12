@@ -10,6 +10,6 @@ export class TransactionFilterPipe implements PipeTransform {
     if (!transactions) {
       return [];
     }
-    return transactions.filter((transac) => transac.status === 0);
+    return transactions.filter((transac) => transac.status == 0);
   }
 }

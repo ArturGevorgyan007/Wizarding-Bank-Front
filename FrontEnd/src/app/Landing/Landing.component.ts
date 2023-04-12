@@ -58,6 +58,6 @@ export class LandingComponent implements OnInit {
   async businessLogin() {
     await this.authService.logout();
     this.cookieService.set('userType', 'Business', 0.4)
-    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/', user_metadata: { target: 'Business' } }, })
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/' }, appState: { target: 'Business' } })
   }
 }
