@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -25,18 +26,18 @@ export class TransferMoneyComponent implements OnInit {
   _amount: any = "";
   cardDsiplay = true;
   bankDisplay = false;
-  typeId : any = 0;
-  type : any = "";
-  cardList : Card[] = [];
-  bankList : bankAccount[] = [];
-  busi : boolean = false; 
+  typeId: any = 0;
+  type: any = "";
+  cardList: Card[] = [];
+  bankList: bankAccount[] = [];
+  busi: boolean = false;
 
   ngOnInit(): void {
-    if(this.cookieService.get('userType') == "Business"){
+    if (this.cookieService.get('userType') == "Business") {
       this.busi = true;
-    } 
+    }
     this.setType("c");
-    this.UID = parseInt(this.cookieService.get('userId')) ;
+    this.UID = parseInt(this.cookieService.get('userId'));
     this.displayAccounts(this.UID);
     this.displayCards(this.UID);
   }
@@ -56,8 +57,15 @@ export class TransferMoneyComponent implements OnInit {
     this._amount += amount;
   }
 
-  change(){
-    this.router.navigateByUrl('TransferMoney');
+  change() {
+    if (this.displayFinal == true) {
+      this.displayFinal = false;
+      this.displayAdd = true
+    } else if (this.displayAdd == true) {
+      this.displayAdd = false;
+      this.display = true;
+    }
+    // this.router.navigateByUrl('TransferMoney');
   }
 
   setType(type: any) {
@@ -75,48 +83,48 @@ export class TransferMoneyComponent implements OnInit {
 
     }
   }
-  
-  addMoney(){
-      if(this.busi == true){
-        this.addMoneyB();
-      } 
-      else{
-        if(this.type == "b"){
-          const accountToWalletObs = this.service.accountToWallet(this.typeId,this.UID,this._amount, false);
-          if (accountToWalletObs) {
-            accountToWalletObs.subscribe(data => {
-              if(data != null){
-                this.messagecall = true;
-                this.message = "Successful transaction from bank to wallet"
-              } else {
-                this.messagecall1 = true;
-                this.message = "Invalid transaction from card to wallet. Not enough money.";
-                return;
-              }
-            });
-          } 
-        } 
-        else {
-          const cardToWalletObs = this.service.cardToWallet(this.typeId,this.UID,this._amount, false);
-          if (cardToWalletObs) {
-            cardToWalletObs.subscribe(data => {
-              if(data != null){
-                this.messagecall = true;
-                this.message = "Successful transaction from card to wallet"
-              } else {
-                this.messagecall1 = true;
-                this.message = "Invalid transaction from card to wallet. Not enough money.";
-                return;
-              } 
-            });
-          } 
-        }  
+
+  addMoney() {
+    if (this.busi == true) {
+      this.addMoneyB();
+    }
+    else {
+      if (this.type == "b") {
+        const accountToWalletObs = this.service.accountToWallet(this.typeId, this.UID, this._amount, false);
+        if (accountToWalletObs) {
+          accountToWalletObs.subscribe(data => {
+            if (data != null) {
+              this.messagecall = true;
+              this.message = "Successful transaction from bank to wallet"
+            } else {
+              this.messagecall1 = true;
+              this.message = "Invalid transaction from card to wallet. Not enough money.";
+              return;
+            }
+          });
+        }
       }
+      else {
+        const cardToWalletObs = this.service.cardToWallet(this.typeId, this.UID, this._amount, false);
+        if (cardToWalletObs) {
+          cardToWalletObs.subscribe(data => {
+            if (data != null) {
+              this.messagecall = true;
+              this.message = "Successful transaction from card to wallet"
+            } else {
+              this.messagecall1 = true;
+              this.message = "Invalid transaction from card to wallet. Not enough money.";
+              return;
+            }
+          });
+        }
+      }
+    }
   }
 
-  addMoneyB(){
-    if(this.type == "b"){
-      const accountToWalletObs = this.service.accountToWallet(this.typeId,this.UID,this._amount, true);
+  addMoneyB() {
+    if (this.type == "b") {
+      const accountToWalletObs = this.service.accountToWallet(this.typeId, this.UID, this._amount, true);
       if (accountToWalletObs) {
         accountToWalletObs.subscribe(data => {
           if (data != null) {
@@ -131,7 +139,7 @@ export class TransferMoneyComponent implements OnInit {
       }
     }
     else {
-      const cardToWalletObs = this.service.cardToWallet(this.typeId,this.UID,this._amount, true);
+      const cardToWalletObs = this.service.cardToWallet(this.typeId, this.UID, this._amount, true);
       if (cardToWalletObs) {
         cardToWalletObs.subscribe(data => {
           if (data != null) {
@@ -143,15 +151,15 @@ export class TransferMoneyComponent implements OnInit {
             return;
           }
         });
-      } 
-    }  
+      }
+    }
   }
 
-  displayCards(id : any){
-    if(this.busi == true){
+  displayCards(id: any) {
+    if (this.busi == true) {
       this.user_service.getBusinessCards(id).subscribe(data => {
-        for(let i = 0; i < data.length; i++){
-          let card = {} as Card; 
+        for (let i = 0; i < data.length; i++) {
+          let card = {} as Card;
           card.cardId = data[i]['id'];
           card.balance = data[i]['balance'];
           card.cardNumber = data[i]['cardNumber'];
@@ -160,11 +168,11 @@ export class TransferMoneyComponent implements OnInit {
           this.cardList.push(card);
         }
       });
-    } 
-    else{
+    }
+    else {
       this.user_service.getUserCards(id).subscribe(data => {
-        for(let i = 0; i < data.length; i++){
-          let card = {} as Card; 
+        for (let i = 0; i < data.length; i++) {
+          let card = {} as Card;
           card.cardId = data[i]['id'];
           card.balance = data[i]['balance'];
           card.cardNumber = data[i]['cardNumber'];
@@ -175,13 +183,13 @@ export class TransferMoneyComponent implements OnInit {
       });
     }
   }
-  
-  displayAccounts(id : any){
-    if(this.busi == true){
+
+  displayAccounts(id: any) {
+    if (this.busi == true) {
       this.user_service.getBankAccounts().subscribe(data => {
-        if(data != null){
-          for(let i = 0; i < data.length; i++){
-            if(data[i]['businessId'] == id){
+        if (data != null) {
+          for (let i = 0; i < data.length; i++) {
+            if (data[i]['businessId'] == id) {
               let bacct = {} as bankAccount;
               bacct.acctNum = data[i]['accountNumber'];
               bacct.balance = data[i]['balance'];
@@ -189,13 +197,13 @@ export class TransferMoneyComponent implements OnInit {
               this.bankList.push(bacct);
             }
           }
-        } 
+        }
       });
     }
-    else{
+    else {
       this.user_service.getUserAccounts(id).subscribe(data => {
-        if(data != null){
-          for(let i = 0; i < data.length; i++){
+        if (data != null) {
+          for (let i = 0; i < data.length; i++) {
             let bacct = {} as bankAccount;
             bacct.acctNum = data[i]['accountNumber'];
             bacct.balance = data[i]['balance'];
@@ -205,10 +213,10 @@ export class TransferMoneyComponent implements OnInit {
         }
       });
     }
-    
+
   }
 
-  setCard(id : any){
+  setCard(id: any) {
     this.typeId = id;
   }
 
