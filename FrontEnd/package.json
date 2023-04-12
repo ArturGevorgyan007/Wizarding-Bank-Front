@@ -26,6 +26,7 @@
     "html2canvas": "^1.4.1",
     "jsonwebtoken": "^9.0.0",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28",
     "jspdf-html2canvas": "^1.4.9",
     "jwt-decode": "^3.1.2",
     "ngx-cookie-service": "^15.0.0",

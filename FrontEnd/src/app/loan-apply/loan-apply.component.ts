@@ -6,10 +6,10 @@ import { Loan, LoanSchedule } from '../Interfaces/loan';
 import { LoanServicesService } from '../loan-services.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import jspdf from 'jspdf';
+import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { HttpClient } from '@angular/common/http';
-import autoTable from 'jspdf-autotable'
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-loan-apply',
@@ -306,13 +306,13 @@ export class LoanApplyComponent implements OnInit {
   // }
 
   exportAsPDF() {
-    var doc = new jspdf();
-    console.log("test1")
-    autoTable(doc, {
+    var doc = new jsPDF.default();
+    console.log("test1");
+    (doc as any).autoTable(doc, {
       head: [['Payment Date', 'Payment', 'Principal', 'Interest', 'Total Interest', 'Balance']],
       body: this.schedule.map(Object.values)
     })
-    console.log("test2")
+    console.log("test2");
     doc.save('file.pdf');
 }
 
