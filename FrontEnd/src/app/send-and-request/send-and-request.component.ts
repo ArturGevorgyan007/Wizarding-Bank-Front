@@ -142,8 +142,8 @@ export class SendAndRequestComponent implements OnInit {
     const amount = this.requestForm.value.ramount;
     const desc = this.requestForm.value.rdescription;
     if(this.acctType == "Business"){ //if current user is a business
-      this.uservice.retrieveUserIdFromDB(email).subscribe(udata => {
-        if(udata != null){
+      this.uservice.retrieveBusinessIdFromDB(email).subscribe(udata => { 
+        if(udata != null){ //if requestee is business
           const uId = udata;
           this.service.requestMoney(this.uID, amount, uId, desc, true, true).subscribe(data => {
             if(data != null){
@@ -166,7 +166,7 @@ export class SendAndRequestComponent implements OnInit {
       })
     } 
     else{ //if current user is not a business
-      this.uservice.retrieveUserIdFromDB(email).subscribe(udata => {
+      this.uservice.retrieveBusinessIdFromDB(email).subscribe(udata => {
         if(udata != null){ // if requestee is a business
           const uId = udata;
           this.service.requestMoney(this.uID, amount, uId, desc, false, true).subscribe(data => {
