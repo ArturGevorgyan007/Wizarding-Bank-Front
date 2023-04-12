@@ -196,7 +196,7 @@ export class SendAndRequestComponent implements OnInit {
       this.uservice.getUser2(id).subscribe(data => {
         if(data != null){
           this.uEmail = data['email'];
-          this.tservice.getTransactions(id).subscribe(t => {
+          this.tservice.getTransactionsRequest(id).subscribe(t => {
             if(t != null){
               for(let i = 0; i < t.length; i++){
                 if(t[i]['senderEmail'] != null && t[i]['description'] != null){

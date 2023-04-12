@@ -18,4 +18,10 @@ export class TransactionHistoryService {
     return this.http.get("https://wiz-docker3.azurewebsites.net/Transaction/transaction/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
 
   }
+
+  getTransactionsRequest(id: number): Observable<Array<Transaction>> {
+
+    return this.http.get("https://wiz-docker3.azurewebsites.net/Transaction/transaction/" + id) as Observable<Array<Transaction>>;
+
+  }
 }
