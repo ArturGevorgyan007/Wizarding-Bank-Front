@@ -27,7 +27,7 @@ export class BusinessHomeComponent implements OnInit {
 
   getWalletAmount(id: any) {
     //getWalletBalance
-    this.userData.getWalletBalance(id).subscribe(data => {
+    this.userData.getWalletBBalance(id).subscribe(data => {
       this._wallet = data['wallet'];
     });
   }
