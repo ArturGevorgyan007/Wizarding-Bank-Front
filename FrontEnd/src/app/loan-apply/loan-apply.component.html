@@ -1,5 +1,5 @@
 <div>
-  <ng-container *ngIf="existingLoan.id > 0">
+  <ng-container *ngIf="existingLoan.id >= 0" style="align-items: center">
     <div class="row" id="payLoanDiv">
       <div class="row">
         <h1>Remaining Loan: {{(existingLoan.amount - existingLoan.amountPaid) | number:'1.0-2'}}</h1>
@@ -20,31 +20,31 @@
             <label for="fullAmountButton">Pay full</label>
             <input type="radio" [checked]="fullAmountButton" name="fullAmountButton" value="Pay full amount"
               (click)="toggleFullBill()">
-          </span></div>
-        <br />
-        <div>
-          <ng-container *ngIf="monthlyAmountButton">
+          </span>
+        </div>
+        <br/>
+        <ng-container *ngIf="monthlyAmountButton">
+          <div>
             <form [formGroup]="payLoanForm">
               <button (click)="payLoan(existingLoan.monthlyPay)">Pay Monthly Bill of
                 {{existingLoan.monthlyPay}}</button>
             </form>
-          </ng-container>
-        </div>
-        <div>
-          <ng-container *ngIf="customAmountButton">
+          </div>
+        </ng-container>
+        <ng-container *ngIf="customAmountButton">
+          <div>
             <form [formGroup]="payLoanForm">
               <label for="customAmount">Enter amount: </label>
-              <input name="customAmount" type="number" formControlName="payAmount" />
+              <input name="customAmount" type="number" formControlName="payAmount" style="margin-bottom: 15px; margin-top :0;"/>
               <button type="submit" (click)="payCustomLoan()">Pay Custom Amount</button>
             </form>
-          </ng-container>
-        </div>
-        <div>
-          <ng-container *ngIf="fullAmountButton">
+          </div>
+        </ng-container>
+        <ng-container *ngIf="fullAmountButton">
+          <div style="width: 100%; justify-content: center;">
             <button (click)="payFullLoan()">Pay Full Bill</button>
-
-          </ng-container>
-        </div>
+          </div>
+        </ng-container>
 
       </form>
     </div>

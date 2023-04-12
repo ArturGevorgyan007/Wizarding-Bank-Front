@@ -1,47 +1,70 @@
-<section id="sendMoney" *ngIf="payDisplay">
-  <h1>Send Money</h1>
+<div class="container" style="border: solid black">
+  <div class="d-flex flex-column flex-sm-column flex-md-row">
+    <section id="sendMoney" *ngIf="payDisplay" class="card p-2 flex-row flex-sm-row flex-md-column">
+      <h1>Send Money</h1>
 
-  <p>Please enter your desired person's email</p>
-  <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
-    <label>
-      Recipient:
-      <label >Email</label>
-      <!-- <div>
-        <input type="emailt" formControlName="email" placeholder="foo@bar.com" required class="form-control" [matAutocomplete]="auto" id="userEmails" list="dymEmailList">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let u of filteredUsers | async" [value]="u">
-            {{user}}
-          </mat-option>
-        </mat-autocomplete>
-      </div> -->
-      <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
-      <label >Amount</label>
-      <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
-      <label >Description</label>
-      <input type="text" formControlName="description" placeholder="Write description?" required class="form-control" ngModel maxlength="150">
-    </label>
-    <br><br>
-    <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
-  </form>
-</section>
+      <p>Please enter your desired person's email</p>
+      <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+        <label>
+          Recipient:
+          <label >Email</label>
+          <!-- <div>
+            <input type="emailt" formControlName="email" placeholder="foo@bar.com" required class="form-control" [matAutocomplete]="auto" id="userEmails" list="dymEmailList">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let u of filteredUsers | async" [value]="u">
+                {{user}}
+              </mat-option>
+            </mat-autocomplete>
+          </div> -->
+          <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
+          <label >Amount</label>
+          <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
+          <label >Description</label>
+          <input type="text" formControlName="description" placeholder="Write description?" required class="form-control" ngModel maxlength="150">
+        </label>
+        <br><br>
+        <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
+      </form>
+    </section>
 
-<section id="requestMoney" *ngIf="requestDisplay">
-  <h1>Request Money</h1>
-  <p>Please enter your desired person's email</p>
-  <form [formGroup]="requestForm" (ngSubmit)="onRequest()">
-    <label>
-      Recipient:
-      <label >Email</label>
-      <input type="email" formControlName="remail" placeholder="foo@bar.com" required class="form-control">
-      <label >Amount</label>
-      <input type="number" formControlName="ramount" placeholder="$100" required class="form-control">
-      <label >Description</label>
-      <input type="text" formControlName="rdescription" placeholder="Description of your request" required class="form-control" ngModel maxlength="150">
-    </label>
-    <br><br>
-    <button type="submit" [disabled]="requestForm.invalid">Request</button>
-  </form>
-</section>
+    <section id="requestMoney" *ngIf="requestDisplay" class="card flex-row p-2 flex-sm-row flex-md-column">
+      <h1>Request Money</h1>
+      <p>Please enter your desired person's email</p>
+      <form [formGroup]="requestForm" (ngSubmit)="onRequest()">
+        <label>
+          Recipient:
+          <label >Email</label>
+          <input type="email" formControlName="remail" placeholder="foo@bar.com" required class="form-control">
+          <label >Amount</label>
+          <input type="number" formControlName="ramount" placeholder="$100" required class="form-control">
+          <label >Description</label>
+          <input type="text" formControlName="rdescription" placeholder="Description of your request" required class="form-control" ngModel maxlength="150">
+        </label>
+        <br><br>
+        <button type="submit" [disabled]="requestForm.invalid">Request</button>
+      </form>
+    </section>
+
+    <section id="payRequestS" *ngIf="!payRequestD" class="card flex-row p-2 flex-sm-row flex-md-column">
+      <h1>Pay Request</h1>
+      <p>Please enter your desired person's email</p>
+      <form [formGroup]="transferForm">
+        <label>
+          Recipient:
+          <label >Email</label>
+          <input id="semail" type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
+          <label >Amount</label>
+          <input id="samount" type="number" formControlName="amount" placeholder="$100" required class="form-control">
+        </label>
+        <br><br>
+        <button type="submit" (click)="pay()">Transfer</button>
+      </form>
+    </section>
+    
+    
+  </div>
+</div>
+
 
 <section id="pendingRequests" *ngIf="requestsDisplay">
   <div class="transac-table">
@@ -74,24 +97,6 @@
     </table>
 </div>
 </section>
-
-<section id="payRequestS" *ngIf="payRequestD">
-  <h1>Pay Rquest</h1>
-
-  <p>Please enter your desired person's email</p>
-  <form [formGroup]="transferForm">
-    <label>
-      Recipient:
-      <label >Email</label>
-      <input id="semail" type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
-      <label >Amount</label>
-      <input id="samount" type="number" formControlName="amount" placeholder="$100" required class="form-control">
-    </label>
-    <br><br>
-    <button type="submit" (click)="pay()">Transfer</button>
-  </form>
-</section>
-
 
 
 

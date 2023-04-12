@@ -1,0 +1,14 @@
+.container {
+    margin-left: 0;
+    justify-content: center;
+    margin: 10px 8%;
+}
+
+.card {
+    border: solid black;
+    align-items: center;
+    margin: 3% 3%;
+    margin-right: 0;
+    padding: 10% 10%;
+    min-width: 30%;
+}
