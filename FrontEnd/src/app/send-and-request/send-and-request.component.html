@@ -2,9 +2,9 @@
   <table class="table">
     <tbody>
       <tr>
-        <td> <button class="yellow-btn"> Send </button></td>
-        <td><button class="yellow-btn"> Request </button></td>
-        <td> <button class="yellow-btn"> Requests </button> </td>
+        <td> <button class="yellow-btn" (click)="send()"> Send </button></td>
+        <td><button class="yellow-btn" (click)="request()"> Request </button></td>
+        <td> <button class="yellow-btn" (click)="viewRequests()"> Requests </button> </td>
       </tr>
     </tbody>
   </table>
@@ -25,7 +25,7 @@
       <input type="text" formControlName="description" placeholder="Write description?" required class="form-control" ngModel maxlength="150">
     </label>
     <br><br>
-    <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
+    <button type="submit" [disabled]="transferForm.invalid" class="yellow-btn">Transfer</button>
   </form>
 </section>
 
@@ -43,7 +43,7 @@
       <input type="text" formControlName="rdescription" placeholder="Description of your request" required class="form-control" ngModel maxlength="150">
     </label>
     <br><br>
-    <button type="submit" [disabled]="requestForm.invalid">Request</button>
+    <button type="submit" [disabled]="requestForm.invalid" class="yellow-btn">Request</button>
   </form>
 </section>
 
@@ -92,7 +92,7 @@
       <input id="samount" type="number" formControlName="amount" placeholder="$100" required class="form-control">
     </label>
     <br><br>
-    <button type="submit" (click)="pay()">Transfer</button>
+    <button type="submit" (click)="pay()" class="yellow-btn">Transfer</button>
   </form>
 </section>
 

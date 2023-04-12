@@ -16,8 +16,8 @@ import { Observable, map, startWith } from 'rxjs';
 export class SendAndRequestComponent implements OnInit {
 
   payDisplay : boolean = true;
-  requestDisplay: boolean = true; 
-  requestsDisplay : boolean = true;
+  requestDisplay: boolean = false; 
+  requestsDisplay : boolean = false;
   payRequestD: boolean = false;
   acctType : string; 
   uID : any; 
@@ -356,6 +356,27 @@ export class SendAndRequestComponent implements OnInit {
       }
       
     }
+
+  send(){
+    this.payDisplay = true; 
+    this.requestDisplay = false; 
+    this.requestsDisplay = false;
+    this.payRequestD = false; 
+  }
+
+  request(){
+    this.payDisplay = false; 
+    this.requestDisplay = true; 
+    this.requestsDisplay = false;
+    this.payRequestD = false; 
+  }
+
+  viewRequests(){
+    this.payDisplay = false; 
+    this.requestDisplay = false; 
+    this.requestsDisplay = true;
+    this.payRequestD = false; 
+  }
 
 }
 
