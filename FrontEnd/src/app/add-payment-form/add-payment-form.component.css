@@ -5,10 +5,14 @@ body{background: #f5f5f5}.rounded{border-radius: 1rem}.nav-pills .nav-link{color
 }
 
 .pointer.nav-link.active {
-    background-color: #ccc162;
+    background-color: #FECE22;
 }
 .subscribe{
-    background-color: #ccc162;
+    background-color: #FECE22;
     border-width: 2px;
-    border-color:black;
+    border-color:#FECE22;
+}
+
+.container {
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
 }

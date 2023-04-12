@@ -144,10 +144,6 @@ span {
   color: #1a1f36;
 }
 
-label {
-  margin-bottom: 10px;
-}
-
 /* .reset-pass a,
 label {
   font-size: 14px;
@@ -173,7 +169,6 @@ label {
   width: 100%;
   min-height: 44px;
   border: unset;
-  border-radius: 4px;
   outline-color: rgb(84 105 212 / 0.5);
   background-color: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
@@ -187,17 +182,22 @@ label {
 
 
 input[type="submit"] {
-  background-color: rgb(84, 105, 212);
-  /* box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
-                  rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
-                  rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, 
-                  rgb(84, 105, 212) 0px 0px 0px 1px, 
-                  rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
-                  rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
-                  rgba(60, 66, 87, 0.08) 0px 2px 5px 0px; */
-  color: blue;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 2% 5%;
+  background-color: white;
+  border-color: #FECE22;
+  border-radius: 14px;
+  border: 1px solid #DDDDDD;
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #25282C;
+}
+
+input[type="submit"]:hover {
+  padding: 2% 5%;
+  background-color: #FECE22;
+  border-radius: 15px;
+  border: 1px solid #FECE22;
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  color: black;
 }
 
 .button1 {
@@ -223,6 +223,7 @@ input[type="submit"] {
   margin-right: 5px;
   box-shadow: unset;
   min-height: unset;
+  background-color: #FECE22;
 }
 
 .field-checkbox label {
@@ -334,10 +335,8 @@ tr:nth-child(odd) {
   text-align: center;
   /* width: fit-content; */
   margin: 2% 20%;
+  padding-bottom: 40px;
   background-color: white;
-}
-
-#payLoanDiv {
   padding: 20px 0px;
   box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
 }
@@ -354,8 +353,31 @@ tr:nth-child(odd) {
 
 #payLoanDiv button {
   padding: 2% 5%;
-  border-radius: 5%;
-  /* color: rgb(238, 220, 80);
-  background-color: rgb(117, 118, 59); */
-  /* box-shadow: -3px 3px; */
+  background-color: white;
+  border-color: #FECE22;
+  border-radius: 14px;
+  border: 1px solid #DDDDDD;
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #25282C;
+  min-width: fit-content;
 }
+
+#payLoanDiv button:hover {
+  padding: 2% 5%;
+  background-color: #FECE22;
+  border-color: #FECE22;
+  border-radius: 15px;
+  border: 1px solid #FECE22;
+  color: black;
+}
+
+/* input[type="button"] {
+  padding: 2% 5%;
+  background-color: white;
+  border: solid 1px white;
+  filter: none;
+}
+
+input[type="button"]:hover {
+  border: solid 1px #FECE22;
+} */
