@@ -33,11 +33,13 @@ export class WalletPageComponent implements OnInit{
    // this.displayCards(this.userID);
   }
 
-  linkCardorAcct(){}
+  linkCardorAcct(){
+    this.route.navigateByUrl('/AddPayment');
+  }
 
   transferMoney(){
     //this needs to send first card and first account to transfer money page
-    this.route.navigateByUrl('TransferMoney');
+    this.route.navigateByUrl('/TransferMoney');
   }
 
   getCurrentAmount(id : any){

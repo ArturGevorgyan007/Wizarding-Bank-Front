@@ -16,8 +16,8 @@ import { Observable, map, startWith } from 'rxjs';
 export class SendAndRequestComponent implements OnInit {
 
   payDisplay : boolean = true;
-  requestDisplay: boolean = true; 
-  requestsDisplay : boolean = true;
+  requestDisplay: boolean = false; 
+  requestsDisplay : boolean = false;
   payRequestD: boolean = false;
   uID : any; 
   uEmail : any;
@@ -28,6 +28,7 @@ export class SendAndRequestComponent implements OnInit {
   users : string[] = [];
   filteredUsers: Observable<string[]>;
   rTransac : Transaction;
+  isDisabled = true;
 
   constructor(private fb: FormBuilder,private router : Router, private cookieService: CookieService, private service : TransferService, private uservice : UserDataService, private tservice : TransactionHistoryService){}
    
@@ -128,11 +129,11 @@ export class SendAndRequestComponent implements OnInit {
     this.transferForm.controls['email'].setValue(transact.recipientEmail);
     this.transferForm.controls['amount'].setValue(transact.ramount);
     this.rTransac = transact;
-    this.payRequestD = true;
   }
 
   pay(){
     const amt = this.transferForm.controls['amount'].value;
+    // set button to enabled 
     if(this.wallet > amt){
       this.uservice.retrieveUserIdFromDB(this.rTransac.recipientEmail).subscribe(data => {
         if(data != null){
@@ -166,32 +167,36 @@ export class SendAndRequestComponent implements OnInit {
     }
   }
 
-    setBalance(id : number){
-      this.uservice.getWalletBalance(id).subscribe(data => {
-        console.log(data['wallet']);
-        console.log(data);
-        if(data != null){
-          this.wallet = data['wallet'];
-        }
-      });
-    }
+  setBalance(id : number){
+    this.uservice.getWalletBalance(id).subscribe(data => {
+      console.log(data['wallet']);
+      console.log(data);
+      if(data != null){
+        this.wallet = data['wallet'];
+      }
+    });
+  }
 
-    filterUsers(){
-      this.filteredUsers = this.emailt.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value || '')),
-      );
-    }
+   
+  send(){
+    this.payDisplay = true; 
+    this.requestDisplay = false; 
+    this.requestsDisplay = false;
+    this.payRequestD = false; 
+  }
 
-    private _filter(value: string): string[] {
-      const filterValue = this._normalizeValue(value);
-      return this.users.filter(user => this._normalizeValue(user).includes(filterValue));
-    }
-  
-    private _normalizeValue(value: string): string {
-      return value.toLowerCase().replace(/\s/g, '');
-    }
+  request(){
+    this.payDisplay = false; 
+    this.requestDisplay = true; 
+    this.requestsDisplay = false;
+    this.payRequestD = false; 
+  }
 
-    
+  viewRequests(){
+    this.payDisplay = false; 
+    this.requestDisplay = false; 
+    this.requestsDisplay = true;
+    this.payRequestD = false; 
+  }
 }
 

@@ -7,6 +7,8 @@ import { UserDataService } from '../user-data.service';
 import {of, firstValueFrom, pipe} from 'rxjs'
 import { CookieService } from '../../../node_modules/ngx-cookie-service';
 
+
+
 @Component({
   selector: 'app-transfer-page',
   templateUrl: './transfer-page.component.html',

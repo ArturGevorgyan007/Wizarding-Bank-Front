@@ -8,19 +8,29 @@ body {
 }
 
 .save-button {
-    background:rgb(175, 185, 32);
+    background: white;
+    color: black;
     box-shadow: none;
-    border: none;
     margin-right:20%;
-    margin-left: 1%
+    margin-left: 1%;
+    border: 2px solid #FECE22;
+}
+
+.save-button:hover {
+    background-color: #FECE22;
 }
 
 .exit-button {
-    background:rgb(255, 0, 0);
+    background: white;
     box-shadow: none;
-    border: none;
+    color: black;
+    border: 2px solid red;
     margin-right: 10%;
     margin-left: 1%;
+}
+
+.exit-button:hover {
+    background-color: red;
 }
 
 .profile-button:hover {
