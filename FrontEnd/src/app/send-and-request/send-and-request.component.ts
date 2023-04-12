@@ -37,7 +37,7 @@ export class SendAndRequestComponent implements OnInit {
     //this.uID = 6; 
     this.uID = parseInt(this.cookieService.get('userId'));
     this.acctType = this.cookieService.get('userType');
-    this.getRequest(this.uID);
+    //this.getRequest(this.uID);
     this.setBalance(this.uID);
   }
    
@@ -375,7 +375,7 @@ export class SendAndRequestComponent implements OnInit {
     this.payDisplay = false; 
     this.requestDisplay = false; 
     this.viewRequestsDisplay= true;
-    this.payRequestD = false; 
+    this.getRequest(this.uID);
   }
 
 }

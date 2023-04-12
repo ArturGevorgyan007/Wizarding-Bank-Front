@@ -23,7 +23,7 @@ export class UserDataService {
     this.email = user;
   }
   public retrieveUserIdFromDB(email: string): Observable<number> {
-    return this.http.get("https://wiz-docker3.azurewebsites.net/user/byEmail/" + email) as Observable<number>;
+    return this.http.get(this.apiRoot + "user/byEmail/" + email) as Observable<number>;
   }
 
   public getUserId(): number {
@@ -43,12 +43,12 @@ export class UserDataService {
   }
 
   public retrieveBusinessIdFromDB(email: string): Observable<number> {
-    return this.http.get("https://wiz-docker3.azurewebsites.net/Business/busId/" + email) as Observable<number>;
+    return this.http.get(this.apiRoot + "Business/busId/" + email) as Observable<number>;
   }
 
 
   public retrieveBusinessTypeFromDB(email: string): Observable<string> {
-    return this.http.get("https://wiz-docker3.azurewebsites.net/Business/busType/" + email) as Observable<string>;
+    return this.http.get(this.apiRoot + "Business/busType/" + email) as Observable<string>;
   }
 
   public getUserAccounts(userId: number): Observable<Array<any>> {
@@ -63,22 +63,22 @@ export class UserDataService {
 
   public getFullPersonalUser(userId: number): Observable<Array<any>> {
 
-    return this.http.get("https://wiz-docker3.azurewebsites.net/user/" + userId) as Observable<Array<any>>;
+    return this.http.get(this.apiRoot + "user/" + userId) as Observable<Array<any>>;
   }
 
   public updateUserProfile(userObj: any): Observable<Array<any>> {
 
-    return this.http.put("https://wiz-docker3.azurewebsites.net/user/update", userObj) as Observable<Array<any>>;
+    return this.http.put(this.apiRoot + "user/update", userObj) as Observable<Array<any>>;
   }
 
   public getFullBusinessUser(businessId: number): Observable<Array<any>> {
 
-    return this.http.get("https://wiz-docker3.azurewebsites.net/Business/bus/" + businessId) as Observable<Array<any>>;
+    return this.http.get(this.apiRoot + "Business/bus/" + businessId) as Observable<Array<any>>;
   }
 
   public updateBusinessProfile(businessObj: any): Observable<Array<any>> {
 
-    return this.http.put("https://wiz-docker3.azurewebsites.net/Business/Update", businessObj) as Observable<Array<any>>;
+    return this.http.put(this.apiRoot + "Business/Update", businessObj) as Observable<Array<any>>;
   }
 
   public getWalletBalance(userId: number): Observable<any> {
