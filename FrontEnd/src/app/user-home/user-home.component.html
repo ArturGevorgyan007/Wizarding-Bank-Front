@@ -6,7 +6,7 @@
             <div class="card-bottom pt-3 px-3 mb-2">
                 <div class="d-flex flex-row justify-content-between text-align-center">
                     <div class="d-flex flex-column"><span>Balance amount</span>
-                        <p>&dollar; <span class="text-white">{{_wallet | currency}}</span></p>
+                        <p><span class="text-white">{{_wallet | currency}}</span></p>
                     </div>
 
                 </div>
@@ -29,15 +29,17 @@
 
 <div class="container split2 d-flex flex-row p-12">
     <div class="card transaction-history-div">
-        <a routerLink="Transactions" class="text-dark" style="margin-bottom: 15px; margin-left: 3%;"><h3>Transaction History</h3></a>
-            <section>
-                <details *ngFor="let Transaction of Transactions">
-                    <summary>Date: {{Transaction.createdAt | date: 'shortDate'}}&emsp;Amount: ${{Transaction.amount}}
-                    </summary>
-                    <p>Recipient: {{Transaction.recipientEmail}}</p>
-                    <p>Sender: {{Transaction.senderEmail}}</p>
-                    <p>Description: {{Transaction.description}}</p>
-                </details>
-            </section>
+        <a routerLink="Transactions" class="text-dark" style="margin-bottom: 15px; margin-left: 3%;">
+            <h3>Transaction History</h3>
+        </a>
+        <section>
+            <details *ngFor="let Transaction of Transactions">
+                <summary>Date: {{Transaction.createdAt | date: 'shortDate'}}&emsp;Amount: ${{Transaction.amount}}
+                </summary>
+                <p>Recipient: {{Transaction.recipientEmail}}</p>
+                <p>Sender: {{Transaction.senderEmail}}</p>
+                <p>Description: {{Transaction.description}}</p>
+            </details>
+        </section>
     </div>
 </div>
