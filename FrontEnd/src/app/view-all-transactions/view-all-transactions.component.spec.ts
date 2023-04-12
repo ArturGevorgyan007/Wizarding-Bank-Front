@@ -39,7 +39,7 @@ describe('ViewAllTransactionsComponent', () => {
 
     expect(component.ngOnInit).toHaveBeenCalled()
 
-    httpMock.expectOne('https://wiz-back.azurewebsites.net/user/byEmail/')
+    httpMock.expectOne('https://wiz-docker3.azurewebsites.net/user/byEmail/')
 
     // expect(userApi.getUser).toHaveBeenCalled()
   })

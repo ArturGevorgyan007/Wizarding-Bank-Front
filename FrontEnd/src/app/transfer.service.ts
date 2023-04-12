@@ -9,7 +9,7 @@ import { Transaction } from './models/transaction';
 export class TransferService {
 
 
-  apiRoot: string = 'https://wiz-back.azurewebsites.net/';
+  apiRoot: string = 'https://wiz-docker3.azurewebsites.net/';
 
   constructor(private http: HttpClient) { }
   //When sending money to self, recipient = id, sender = null
@@ -21,7 +21,7 @@ export class TransferService {
       "recipientId": userId,
       "amount": amount
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=3', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=3', body) as Observable<any>;
 
   }
 
@@ -32,7 +32,7 @@ export class TransferService {
       "cardId": cardId,
       "amount": amount,
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=2', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=2', body) as Observable<any>;
   }
 
   //bankAccount-to-wallet
@@ -42,7 +42,7 @@ export class TransferService {
       "recipientId": userId,
       "amount": amount
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=4', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=4', body) as Observable<any>;
   }
 
   //wallet-to-bankAccount
@@ -52,11 +52,11 @@ export class TransferService {
       "senderId": userId,
       "amount": amount
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=1', body) as Observable<any>; 
+    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=1', body) as Observable<any>;
   }
-  
-  requestMoney(userId : number, amount : number, recipientId : number, description : string) : Observable<any> {
-    var body : Transaction = {
+
+  requestMoney(userId: number, amount: number, recipientId: number, description: string): Observable<any> {
+    var body: Transaction = {
       "amount": amount,
       "description": "Request: " + description,
       "recipientId": userId,
@@ -66,8 +66,8 @@ export class TransferService {
     return this.http.post(this.apiRoot + "Transaction/", body) as Observable<any>;
   }
 
-  userToUser(userId : number, amount : number, recipientId : number, description : string) : Observable<any>{
-    var body : Transaction = {
+  userToUser(userId: number, amount: number, recipientId: number, description: string): Observable<any> {
+    var body: Transaction = {
       "amount": amount,
       "description": description,
       "recipientId": recipientId,
@@ -78,17 +78,17 @@ export class TransferService {
   }
 
 
-  updateRequest(userId : number, recipientId : number, transac : any): Observable<any>{
-    var body : Transaction = {
+  updateRequest(userId: number, recipientId: number, transac: any): Observable<any> {
+    var body: Transaction = {
       "id": transac.id,
       "amount": transac.amount,
-      "createdAt" : transac.Date,
+      "createdAt": transac.Date,
       "description": transac.description,
       "recipientId": recipientId,
       "status": 1,
       "senderId": userId
     };
     return this.http.put(this.apiRoot + "Transaction/", body) as Observable<any>
-    
+
   }
 }
