@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { HttpClient } from '@angular/common/http';
+import autoTable from 'jspdf-autotable'
 
 @Component({
   selector: 'app-loan-apply',
@@ -285,24 +286,35 @@ export class LoanApplyComponent implements OnInit {
   //   });
   // }
 
+  // exportAsPDF() {
+  //     var doc = new jspdf();
+  //     var rownum = this.schedule.length;
+  //     console.log(rownum)
+  //     while(rownum!=0) {
+  //       for (var i =0;i<45;i++) {
+  //         var source = document.getElementsByTagName("tr")[i]
+  //         console.log(source)
+  //         doc.html(source)
+  //         rownum--;
+  //       }
+  //       if(rownum!=0)
+  //         doc.addPage();
+  //       console.log("new page added")
+  //     }
+  //     console.log("pdf saved")
+  //     doc.save('file.pdf');
+  // }
+
   exportAsPDF() {
-      var doc = new jspdf();
-      var rownum = this.schedule.length;
-      console.log(rownum)
-      while(rownum!=0) {
-        for (var i =0;i<45;i++) {
-          var source = document.getElementsByTagName("tr")[i]
-          console.log(source)
-          doc.html(source)
-          rownum--;
-        }
-        if(rownum!=0)
-          doc.addPage();
-        console.log("new page added")
-      }
-      console.log("pdf saved")
-      doc.save('file.pdf');
-  }
+    var doc = new jspdf();
+    console.log("test1")
+    autoTable(doc, {
+      head: [['Payment Date', 'Payment', 'Principal', 'Interest', 'Total Interest', 'Balance']],
+      body: this.schedule.map(Object.values)
+    })
+    console.log("test2")
+    doc.save('file.pdf');
+}
 
   Validate() {
     var s=document.getElementById("loanTerm")! as HTMLInputElement;
