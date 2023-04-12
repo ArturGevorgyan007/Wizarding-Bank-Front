@@ -307,9 +307,9 @@ export class LoanApplyComponent implements OnInit {
 
   exportAsPDF() {
     var doc = new jsPDF.default();
-    console.log("test1");
-    (doc as any).autoTable(doc, {
-      head: [['Payment Date', 'Payment', 'Principal', 'Interest', 'Total Interest', 'Balance']],
+    console.log(this.schedule.map(Object.values));
+    (doc as any).autoTable({
+      columns: [['Payment Date', 'Payment', 'Principal', 'Interest', 'Total Interest', 'Balance']],
       body: this.schedule.map(Object.values)
     })
     console.log("test2");
