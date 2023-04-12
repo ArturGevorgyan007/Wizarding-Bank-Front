@@ -255,36 +255,48 @@ export class LoanApplyComponent implements OnInit {
     });
   }
 
+  // exportAsPDF() {
+  //   let data = document.getElementById('pdf');
+  //   html2canvas(data!).then(canvas => {
+  //     // const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
+  //     // let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+  //     // pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
+  //     // pdf.save('Filename.pdf');
+
+  //     var imgData = canvas.toDataURL('image/jpeg');
+  //     var imgWidth = 210;
+  //     var pageHeight = 295;
+  //     var imgHeight = canvas.height * imgWidth / canvas.width;
+  //     var heightLeft = imgHeight;
+  //     var doc = new jspdf('p', 'mm');
+  //     var position = 10; // give some top padding to first page
+
+  //     doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+  //     heightLeft -= pageHeight;
+
+  //     while (heightLeft >= 0) {
+  //       position += heightLeft - imgHeight; // top padding for other pages
+  //       // position = heightLeft - imgHeight + 10; // top padding for other pages
+  //       doc.addPage();
+  //       doc.addImage(imgData, 'PNG', 0, position+10, imgWidth, imgHeight);
+  //       heightLeft -= pageHeight;
+  //     }
+  //     doc.save('file.pdf');
+  //   });
+  // }
+
   exportAsPDF() {
-    let data = document.getElementById('pdf');
-    html2canvas(data!).then(canvas => {
-      // const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
-      // let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
-      // pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
-      // pdf.save('Filename.pdf');
-
-      var imgData = canvas.toDataURL('image/jpeg');
-      var imgWidth = 210;
-      var pageHeight = 295;
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      var heightLeft = imgHeight;
-      var doc = new jspdf('p', 'mm');
-      var position = 10; // give some top padding to first page
-
-      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      doc.text("Page 1",10,10);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        position += heightLeft - imgHeight; // top padding for other pages
-        // position = heightLeft - imgHeight + 10; // top padding for other pages
+      var doc = new jspdf();
+      var rownum = this.schedule.length;
+      while(rownum!=0) {
+        for (var i =0;i<45;i++) {
+          var source = window.document.getElementsByTagName("tr")[i]
+          doc.html(source)
+          rownum--;
+        }
         doc.addPage();
-        doc.text("Page 2",10,10)
-        doc.addImage(imgData, 'PNG', 0, position+10, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
       }
       doc.save('file.pdf');
-    });
   }
 
   Validate() {
