@@ -193,9 +193,10 @@ export class SendAndRequestComponent implements OnInit {
   }
 
   getRequest(id : number){
-      this.uservice.getUser2(id).subscribe(data => {
+    if(this.acctType == "Business"){
+      this.uservice.getWalletBBalance(id).subscribe(data => {
         if(data != null){
-          this.uEmail = data['email'];
+          this.uEmail = data[0]['email'];
           this.tservice.getTransactionsRequest(id).subscribe(t => {
             if(t != null){
               for(let i = 0; i < t.length; i++){
@@ -221,6 +222,42 @@ export class SendAndRequestComponent implements OnInit {
           });
         }
       });
+    } 
+    else {
+      this.uservice.getUser2(id).subscribe(data => {
+        if(data != null){
+          this.uEmail = data['email'];
+          console.log(this.uEmail);
+          this.tservice.getTransactionsRequest(id).subscribe(t => {
+            if(t != null){
+              console.log(t);
+              for(let i = 0; i < t.length; i++){
+                if(t[i]['senderEmail'] != null && t[i]['description'] != null){
+                  console.log(t[i]);
+                  const desc = t[i]['description'];
+                  if(this.uEmail == t[i]['senderEmail']){
+                    console.log("HERE");
+                    if(desc.includes("Request: ")){
+                      console.log("HERE PART2");
+                      if(t[i]['status'] == 1){
+                        t[i].ramount = t[i].amount
+                        for(let j = 0; j < t.length; j++){
+                          let str = t[j]['description'];
+                          if(str.includes("PR: " + t[i].id)){
+                            t[i].ramount -= t[j].amount;
+                          }
+                        }
+                        this.Requests.push(t[i]);
+                      } 
+                    }
+                  }
+                }
+              }
+            } 
+          });
+        }
+      });
+    }
   }
 
   payRequest(transact : Transaction){
