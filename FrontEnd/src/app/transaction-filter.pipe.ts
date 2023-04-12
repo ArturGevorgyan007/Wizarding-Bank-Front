@@ -3,7 +3,7 @@ import { Transaction } from './Interfaces/transaction';
 
 
 @Pipe({
-  name: 'filterByStatus',
+  name: 'TransactionFilterPipe',
 })
 export class TransactionFilterPipe implements PipeTransform {
   transform(transactions: Transaction[]): Transaction[] {
