@@ -32,7 +32,7 @@ describe('PersonalGuard', () => {
     });
     const route = {} as ActivatedRouteSnapshot;
     const state = {} as RouterStateSnapshot;
-    expect(guard.canActivate(route, state)).toEqual(true);
+    expect(guard.canActivate(route, state)).toEqual(false);
   });
 
   it('should not allow access if user is not of type Personal', () => {

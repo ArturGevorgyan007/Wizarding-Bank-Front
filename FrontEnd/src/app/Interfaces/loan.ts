@@ -10,7 +10,7 @@ export interface Loan {
 }
 
 export interface LoanSchedule {
-    date: Date;
+    date: string;
     payment: number;
     principal: number;
     interest: number;

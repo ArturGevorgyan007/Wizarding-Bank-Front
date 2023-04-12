@@ -48,6 +48,8 @@
 <section id="AddMoney" *ngIf="displayAdd">  
   <div class="container">
     <div class ="flex-column card rounded-3">
+
+      <span class="backbtn" onclick="change()">&larr;</span>
       <div class="flex-row d-flex justify-content-center" style="margin-bottom: 50px;">
         <div class="flex-column">
           <div class="flex-row">
@@ -55,6 +57,7 @@
           </div>
           <div class="flex-row">
             <h6>Add money to your wallet</h6>
+
           </div>
         </div>
       </div>
@@ -96,10 +99,10 @@
 <section id="AddMoneyBorC" *ngIf="displayFinal">  
   <div class="container">
     <div class ="card" style="align-items: center;">
+      <span class="backbtn" onclick="addToWallet()">&larr;</span>
         <div class="row d-flex justify-content-center">
             <h6 style="text-align: center; margin-top: 10px; font-size: large;">Choose bank or card:</h6>
         </div>
-         
         <div class="row d-flex justify-content-center" style="text-align: center;"> 
           <p style="font-size: 40px;">${{_amount}}</p>
         </div>
@@ -120,6 +123,7 @@
 
         <div class="success" *ngIf="messagecall">
           <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+
           <span style="font-weight: bold;"> SUCCESS! </span> {{message}} 
         </div>
 

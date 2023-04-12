@@ -11,11 +11,11 @@ export class TransactionHistoryService {
 
   constructor(private http: HttpClient, private userData: UserDataService) { }
   getMostRecentTransactions(id: number): Observable<Array<Transaction>> {
-    return this.http.get("https://wiz-back.azurewebsites.net/Transaction/transaction/number/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
+    return this.http.get("https://wiz-docker3.azurewebsites.net/Transaction/transaction/number/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
   }
   getTransactions(id: number): Observable<Array<Transaction>> {
 
-    return this.http.get("https://wiz-back.azurewebsites.net/Transaction/transaction/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
+    return this.http.get("https://wiz-docker3.azurewebsites.net/Transaction/transaction/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
 
   }
 }

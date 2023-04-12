@@ -76,7 +76,8 @@
 </div>
 
 
-<section id="pendingRequests" *ngIf="requestsDisplay">
+
+<section id="pendingRequests" *ngIf="viewRequestsDisplay">
   <div class="transac-table">
     <table class="table">
         <thead>
@@ -84,7 +85,7 @@
                 <th scope="col">Recipient</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Date</th>
-                <th scope="col"> Remaining Balance </th>
+                <th scope="col"> Remaining Balance</th>
             </tr>
         </thead>
 
@@ -115,6 +116,3 @@
     </table>
 </div>
 </section>
-
-
-

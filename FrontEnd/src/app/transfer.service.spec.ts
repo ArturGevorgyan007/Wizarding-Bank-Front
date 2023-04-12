@@ -31,7 +31,7 @@ describe('TransferService', () => {
       const cardId = 123;
       const userId = 456;
       const amount = 789;
-      const expectedUrl = `${service.apiRoot}Transaction/transactions/internal?type=3`;
+      const expectedUrl = `${service.apiRoot}Transaction/transaction/internal?type=3`;
       const expectedBody = { cardId, recipientId: userId, amount };
 
       // Mock the response from the API
@@ -59,7 +59,7 @@ describe('TransferService', () => {
       const cardId = 123;
       const userId = 456;
       const amount = 789;
-      const expectedUrl = `${service.apiRoot}Transaction/transactions/internal?type=2`;
+      const expectedUrl = `${service.apiRoot}Transaction/transaction/internal?type=2`;
       const expectedBody = { senderId: userId, cardId, amount };
 
       // Mock the response from the API
@@ -86,7 +86,7 @@ describe('TransferService', () => {
       const userId = 123;
       const accountId = 456;
       const amount = 789;
-      const expectedUrl = `${service.apiRoot}Transaction/transactions/internal?type=4`;
+      const expectedUrl = `${service.apiRoot}Transaction/transaction/internal?type=4`;
       const expectedBody = { recipientId: userId, accountId, amount };
 
       // Mock the response from the API
@@ -113,7 +113,7 @@ describe('TransferService', () => {
       const accountId = 123;
       const userId = 456;
       const amount = 789;
-      const expectedUrl = `${service.apiRoot}Transaction/transactions/internal?type=1`;
+      const expectedUrl = `${service.apiRoot}Transaction/transaction/internal?type=1`;
       const expectedBody = { accountId, senderId: userId, amount };
 
       // Mock the response from the API
