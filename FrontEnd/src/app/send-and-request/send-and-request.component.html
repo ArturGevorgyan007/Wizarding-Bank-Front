@@ -1,3 +1,15 @@
+<section id="subNav">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td> <button class="yellow-btn" (click)="send()"> Send </button></td>
+        <td><button class="yellow-btn" (click)="request()"> Request </button></td>
+        <td> <button class="yellow-btn" (click)="viewRequests()"> Requests </button> </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
 <section id="sendMoney" *ngIf="payDisplay">
   <h1>Send Money</h1>
 
@@ -6,14 +18,6 @@
     <label>
       Recipient:
       <label >Email</label>
-      <!-- <div>
-        <input type="emailt" formControlName="email" placeholder="foo@bar.com" required class="form-control" [matAutocomplete]="auto" id="userEmails" list="dymEmailList">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let u of filteredUsers | async" [value]="u">
-            {{user}}
-          </mat-option>
-        </mat-autocomplete>
-      </div> -->
       <input type="email" formControlName="email" placeholder="foo@bar.com" required class="form-control">
       <label >Amount</label>
       <input type="number" formControlName="amount" placeholder="$100" required class="form-control">
@@ -21,7 +25,7 @@
       <input type="text" formControlName="description" placeholder="Write description?" required class="form-control" ngModel maxlength="150">
     </label>
     <br><br>
-    <button type="submit" [disabled]="transferForm.invalid">Transfer</button>
+    <button type="submit" [disabled]="transferForm.invalid" class="yellow-btn">Transfer</button>
   </form>
 </section>
 
@@ -39,19 +43,19 @@
       <input type="text" formControlName="rdescription" placeholder="Description of your request" required class="form-control" ngModel maxlength="150">
     </label>
     <br><br>
-    <button type="submit" [disabled]="requestForm.invalid">Request</button>
+    <button type="submit" [disabled]="requestForm.invalid" class="yellow-btn">Request</button>
   </form>
 </section>
 
-<section id="pendingRequests" *ngIf="requestsDisplay">
+<section id="pendingRequests" *ngIf="viewRequestsDisplay">
   <div class="transac-table">
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Recipient</th>
+                <th scope="col">Requested By</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Date</th>
-                <th scope="col"> Remaining Balance </th>
+                <th scope="col"> Remaining Balance</th>
             </tr>
         </thead>
 
@@ -88,7 +92,7 @@
       <input id="samount" type="number" formControlName="amount" placeholder="$100" required class="form-control">
     </label>
     <br><br>
-    <button type="submit" (click)="pay()">Transfer</button>
+    <button type="submit" (click)="pay()" class="yellow-btn">Transfer</button>
   </form>
 </section>
 

@@ -7,5 +7,7 @@ export interface Transaction {
     "description"?: string,
     "recipientId"?: number,
     "status"?: number,
-    "senderId"?: number
+    "senderId"?: number,
+    "recpientType"?: boolean,
+    "senderType"?: boolean
 }

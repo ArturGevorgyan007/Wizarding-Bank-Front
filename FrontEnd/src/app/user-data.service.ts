@@ -10,7 +10,9 @@ export class UserDataService {
   addUser(arg0: string) {
     throw new Error('Method not implemented.');
   }
+
   apiRoot: any = "https://wiz-docker3.azurewebsites.net/";
+
   public email: any;
   public Id: any;
   constructor(private http: HttpClient, private cookieService: CookieService) { }
@@ -27,10 +29,17 @@ export class UserDataService {
   public getUserId(): number {
     return this.Id
   }
+
   public getUserCards(userId: number): Observable<Array<any>> {
     let qparams = new HttpParams()
       .set('userId', userId/*this.Id*/)
-    return this.http.get("https://wiz-docker3.azurewebsites.net/" + 'Card/User', { params: qparams }) as Observable<Array<any>>;
+    return this.http.get(this.apiRoot + 'Card/User', { params: qparams }) as Observable<Array<any>>;
+  }
+
+  public getBusinessCards(id : number) : Observable<Array<any>>{
+    let qparams = new HttpParams()
+      .set('userId', id);
+    return this.http.get(this.apiRoot + "Card/Business", {params: qparams}) as Observable<Array<any>>;
   }
 
   public retrieveBusinessIdFromDB(email: string): Observable<number> {
@@ -41,10 +50,15 @@ export class UserDataService {
   public retrieveBusinessTypeFromDB(email: string): Observable<string> {
     return this.http.get("https://wiz-docker3.azurewebsites.net/Business/busType/" + email) as Observable<string>;
   }
+
   public getUserAccounts(userId: number): Observable<Array<any>> {
     let qparams = new HttpParams()
       .set('id', userId/*this.Id*/)
-    return this.http.get("https://wiz-docker3.azurewebsites.net/" + 'Account/UserAccounts', { params: qparams }) as Observable<Array<any>>;
+    return this.http.get(this.apiRoot + 'Account/UserAccounts', { params: qparams }) as Observable<Array<any>>;
+  }
+
+  public getBankAccounts() : Observable<Array<any>> {
+    return this.http.get(this.apiRoot + "Account/Accounts") as Observable<Array<any>>;
   }
 
   public getFullPersonalUser(userId: number): Observable<Array<any>> {
@@ -68,7 +82,11 @@ export class UserDataService {
   }
 
   public getWalletBalance(userId: number): Observable<any> {
-    return this.http.get("https://wiz-docker3.azurewebsites.net/user/" + userId) as Observable<any>;
+    return this.http.get(this.apiRoot + "user/" + userId) as Observable<any>;
+  }
+
+  public getWalletBBalance(userId: number): Observable<any> {
+    return this.http.get(this.apiRoot + "Business/bus/" + userId) as Observable<any>;
   }
 
   current_state = this.cookieService.get('userType');
@@ -97,4 +115,7 @@ export class UserDataService {
     return this.http.get(this.apiRoot + "user/wallet/update/" + id + "/" + amt) as Observable<any>;
   }
 
+  public updateBusinessWallet(id : number, amt : number) : Observable<any>{
+    return this.http.get(this.apiRoot + "Business/wallet/update/" + id + "/" + amt) as Observable<any>;
+  }
 }
