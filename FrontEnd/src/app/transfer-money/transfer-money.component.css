@@ -1,12 +1,19 @@
 .subtitle-money{
-    font-family: 'DM Sans';
     font-style: normal;
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 29px;
+    font-weight: 500;
     text-align: left;
     margin-top: 15px;
     color: #25282C;
+}
+
+h1 {
+    text-align: center;
+    /* margin-top: 20px; */
+}
+
+.card {
+    padding: 20px 8%;
+    max-width: 1088;
 }
 
 row d-flex justify-content-center{
@@ -16,21 +23,16 @@ row d-flex justify-content-center{
 div .cardMT:hover{
     background-color: #FECE22;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 input{
-
     width: 300px;
-    border-bottom-style: hidden;
-    border-top-style: hidden;
-    border-right-style: hidden;
-    border-left-style: hidden;  
+    border-style: hidden; 
     font-size: 40px;
     color: black;
     text-align: center; 
-    margin-top: 55px;
 }
-
 
 .no-outline:focus{
     outline: none;
@@ -76,7 +78,6 @@ button{
 .withBut:focus{
     border-color: #FECE22;
 }
-
 .withBut:hover{
     border-color: #FECE22;
     background-color: #FECE22;
@@ -114,7 +115,7 @@ div .bacct:focus {
 
 .alert {
     padding: 20px;
-    background-color: #f44336;
+    background-color: #c2918e;
     color: white;
     margin-bottom: 15px;
     width: 320px;
@@ -143,4 +144,35 @@ div .bacct:focus {
 /* When moving the mouse over the close button */
 .closebtn:hover {
     color: black;
+}
+
+.backbtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: left;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-right: 100%;
+}
+
+.backbtn:hover{
+    color:#FECE22;
+}
+
+
+.amtbtn {
+    margin: 5px 5%;
+}
+
+.amtList {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.custom-amt-div {
+    font-size: 24px;
+    padding-top: 1.8%;
 }

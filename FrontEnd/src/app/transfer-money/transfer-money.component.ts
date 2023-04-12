@@ -58,6 +58,7 @@ export class TransferMoneyComponent implements OnInit{
   }
 
   change(){
+    this.router.navigateByUrl('TransferMoney');
   }
 
   setType(type : any){

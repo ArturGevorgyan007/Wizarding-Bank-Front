@@ -17,7 +17,7 @@ export class SendAndRequestComponent implements OnInit {
 
   payDisplay : boolean = true;
   requestDisplay: boolean = false; 
-  requestsDisplay : boolean = false;
+  viewRequestsDisplay : boolean = false;
   payRequestD: boolean = false;
   acctType : string; 
   uID : any; 
@@ -360,21 +360,21 @@ export class SendAndRequestComponent implements OnInit {
   send(){
     this.payDisplay = true; 
     this.requestDisplay = false; 
-    this.requestsDisplay = false;
+    this.viewRequestsDisplay = false;
     this.payRequestD = false; 
   }
 
   request(){
     this.payDisplay = false; 
     this.requestDisplay = true; 
-    this.requestsDisplay = false;
+    this.viewRequestsDisplay = false;
     this.payRequestD = false; 
   }
 
   viewRequests(){
     this.payDisplay = false; 
     this.requestDisplay = false; 
-    this.requestsDisplay = true;
+    this.viewRequestsDisplay= true;
     this.payRequestD = false; 
   }
 
