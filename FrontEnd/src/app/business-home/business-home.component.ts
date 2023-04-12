@@ -16,7 +16,7 @@ export class BusinessHomeComponent implements OnInit {
   user: string | undefined;
   token: string | undefined | null = localStorage.getItem('access_token');
   _wallet: any = "";
-  constructor(private jwtDecoder: JwtDecoderService, private userData: UserDataService, private cookieService: CookieService, private router: Router, public authService: AuthService) { }
+  constructor(private jwtDecoder: JwtDecoderService, public userData: UserDataService, public cookieService: CookieService, private router: Router, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.userData.email = this.cookieService.get('email')
@@ -28,7 +28,6 @@ export class BusinessHomeComponent implements OnInit {
   getWalletAmount(id: any) {
     //getWalletBalance
     this.userData.getWalletBalance(id).subscribe(data => {
-      console.log(data);
       this._wallet = data['wallet'];
     });
   }

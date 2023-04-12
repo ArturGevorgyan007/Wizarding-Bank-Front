@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SendAndRequestComponent } from './send-and-request.component';
+import { FormGroup, FormControl, FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 describe('SendAndRequestComponent', () => {
   let component: SendAndRequestComponent;
@@ -8,7 +10,8 @@ describe('SendAndRequestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SendAndRequestComponent ]
+      declarations: [ SendAndRequestComponent ],
+      imports : [HttpClientTestingModule, ReactiveFormsModule, FormsModule]
     })
     .compileComponents();
 

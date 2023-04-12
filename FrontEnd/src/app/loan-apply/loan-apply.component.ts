@@ -6,9 +6,10 @@ import { Loan, LoanSchedule } from '../Interfaces/loan';
 import { LoanServicesService } from '../loan-services.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import jspdf from 'jspdf';
+import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { HttpClient } from '@angular/common/http';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-loan-apply',
@@ -135,12 +136,16 @@ export class LoanApplyComponent implements OnInit {
         let date: Date = new Date()
         date.setMonth(date.getMonth() + dateincriment)
         let data: LoanSchedule = {
-          date: date,
+          date: date.toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          }),
           payment: parseFloat(payment.toFixed(2)),
-          interest: parseFloat(inter.toFixed(2)),
           principal: parseFloat((payment - inter).toFixed(2)),
-          balance: parseFloat(balance.toFixed(2)),
+          interest: parseFloat(inter.toFixed(2)),
           totalInterest: parseFloat((totInterest + inter).toFixed(2)),
+          balance: parseFloat(balance.toFixed(2))
         }
         dateincriment++
         if (balance < 0)
@@ -255,35 +260,23 @@ export class LoanApplyComponent implements OnInit {
     });
   }
 
+  
   exportAsPDF() {
-    let data = document.getElementById('pdf');
-    html2canvas(data!).then(canvas => {
-      // const contentDataURL = canvas.toDataURL('image/jpeg')  // 'image/jpeg' for lower quality output.
-      // let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
-      // pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
-      // pdf.save('Filename.pdf');
+    var doc = new jsPDF.default();
+    console.log(this.schedule.map(Object.values));
+    (doc as any).autoTable({
+      head: [['Payment Date', 'Payment', 'Principal', 'Interest', 'Total Interest', 'Balance']],
+      body: this.schedule.map(Object.values)
+    })
+    console.log("test2");
+    doc.save('file.pdf');
+}
 
-      var imgData = canvas.toDataURL('image/jpeg');
-      var imgWidth = 210;
-      var pageHeight = 295;
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      var heightLeft = imgHeight;
-      var doc = new jspdf('p', 'mm');
-      var position = 10; // give some top padding to first page
-
-      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        // position += heightLeft - imgHeight; // top padding for other pages
-        position = heightLeft - imgHeight + 10; // top padding for other pages
-        doc.addPage();
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-      doc.save('file.pdf');
-    });
+  Validate() {
+    var s=document.getElementById("loanTerm")! as HTMLInputElement;
+    if (parseInt(s.value)<0)
+      s.value="";
+    if (parseInt(s.value)>60)
+      s.value="";  
   }
-
-
 }

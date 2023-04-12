@@ -4,6 +4,7 @@ import { TransactionHistoryService } from './transaction-history.service';
 import { UserDataService } from './user-data.service';
 import { of } from 'rxjs';
 import { Transaction } from './Interfaces/transaction';
+import { HttpClient } from '@angular/common/http';
 
 describe('TransactionHistoryService', () => {
   let service: TransactionHistoryService;
@@ -35,7 +36,7 @@ describe('TransactionHistoryService', () => {
 
   describe('getMostRecentTransactions', () => {
     it('should return an Observable of Transaction[]', () => {
-      const transactions: Transaction[] = [{ amount: 1.00, senderEmail: "email@email.com", recipientEmail: "email@email.com", createdAt: new Date(), description: "Desc" }];
+      const transactions: Transaction[] = [{ amount: 1.00, senderEmail: "email@email.com", recipientEmail: "email@email.com", createdAt: new Date(), description: "Desc", id: 0, status: 0, ramount: 1.5 }];
       const userId = 1;
       userDataSpy.getUserId.and.returnValue(userId);
 
@@ -43,7 +44,7 @@ describe('TransactionHistoryService', () => {
         expect(response).toEqual(transactions);
       });
 
-      const request = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Transaction/transaction/number/${userId}`);
+      const request = httpMock.expectOne(`https://wiz-docker3.azurewebsites.net/Transaction/transaction/number/${userId}`);
       expect(request.request.method).toBe('GET');
       request.flush(transactions);
     });
@@ -56,7 +57,10 @@ describe('TransactionHistoryService', () => {
         senderEmail: '',
         recipientEmail: '',
         createdAt: new Date(),
-        description: ''
+        description: '',
+        id: 0,
+        status: 1,
+        ramount: 12.5
       }
       ];
 
@@ -67,7 +71,7 @@ describe('TransactionHistoryService', () => {
         expect(response).toEqual(transactions);
       });
 
-      const request = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Transaction/transaction/${userId}`);
+      const request = httpMock.expectOne(`https://wiz-docker3.azurewebsites.net/Transaction/transaction/${userId}`);
       expect(request.request.method).toBe('GET');
       request.flush(transactions);
     });

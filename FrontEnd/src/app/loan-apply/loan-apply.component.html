@@ -67,7 +67,7 @@
                   </div>
                   <div class="field padding-bottom--24">
                     <label for="period">Loan term in months</label>
-                    <input type="number" name="period" formControlName="period" required max="60">
+                    <input type="number" id = "loanTerm" name="period" formControlName="period" (keyup)="Validate()" (change)="Validate()" required max="60">
                   </div>
                   <div class="field padding-bottom--24">
                     <input type="submit" name="submit" (click)="createSchedule()" (click)="toggle()">
