@@ -265,6 +265,7 @@ export class SendAndRequestComponent implements OnInit {
     this.transferForm.controls['email'].setValue(transact.recipientEmail);
     this.transferForm.controls['amount'].setValue(transact.ramount);
     this.rTransac = transact;
+    this.payRequestD = true;
   }
 
   pay(){
