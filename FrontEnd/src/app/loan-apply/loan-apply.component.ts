@@ -288,14 +288,19 @@ export class LoanApplyComponent implements OnInit {
   exportAsPDF() {
       var doc = new jspdf();
       var rownum = this.schedule.length;
+      console.log(rownum)
       while(rownum!=0) {
         for (var i =0;i<45;i++) {
-          var source = window.document.getElementsByTagName("tr")[i]
+          var source = document.getElementsByTagName("tr")[i]
+          console.log(source)
           doc.html(source)
           rownum--;
         }
-        doc.addPage();
+        if(rownum!=0)
+          doc.addPage();
+        console.log("new page added")
       }
+      console.log("pdf saved")
       doc.save('file.pdf');
   }
 
