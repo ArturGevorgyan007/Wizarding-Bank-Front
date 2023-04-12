@@ -41,6 +41,7 @@ describe('ViewAllTransactionsComponent', () => {
 
     httpMock.expectOne('https://wiz-back.azurewebsites.net/user/byEmail/test@email.com')
 
+
     // expect(userApi.getUser).toHaveBeenCalled()
   })
 });

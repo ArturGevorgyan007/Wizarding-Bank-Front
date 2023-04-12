@@ -7,6 +7,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { JwtDecoderService } from '../jwt-decoder.service';
 import { UserDataService } from '../user-data.service';
 import { BusinessHomeComponent } from './business-home.component';
+import { AuthService} from '../auth.service';
 
 describe('BusinessHomeComponent', () => {
   let component: BusinessHomeComponent;
@@ -30,6 +31,7 @@ describe('BusinessHomeComponent', () => {
       ]
     }).compileComponents();
   });
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BusinessHomeComponent);
