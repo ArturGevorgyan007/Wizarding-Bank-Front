@@ -49,7 +49,7 @@ export class UserDataService {
 
   public getFullPersonalUser(userId: number): Observable<Array<any>> {
 
-    return this.http.get("https://wiz-docker3.azurewebsites.net/" + userId) as Observable<Array<any>>;
+    return this.http.get("https://wiz-docker3.azurewebsites.net/user/" + userId) as Observable<Array<any>>;
   }
 
   public updateUserProfile(userObj: any): Observable<Array<any>> {
