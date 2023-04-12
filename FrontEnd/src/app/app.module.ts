@@ -24,6 +24,7 @@ import { cardTransform } from './CardTransformPipe';
 import { SendAndRequestComponent } from './send-and-request/send-and-request.component'
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
+import { TransactionFilterPipe } from './transaction-filter.pipe';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { BusinessProfileComponent } from './business-profile/business-profile.co
     SendAndRequestComponent,
     UserProfileComponent,
     BusinessProfileComponent,
+    TransactionFilterPipe,
     
   ],
   imports: [

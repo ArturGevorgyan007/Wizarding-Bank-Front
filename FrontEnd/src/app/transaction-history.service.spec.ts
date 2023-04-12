@@ -18,8 +18,7 @@ describe('TransactionHistoryService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         TransactionHistoryService,
-        { provide: UserDataService, useValue: userDataServiceSpy },
-        { provide: HttpClient, useValue: httpMock }
+        { provide: UserDataService, useValue: userDataServiceSpy }
       ]
     });
     service = TestBed.inject(TransactionHistoryService);
@@ -45,7 +44,7 @@ describe('TransactionHistoryService', () => {
         expect(response).toEqual(transactions);
       });
 
-      const request = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Transaction/transaction/number/${userId}`);
+      const request = httpMock.expectOne(`https://wiz-docker3.azurewebsites.net/Transaction/transaction/number/${userId}`);
       expect(request.request.method).toBe('GET');
       request.flush(transactions);
     });
@@ -72,7 +71,7 @@ describe('TransactionHistoryService', () => {
         expect(response).toEqual(transactions);
       });
 
-      const request = httpMock.expectOne(`https://wiz-back.azurewebsites.net/Transaction/transaction/${userId}`);
+      const request = httpMock.expectOne(`https://wiz-docker3.azurewebsites.net/Transaction/transaction/${userId}`);
       expect(request.request.method).toBe('GET');
       request.flush(transactions);
     });

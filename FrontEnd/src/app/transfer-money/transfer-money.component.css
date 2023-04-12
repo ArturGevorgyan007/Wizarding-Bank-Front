@@ -146,6 +146,25 @@ div .bacct:focus {
     color: black;
 }
 
+
+.backbtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: left;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-right: 100%;
+}
+
+.backbtn:hover{
+    color:#FECE22;
+}
+
+
+
 .amtbtn {
     margin: 5px 5%;
 }

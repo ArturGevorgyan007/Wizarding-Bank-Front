@@ -17,20 +17,17 @@ export class WalletPageComponent implements OnInit{
 
   _amount : any = ""; 
   userID : any = "";
+  acctType : any;
   cardList : Card[] = [];
   bankList : bankAccount[] = [];
   type : any; 
 
   ngOnInit(): void {
-    if (this.cookieService.get('userType') == 'Business') {
-      console.log("THIS IS A BUSINESS");
-    } else if(this.cookieService.get('userType') == 'Personal'){
-      console.log("THIS IS PERSONAL");
-    }
-    //this.userID = parseInt(this.cookieService.get('userId')) ;
-   // this.getCurrentAmount(this.userID);
-    //this.displayAccounts(this.userID);
-   // this.displayCards(this.userID);
+    this.acctType = this.cookieService.get('userType'); 
+    this.userID = parseInt(this.cookieService.get('userId')) ;
+    this.getCurrentAmount(this.userID);
+    this.displayAccounts(this.userID);
+    this.displayCards(this.userID);
   }
 
   linkCardorAcct(){
@@ -44,36 +41,82 @@ export class WalletPageComponent implements OnInit{
 
   getCurrentAmount(id : any){
     //getWalletBalance
-    this.service.getWalletBalance(id).subscribe(data => {
-      this._amount = data['wallet'];
-    });
+
+    if(this.acctType == 'Business'){
+      this.service.getWalletBBalance(id).subscribe(data => {
+        console.log(data);
+        this._amount = data[0]['wallet'];
+      });
+    } 
+    else {
+      this.service.getWalletBalance(id).subscribe(data => {
+            console.log(data);
+            this._amount = data['wallet'];
+      });
+    }
+    
   }
 
   displayAccounts(id : any){
-    this.service.getUserAccounts(id).subscribe(data => {
-      for(let i = 0; i < data.length; i++){
-        let bacct = {} as bankAccount;
-        bacct.acctNum = data[i]['accountNumber'];
-        bacct.balance = data[i]['balance'];
-        bacct.bankAcctId = data[i]['id'];
-        this.bankList.push(bacct);
-      }
-    });
+    if(this.acctType == 'Business'){
+      this.service.getBankAccounts().subscribe(data => {
+        if(data != null){
+          for(let i = 0; i < data.length; i++){
+            if(data[i]['businessId'] == id){
+              let bacct = {} as bankAccount;
+              bacct.acctNum = data[i]['accountNumber'];
+              bacct.balance = data[i]['balance'];
+              bacct.bankAcctId = data[i]['id'];
+              this.bankList.push(bacct);
+            }
+          }
+        } 
+      });
+    }
+    else{
+      this.service.getUserAccounts(id).subscribe(data => {
+        if(data != null){
+          for(let i = 0; i < data.length; i++){
+            let bacct = {} as bankAccount;
+            bacct.acctNum = data[i]['accountNumber'];
+            bacct.balance = data[i]['balance'];
+            bacct.bankAcctId = data[i]['id'];
+            this.bankList.push(bacct);
+          }
+        }
+      });
+    }
   }
 
   displayCards(id : any){
-    this.service.getUserCards(id).subscribe(data => {
-      for(let i = 0; i < data.length; i++){
-        let card = {} as Card; 
-        card.cardId = data[i]['id'];
-        card.balance = data[i]['balance'];
-        card.cardNumber = data[i]['cardNumber'];
-        card.cvv = data[i]['cvv'];
-        card.expDate = data[i]['expiryDate'];
-        this.cardList.push(card);
-      }
-    });
+    if(this.acctType == "Business"){
+      this.service.getBusinessCards(id).subscribe(data => {
+        for(let i = 0; i < data.length; i++){
+          let card = {} as Card; 
+          card.cardId = data[i]['id'];
+          card.balance = data[i]['balance'];
+          card.cardNumber = data[i]['cardNumber'];
+          card.cvv = data[i]['cvv'];
+          card.expDate = data[i]['expiryDate'];
+          this.cardList.push(card);
+        }
+      });
+    } 
+    else{
+      this.service.getUserCards(id).subscribe(data => {
+        for(let i = 0; i < data.length; i++){
+          let card = {} as Card; 
+          card.cardId = data[i]['id'];
+          card.balance = data[i]['balance'];
+          card.cardNumber = data[i]['cardNumber'];
+          card.cvv = data[i]['cvv'];
+          card.expDate = data[i]['expiryDate'];
+          this.cardList.push(card);
+        }
+      });
+    }
   }
+    
 }
 
 export interface Card{

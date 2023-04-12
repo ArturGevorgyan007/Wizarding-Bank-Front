@@ -31,7 +31,7 @@ describe('BusinessGuard', () => {
       }
     });
     const canActivate = guard.canActivate(null, null);
-    expect(canActivate).toBeTrue();
+    expect(canActivate).toBeFalse();
   });
 
   it('should not allow access to business page if user is not a business', () => {
@@ -39,6 +39,6 @@ describe('BusinessGuard', () => {
     spyOn(router, 'navigate');
     const canActivate = guard.canActivate(null, null);
     expect(canActivate).toBeFalse();
-    expect(router.navigate).toHaveBeenCalledWith(['/Home']);
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
 });

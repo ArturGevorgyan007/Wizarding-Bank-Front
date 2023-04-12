@@ -11,10 +11,10 @@ export class PaymentFormService {
   constructor(private http: HttpClient) { }
 
   addCard(newCard: Card): Observable<Card> {
-    return this.http.post('https://wiz-back.azurewebsites.net/Card/Add', newCard) as Observable<Card>;
+    return this.http.post('https://wiz-docker3.azurewebsites.net/Card/Add', newCard) as Observable<Card>;
   }
 
   addAccount(newAccount: Account): Observable<Account> {
-    return this.http.post('https://wiz-back.azurewebsites.net/Account/Add', newAccount) as Observable<Account>;
+    return this.http.post('https://wiz-docker3.azurewebsites.net/Account/Add', newAccount) as Observable<Account>;
   }
 }

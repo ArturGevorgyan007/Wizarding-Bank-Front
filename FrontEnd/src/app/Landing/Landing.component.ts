@@ -17,18 +17,19 @@ export class LandingComponent implements OnInit {
   constructor(private cookieService: CookieService, private router: Router, public authService: AuthService, public userData: UserDataService) { }
   async ngOnInit(): Promise<void> {
     if (this.authService.isAuthenticated$) {
-      this.userData.authenticate()
       await this.authService.user$.subscribe(c => {
         if (c) {
           console.log(c)
           if (c["email"]) {
             console.log(c['email'])
             this.cookieService.set('email', c['email'], 0.4)
+            // sessionStorage.setItem("loggedin", 'true')
             if (this.cookieService.get('userType') == 'Business') {
               this.userData.retrieveBusinessIdFromDB(this.cookieService.get('email')).subscribe(data => {
                 if (data) {
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/BusinessHome']);
+                  this.userData.authenticate()
                 }
               })
             }
@@ -37,6 +38,7 @@ export class LandingComponent implements OnInit {
                 if (data) {
                   this.cookieService.set("userId", data + "")
                   this.router.navigate(['/UserHome']);
+                  this.userData.authenticate()
                 }
               })
             }
