@@ -240,6 +240,7 @@ export class SendAndRequestComponent implements OnInit {
                     if(desc.includes("Request: ")){
                       console.log("HERE PART2");
                       if(t[i]['status'] == 1){
+                        console.log("HERE PART3");
                         t[i].ramount = t[i].amount
                         for(let j = 0; j < t.length; j++){
                           let str = t[j]['description'];
