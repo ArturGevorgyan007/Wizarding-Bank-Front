@@ -22,7 +22,7 @@
               (click)="toggleFullBill()">
           </span>
         </div>
-        <br/>
+        <br />
         <ng-container *ngIf="monthlyAmountButton">
           <div>
             <form [formGroup]="payLoanForm">
@@ -35,7 +35,8 @@
           <div>
             <form [formGroup]="payLoanForm">
               <label for="customAmount">Enter amount: </label>
-              <input name="customAmount" type="number" formControlName="payAmount" style="margin-bottom: 15px; margin-top :0;"/>
+              <input name="customAmount" type="number" formControlName="payAmount"
+                style="margin-bottom: 15px; margin-top :0;" />
               <button type="submit" (click)="payCustomLoan()">Pay Custom Amount</button>
             </form>
           </div>
@@ -67,7 +68,8 @@
                   </div>
                   <div class="field padding-bottom--24">
                     <label for="period">Loan term in months</label>
-                    <input type="number" id = "loanTerm" name="period" formControlName="period" (keyup)="Validate()" (change)="Validate()" required max="60">
+                    <input type="number" id="loanTerm" name="period" formControlName="period" (keyup)="Validate()"
+                      (change)="Validate()" required max="60">
                   </div>
                   <div class="field padding-bottom--24">
                     <input type="submit" name="submit" (click)="createSchedule()" (click)="toggle()">
@@ -90,7 +92,7 @@
           <div class="formbg-outer">
             <div class="formbg">
               <div *ngIf="!showCalculation" class="formbg-inner padding-horizontal--48">
-                <p>Wizzard bank loan offer is a financial product offered by bank to businesses in need of funds. This
+                <p>Wizard bank loan offer is a financial product offered by bank to businesses in need of funds. This
                   offer provides an opportunity for borrowers to access money to finance various projects and
                   activities, such
                   as buying an assets, funding a startup, or expanding an existing business. Bank loan offers come with

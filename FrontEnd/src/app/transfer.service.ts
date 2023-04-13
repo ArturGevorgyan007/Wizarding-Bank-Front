@@ -19,6 +19,7 @@ export class TransferService {
   cardToWallet(cardId: number, userId: number, amount: number, type: boolean): Observable<any> {
     var body: Transaction = {
       "cardId": cardId,
+      "description": "Transfer",
       "recipientId": userId,
       "amount": amount,
       "recpientType": type
@@ -31,6 +32,7 @@ export class TransferService {
   walletToCard(userId: number, cardId: number, amount: number, type: boolean): Observable<any> {
     var body: Transaction = {
       "senderId": userId,
+      "description": "Transfer",
       "cardId": cardId,
       "amount": amount,
       "senderType": type,
@@ -42,6 +44,7 @@ export class TransferService {
   accountToWallet(accountId: number, userId: number, amount: number, type: boolean): Observable<any> {
     var body: Transaction = {
       "accountId": accountId,
+      "description": "Transfer",
       "recipientId": userId,
       "amount": amount,
       "recpientType": type
@@ -53,6 +56,7 @@ export class TransferService {
   walletToAccount(userId: number, accountId: number, amount: number, type: boolean): Observable<any> {
     var body: Transaction = {
       "accountId": accountId,
+      "description": "Transfer",
       "senderId": userId,
       "amount": amount,
       "senderType": type
