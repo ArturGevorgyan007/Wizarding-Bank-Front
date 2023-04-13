@@ -80,8 +80,8 @@ export class TransferService {
       "recipientId": recipientId,
       "status": 0,
       "senderId": userId,
-      "senderType": rtype,
-      "recpientType": stype
+      "senderType": stype,
+      "recpientType": rtype
     };
     return this.http.post(this.apiRoot + "Transaction/transaction/userToUser", body) as Observable<any>;
   }

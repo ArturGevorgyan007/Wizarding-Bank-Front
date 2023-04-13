@@ -81,7 +81,7 @@
     margin-top: 70px;
     margin-bottom: 2%;
     width: 100%;
-    max-width: 50%;    
+    max-width: 50%;
 }
 
 /* Control the left side */
@@ -108,6 +108,7 @@
     .disappear {
         display: none;
     }
+
     .container {
         position: relative;
         flex-direction: column;
@@ -180,5 +181,5 @@ details p {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 90%;
+    width: 200%;
 }

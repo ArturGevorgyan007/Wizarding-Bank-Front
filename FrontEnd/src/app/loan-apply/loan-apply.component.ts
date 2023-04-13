@@ -148,7 +148,7 @@ export class LoanApplyComponent implements OnInit {
           balance: parseFloat(balance.toFixed(2))
         }
         dateincriment++
-        if (balance < 0)
+        if (balance < -1)
           break;
 
         totInterest = data.totalInterest
@@ -260,7 +260,7 @@ export class LoanApplyComponent implements OnInit {
     });
   }
 
-  
+
   exportAsPDF() {
     var doc = new jsPDF.default();
     console.log(this.schedule.map(Object.values));
@@ -270,13 +270,13 @@ export class LoanApplyComponent implements OnInit {
     })
     console.log("test2");
     doc.save('file.pdf');
-}
+  }
 
   Validate() {
-    var s=document.getElementById("loanTerm")! as HTMLInputElement;
-    if (parseInt(s.value)<0)
-      s.value="";
-    if (parseInt(s.value)>60)
-      s.value="";  
+    var s = document.getElementById("loanTerm")! as HTMLInputElement;
+    if (parseInt(s.value) < 0)
+      s.value = "";
+    if (parseInt(s.value) > 60)
+      s.value = "";
   }
 }
