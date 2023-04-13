@@ -23,10 +23,10 @@ export class BusinessHomeComponent implements OnInit {
     this.userData.email = this.cookieService.get('email')
 
     console.log(this.userData.getUser())
-    this.userData.retrieveUserIdFromDB(this.userData.getUser()).subscribe(x => {
+    this.userData.retrieveBusinessIdFromDB(this.userData.getUser()).subscribe(x => {
       this.userData.Id = x as number;
       this.user = this.userData.Id;
-      this.getWalletAmount(x);
+      this.getWalletAmount(this.cookieService.get('userId'));
       this.transactions.getMostRecentTransactions(x).subscribe(w => {
         this.Transactions = w;
       })

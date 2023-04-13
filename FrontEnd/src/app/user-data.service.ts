@@ -36,10 +36,10 @@ export class UserDataService {
     return this.http.get(this.apiRoot + 'Card/User', { params: qparams }) as Observable<Array<any>>;
   }
 
-  public getBusinessCards(id : number) : Observable<Array<any>>{
+  public getBusinessCards(id: number): Observable<Array<any>> {
     let qparams = new HttpParams()
       .set('userId', id);
-    return this.http.get(this.apiRoot + "Card/Business", {params: qparams}) as Observable<Array<any>>;
+    return this.http.get(this.apiRoot + "Card/Business", { params: qparams }) as Observable<Array<any>>;
   }
 
   public retrieveBusinessIdFromDB(email: string): Observable<number> {
@@ -57,7 +57,7 @@ export class UserDataService {
     return this.http.get(this.apiRoot + 'Account/UserAccounts', { params: qparams }) as Observable<Array<any>>;
   }
 
-  public getBankAccounts() : Observable<Array<any>> {
+  public getBankAccounts(): Observable<Array<any>> {
     return this.http.get(this.apiRoot + "Account/Accounts") as Observable<Array<any>>;
   }
 
@@ -115,7 +115,7 @@ export class UserDataService {
     return this.http.get(this.apiRoot + "user/wallet/update/" + id + "/" + amt) as Observable<any>;
   }
 
-  public updateBusinessWallet(id : number, amt : number) : Observable<any>{
+  public updateBusinessWallet(id: number, amt: number): Observable<any> {
     return this.http.get(this.apiRoot + "Business/wallet/update/" + id + "/" + amt) as Observable<any>;
   }
 }
