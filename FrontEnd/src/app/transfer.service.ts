@@ -96,8 +96,8 @@ export class TransferService {
       "recipientId": recipientId,
       "status": 0,
       "senderId": userId,
-      "senderType": transac.sType,
-      "recpientType": transac.rType
+      "senderType": transac.rType,
+      "recpientType": transac.sType
     };
     return this.http.put(this.apiRoot + "Transaction/", body) as Observable<any>
 
