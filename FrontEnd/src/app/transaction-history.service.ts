@@ -9,19 +9,22 @@ import { UserDataService } from './user-data.service';
 })
 export class TransactionHistoryService {
 
+  apiroot : string = "https://wizardingbankapi.azurewebsites.net"
+  // apiroot : string = "http://localhost:5092"
+
   constructor(private http: HttpClient, private userData: UserDataService) { }
   getMostRecentTransactions(id: number): Observable<Array<Transaction>> {
-    return this.http.get("https://wiz-docker3.azurewebsites.net/Transaction/transaction/number/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
+    return this.http.get(this.apiroot+"/Transaction/transaction/number/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
   }
   getTransactions(id: number): Observable<Array<Transaction>> {
 
-    return this.http.get("https://wiz-docker3.azurewebsites.net/Transaction/transaction/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
+    return this.http.get(this.apiroot+"/Transaction/transaction/" + this.userData.getUserId()) as Observable<Array<Transaction>>;
 
   }
 
   getTransactionsRequest(id: number): Observable<Array<Transaction>> {
 
-    return this.http.get("https://wiz-docker3.azurewebsites.net/Transaction/transaction/" + id) as Observable<Array<Transaction>>;
+    return this.http.get(this.apiroot+"/Transaction/transaction/" + id) as Observable<Array<Transaction>>;
 
   }
 }

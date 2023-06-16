@@ -10,7 +10,8 @@ export class TransferService {
 
 
 
-  apiRoot: string = 'https://wiz-docker3.azurewebsites.net/';
+  apiroot : string = "https://wizardingbankapi.azurewebsites.net"
+  // apiroot : string = "http://localhost:5092/"
 
   constructor(private http: HttpClient) { }
   //When sending money to self, recipient = id, sender = null
@@ -24,7 +25,7 @@ export class TransferService {
       "amount": amount,
       "recpientType": type
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=3', body) as Observable<any>;
+    return this.http.post(this.apiroot + 'Transaction/transaction/internal?type=3', body) as Observable<any>;
 
   }
 
@@ -37,7 +38,7 @@ export class TransferService {
       "amount": amount,
       "senderType": type,
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=2', body) as Observable<any>;
+    return this.http.post(this.apiroot + 'Transaction/transaction/internal?type=2', body) as Observable<any>;
   }
 
   //bankAccount-to-wallet
@@ -49,7 +50,7 @@ export class TransferService {
       "amount": amount,
       "recpientType": type
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=4', body) as Observable<any>;
+    return this.http.post(this.apiroot + 'Transaction/transaction/internal?type=4', body) as Observable<any>;
   }
 
   //wallet-to-bankAccount
@@ -61,7 +62,7 @@ export class TransferService {
       "amount": amount,
       "senderType": type
     };
-    return this.http.post(this.apiRoot + 'Transaction/transaction/internal?type=1', body) as Observable<any>;
+    return this.http.post(this.apiroot + 'Transaction/transaction/internal?type=1', body) as Observable<any>;
   }
 
   requestMoney(userId: number, amount: number, recipientId: number, description: string, stype: boolean, rtype: boolean): Observable<any> {
@@ -74,7 +75,7 @@ export class TransferService {
       "senderType": rtype,
       "recpientType": stype
     };
-    return this.http.post(this.apiRoot + "Transaction/", body) as Observable<any>;
+    return this.http.post(this.apiroot + "Transaction/", body) as Observable<any>;
   }
 
   userToUser(userId: number, amount: number, recipientId: number, description: string, stype: boolean, rtype: boolean): Observable<any> {
@@ -87,7 +88,7 @@ export class TransferService {
       "senderType": stype,
       "recpientType": rtype
     };
-    return this.http.post(this.apiRoot + "Transaction/transaction/userToUser", body) as Observable<any>;
+    return this.http.post(this.apiroot + "Transaction/transaction/userToUser", body) as Observable<any>;
   }
 
 
@@ -103,7 +104,7 @@ export class TransferService {
       "senderType": transac.rType,
       "recpientType": transac.sType
     };
-    return this.http.put(this.apiRoot + "Transaction/", body) as Observable<any>
+    return this.http.put(this.apiroot + "Transaction/", body) as Observable<any>
 
   }
 }

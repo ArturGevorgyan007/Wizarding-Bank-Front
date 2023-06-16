@@ -7,14 +7,18 @@ import { Account } from './Interfaces/Account';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PaymentFormService {
   constructor(private http: HttpClient) { }
+  
+  apiroot : string = "https://wizardingbankapi.azurewebsites.net"
+  // apiroot : string = "https://localhost:4200"
 
   addCard(newCard: Card): Observable<Card> {
-    return this.http.post('https://wiz-docker3.azurewebsites.net/Card/Add', newCard) as Observable<Card>;
+    return this.http.post(this.apiroot+'/Card/Add', newCard) as Observable<Card>;
   }
 
   addAccount(newAccount: Account): Observable<Account> {
-    return this.http.post('https://wiz-docker3.azurewebsites.net/Account/Add', newAccount) as Observable<Account>;
+    return this.http.post(this.apiroot+'/Account/Add', newAccount) as Observable<Account>;
   }
 }

@@ -58,7 +58,7 @@ import { TransactionFilterPipe } from './transaction-filter.pipe';
       domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
       clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
       authorizationParams: {
-        redirect_uri: 'https://brave-mud-0bd752310.2.azurestaticapps.net/'
+        redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net'
       }
     })
   ],
