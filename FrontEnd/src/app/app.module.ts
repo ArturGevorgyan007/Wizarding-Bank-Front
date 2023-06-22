@@ -55,8 +55,8 @@ import { TransactionFilterPipe } from './transaction-filter.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     AuthModule.forRoot({
-      domain: 'dev-z8ypmdswd2nbh4n2.us.auth0.com',
-      clientId: 'Zq0rCWWoR0q3QHWpfAcT2wizKAqtTDYJ',
+      domain: 'dev-cxn8esqbf8v4j6bz.us.auth0.com',
+      clientId: '67A4XNi0wYjSGXJDGcmXN45X9N6TRGeF',
       authorizationParams: {
         redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net'
       }
