@@ -11,7 +11,7 @@ export class UserDataService {
     throw new Error('Method not implemented.');
   }
 
-  apiroot : string = "https://wizardingbankapi.azurewebsites.net"
+  apiroot : string = "https://wizardingbankapi.azurewebsites.net/"
   // apiroot : string = "http://localhost:5092/"
 
   public email: any;
