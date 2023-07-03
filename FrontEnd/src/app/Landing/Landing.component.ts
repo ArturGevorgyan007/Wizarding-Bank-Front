@@ -53,13 +53,13 @@ export class LandingComponent implements OnInit {
   async login() {
     await this.authService.logout()
     this.cookieService.set('userType', 'Personal', 0.4);
-    // this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' }, appState: { target: 'Personal' } })
-    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' } })
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' }, appState: { target: 'Personal' } })
+    // this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' } })
   }
   async businessLogin() {
     await this.authService.logout();
     this.cookieService.set('userType', 'Business', 0.4)
-    // this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' }, appState: { target: 'Business' } })
-    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' }})
+    this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' }, appState: { target: 'Business' } })
+    // this.authService.loginWithRedirect({ authorizationParams: { redirect_uri: 'https://thankful-dune-043ee561e.3.azurestaticapps.net' }})
   }
 }
