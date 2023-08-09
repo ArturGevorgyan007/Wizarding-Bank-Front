@@ -8,8 +8,8 @@ import { Loan } from './Interfaces/loan';
 })
 export class LoanServicesService {
 
-  // apiroot : string = "https://wizardingbankapi.azurewebsites.net"
-  apiroot : string = "http://localhost:5092"
+  apiroot : string = "https://wizardingbankapi.azurewebsites.net"
+  // apiroot : string = "http://localhost:5092"
 
   constructor(private httpClient: HttpClient) { }
   addNewLoan(loan: Loan): Observable<any> {

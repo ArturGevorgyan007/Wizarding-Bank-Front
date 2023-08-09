@@ -10,8 +10,8 @@ export class TransferService {
 
 
 
-  // apiroot : string = "https://wizardingbankapi.azurewebsites.net/"
-  apiroot : string = "http://localhost:5092/"
+  apiroot : string = "https://wizardingbankapi.azurewebsites.net/"
+  // apiroot : string = "http://localhost:5092/"
 
   constructor(private http: HttpClient) { }
   //When sending money to self, recipient = id, sender = null
