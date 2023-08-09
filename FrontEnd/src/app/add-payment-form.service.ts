@@ -11,8 +11,8 @@ import { Account } from './Interfaces/Account';
 export class PaymentFormService {
   constructor(private http: HttpClient) { }
   
-  apiroot : string = "https://wizardingbankapi.azurewebsites.net"
-  // apiroot : string = "https://localhost:4200"
+  // apiroot : string = "https://wizardingbankapi.azurewebsites.net"
+  apiroot : string = "https://localhost:4200"
 
   addCard(newCard: Card): Observable<Card> {
     return this.http.post(this.apiroot+'/Card/Add', newCard) as Observable<Card>;

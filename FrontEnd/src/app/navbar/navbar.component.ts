@@ -14,8 +14,10 @@ export class NavbarComponent {
   Logout(): void {
     this.cookieService.set('userType', '')
     this.cookieService.set('email', '')
-    this.authService.logout()
+    this.cookieService.set('userId', '')
+    // this.authService.logout()
     this.userData.deauthenticate()
+    this.router.navigateByUrl('');
   }
   goToWallet() {
     this.router.navigateByUrl('Wallet');

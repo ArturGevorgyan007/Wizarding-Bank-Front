@@ -11,8 +11,8 @@ export class UserDataService {
     throw new Error('Method not implemented.');
   }
 
-  apiroot : string = "https://wizardingbankapi.azurewebsites.net/"
-  // apiroot : string = "http://localhost:5092/"
+  // apiroot : string = "https://wizardingbankapi.azurewebsites.net/"
+  apiroot : string = "http://localhost:5092/"
 
   public email: any;
   public Id: any;
@@ -67,6 +67,16 @@ export class UserDataService {
     return this.http.get(this.apiroot + "user/" + userId) as Observable<Array<any>>;
   }
 
+  public createUser(userObj: any): Observable<Array<any>> {
+
+    return this.http.post(this.apiroot + "user/create", userObj) as Observable<Array<any>>;
+  }
+
+  public createBusiness(userObj: any): Observable<Array<any>> {
+
+    return this.http.post(this.apiroot + "Business/create", userObj) as Observable<Array<any>>;
+  }
+
   public updateUserProfile(userObj: any): Observable<Array<any>> {
 
     return this.http.put(this.apiroot + "user/update", userObj) as Observable<Array<any>>;
@@ -98,6 +108,7 @@ export class UserDataService {
     else
       return false;
   }
+
   public $navbar_toggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.ParseBoolean(this.current_state))
 
   public authenticate() {
